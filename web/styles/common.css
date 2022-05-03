@@ -1,0 +1,52 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing:border-box;
+    font-family: Inder;
+}
+
+body{
+    width: 100%;
+}
+
+a{
+    text-decoration: none;
+    color:white;
+}
+
+.ads, main{
+    display: inline-block;
+}
+
+#iconoWeb, iconoSesion{
+    width: 75px;
+    color: white;
+}
+
+.ads{
+    width: 10%;
+    background-color: #C4C4C4;
+    color: #120101;
+    text-align: center;
+    height: 85vh;
+}
+
+navbar{
+    display: flex;
+    width: 100%;
+    height: 8vh;
+    align-items: center;
+    color: white;
+    justify-content: space-around;
+    flex-direction: row;
+    background-color: #6E8C03;
+}
+
+footer{
+    background-color: #593B02;
+    color: #FFFFFF;
+    height: 7vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
