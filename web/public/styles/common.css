@@ -7,6 +7,11 @@
 
 body{
     width: 100%;
+    background-color: #f2f2f2;
+}
+
+.error{
+    color: red;
 }
 
 a{
@@ -14,22 +19,43 @@ a{
     color:white;
 }
 
-.ads, main{
-    display: inline-block;
-}
 
 #iconoWeb, iconoSesion{
     width: 75px;
     color: white;
 }
 
-.ads{
-    width: 10%;
-    background-color: #C4C4C4;
-    color: #120101;
-    text-align: center;
-    height: 85vh;
+main *{
+    margin: 1vh;
 }
+
+section > div{
+    margin: auto auto;
+    display: flex;
+    justify-content: center;
+}
+
+section{
+    width: 100%;
+}
+
+main{
+    width: 100%;
+    display: flex;
+}
+
+
+.ads{
+    width: 9%;
+    background-color: #593B02;
+    color: #f2f2f2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 83vh;
+}
+
 
 navbar{
     display: flex;
@@ -43,7 +69,7 @@ navbar{
 }
 
 footer{
-    background-color: #593B02;
+    background-color: #6E8C03;
     color: #FFFFFF;
     height: 7vh;
     display: flex;

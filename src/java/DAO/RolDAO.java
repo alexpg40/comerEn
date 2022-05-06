@@ -5,9 +5,13 @@
  */
 package DAO;
 
+import Entidades.Rol;
 import Utilidades.ConexionBD;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 
 /**
  *
@@ -29,4 +33,21 @@ public class RolDAO {
             System.out.println("Fallo al cerrar la conexión con la base de datos!");
         }
     }
+    
+    public ArrayList<Rol> obtenerRolesUsuario(int idUsuario){
+        ArrayList<Rol> ret = new ArrayList<>();
+        try {
+            String sqlStr = "SELECT rol.idRol, rol.nombre FROM ((rol INNER JOIN usuario_rol ON rol.idRol = usuario_rol.idRol) "
+             + "INNER JOIN usuario ON usuario.idUsuario = usuario_rol.idUsuario) WHERE usuario.idUsuario = " + idUsuario;
+            Statement smt = this.conexion.createStatement();
+            ResultSet result = smt.executeQuery(sqlStr);
+            while(result.next()){
+                ret.add(new Rol(result.getInt("idRol"), result.getString("nombre")));
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error al recuperar los roles del usuario" + ex.getMessage());
+        }
+        return ret;
+    }
+    
 }

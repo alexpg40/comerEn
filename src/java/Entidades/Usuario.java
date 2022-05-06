@@ -24,4 +24,34 @@ public class Usuario {
         this.correo = correo;
         this.contrasena = contrasena;
     }
+    
+    public Usuario(int idUsuario, String  nombre, String apellido, String correo){
+        this.idUsuario = idUsuario;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.correo = correo;
+    }
+
+    public int getIdUsuario() {
+        return idUsuario;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public String getContrasena() {
+        return contrasena;
+    }
+    
+    
+    
 }

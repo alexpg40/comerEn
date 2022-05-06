@@ -25,6 +25,9 @@
                     <img id="iconoSesion" alt='icono de sesión' src='public/img/iconoLogin.svg'>
                 </a>
             </navbar>
+            <section>
+                
+            </section>
         </header>
         <aside class="ads">
             ADS

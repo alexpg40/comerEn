@@ -5,7 +5,14 @@
  */
 package comeren.es.controlador;
 
+import DAO.RestauranteDAO;
+import DAO.RolDAO;
+import DAO.UsuarioDAO;
+import Entidades.Restaurante;
+import Entidades.Rol;
+import Entidades.Usuario;
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -37,16 +44,49 @@ public class controlador extends HttpServlet {
             rd.forward(request, response);
         } else {
             String opcion = request.getParameter("opcion");
+            String buscador = request.getParameter("buscador");
+            String iniciarSesion = request.getParameter("iniciarSesion");
             if(opcion != null){
                 System.out.println(opcion);
                 if("index".equals(opcion)){ 
                     rd = request.getRequestDispatcher("/index.jsp");
                     rd.forward(request, response);
                 } else if ("session".equals(opcion)){
-                    rd = request.getRequestDispatcher("/cuenta.jsp");
+                    if(session.getAttribute("roles") != null){
+                        rd = request.getRequestDispatcher("/cuenta.jsp");
+                        rd.forward(request, response);
+                    } else {
+                        rd = request.getRequestDispatcher("/login.jsp");
+                        rd.forward(request, response);
+                    }
+                }
+            } else if (buscador != null && !buscador.equals("")){
+                RestauranteDAO restauranteDao = new RestauranteDAO();
+                ArrayList<Restaurante> restaurantes = restauranteDao.getRestaurantes(buscador);
+                restauranteDao.cerrarConexion();
+                request.setAttribute("listaRestaurante", restaurantes);
+                rd = request.getRequestDispatcher("/listaRestaurantes.jsp");
+                rd.forward(request, response);
+            } else if(iniciarSesion != null){
+                UsuarioDAO usuarioDao = new UsuarioDAO();
+                String correo = request.getParameter("correo");
+                String contraseña = request.getParameter("contrasena");
+                int idUsuario = usuarioDao.existeUsuario(correo, contraseña);
+                if(idUsuario != 0){
+                    RolDAO rolDao = new RolDAO();
+                    Usuario usuario = usuarioDao.getUsuarioByidUsuario(idUsuario);
+                    session.setAttribute("usuario", usuario);
+                    ArrayList<Rol> rolesUsuario = rolDao.obtenerRolesUsuario(idUsuario);
+                    session.setAttribute("roles", rolesUsuario);
+                    rd = request.getRequestDispatcher("/index.jsp");
+                    rd.forward(request, response);
+                } else {
+                    request.setAttribute("usuario_no_existe", "usuario_no_existe");
+                    rd = request.getRequestDispatcher("/login.jsp");
                     rd.forward(request, response);
                 }
-            } else {
+                usuarioDao.cerrarConexion();
+            }else {
                 rd = request.getRequestDispatcher("/index.jsp");
                 rd.forward(request, response);
             } 
