@@ -5,6 +5,8 @@
  */
 package Entidades;
 
+import Utilidades.Utilidades;
+
 /**
  *
  * @author Alex
@@ -17,12 +19,19 @@ public class Usuario {
     private String correo;
     private String contrasena;
     
+    public Usuario(String nombre, String apellido, String correo, String contrasena){
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.correo = correo;
+        this.contrasena = Utilidades.convertirSHA256(contrasena);
+    }
+    
     public Usuario(int idUsuario, String nombre, String apellido, String correo, String contrasena){
         this.idUsuario = idUsuario;
         this.nombre = nombre;
         this.apellido = apellido;
         this.correo = correo;
-        this.contrasena = contrasena;
+        this.contrasena = Utilidades.convertirSHA256(contrasena);
     }
     
     public Usuario(int idUsuario, String  nombre, String apellido, String correo){

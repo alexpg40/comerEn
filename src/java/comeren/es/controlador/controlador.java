@@ -46,8 +46,8 @@ public class controlador extends HttpServlet {
             String opcion = request.getParameter("opcion");
             String buscador = request.getParameter("buscador");
             String iniciarSesion = request.getParameter("iniciarSesion");
+            String registro = request.getParameter("registrar");
             if(opcion != null){
-                System.out.println(opcion);
                 if("index".equals(opcion)){ 
                     rd = request.getRequestDispatcher("/index.jsp");
                     rd.forward(request, response);
@@ -86,7 +86,17 @@ public class controlador extends HttpServlet {
                     rd.forward(request, response);
                 }
                 usuarioDao.cerrarConexion();
-            }else {
+            } else if(registro != null) {
+                UsuarioDAO usuarioDao = new UsuarioDAO();
+                String nombre = request.getParameter("nombre");
+                String apellido = request.getParameter("apellido");
+                String correo = request.getParameter("correo");
+                String contrasena = request.getParameter("contrasena");
+                usuarioDao.registrarUsuario(new Usuario(nombre, apellido, correo, contrasena));
+                usuarioDao.cerrarConexion();
+                rd = request.getRequestDispatcher("/index.jsp");
+                rd.forward(request, response);
+            } else {
                 rd = request.getRequestDispatcher("/index.jsp");
                 rd.forward(request, response);
             } 

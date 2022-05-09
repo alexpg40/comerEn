@@ -39,7 +39,7 @@ public class ConexionBD {
     public ConexionBD(){
         try{
             this.servidor = "localhost";
-            this.database = "comeren";
+            this.database = "comerEn";
             this.usuario = "root";
             this.passwords = "";
             this.url = "jdbc:mysql://" + servidor + "/" + database;
