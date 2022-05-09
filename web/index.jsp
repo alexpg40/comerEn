@@ -17,9 +17,8 @@
     </head>
     <body>
         <%
-           Usuario usuario = (Usuario) session.getAttribute("usuario");
-            
-         %>
+            Usuario usuario = (Usuario) session.getAttribute("usuario");
+        %>
         <header>
             <navbar>
                 <a href="controlador?opcion=index">
@@ -28,16 +27,33 @@
                 <a href="controlador?opcion=index">
                     <h1>ComerEn</h1>
                 </a>
+
+                <%
+                if (usuario != null) {
+                %>
+                <div class="logUser">
+                    <a href="controlador?opcion=session" class="usuarioLogged">
+                        <img id="iconoSesion" alt='icono de sesión' src='public/img/iconoLogin.svg'>
+                        Hola, <%=usuario.getNombre()%>
+                    </a>
+                    <div class="ventanaEmergente">
+                        <a href="controlador?opcion=suscripcion">
+                            <img id='iconoSuscripcion' alt='icono cerrar sesión' src="public/img/suscripcion.png"> Suscripciones
+                        </a>
+                        <a href="controlador?opcion=logout">
+                            <img id='iconoLogout' alt='icono cerrar sesión' src="public/img/logout.png"> Cerrar Sesión
+                        </a>
+                    </div>
+                </div>
+                <%
+                } else {
+                %>
                 <a href="controlador?opcion=session">
                     <img id="iconoSesion" alt='icono de sesión' src='public/img/iconoLogin.svg'>
-                    <%
-                      if(usuario != null){
-                          %>
-                          Hola, <%=usuario.getNombre()%>
-                          <%
-                      }  
-                    %>
                 </a>
+                <%
+                }
+                %>
             </navbar>
         </header>
         <main>
@@ -48,10 +64,10 @@
                 <article id="setionHeader">
                     <div>
                         <h2>Bienvenido a ComerEn, encuentra tu restaurante ideal.</h2>
-                    <form>
-                        <input type="text" name="buscador" placeholder="Restaurantes, ciudades, comida italiana...">
-                        <input type="submit" value="Buscar">
-                    </form>
+                        <form>
+                            <input type="text" name="buscador" placeholder="Restaurantes, ciudades, comida italiana...">
+                            <input type="submit" value="Buscar">
+                        </form>
                     </div>
                 </article>
             </section>

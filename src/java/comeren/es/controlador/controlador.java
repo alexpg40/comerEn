@@ -39,7 +39,7 @@ public class controlador extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession(true);
         RequestDispatcher rd = null;
-        if(session.isNew()){
+        if (session.isNew()) {
             rd = request.getRequestDispatcher("/index.jsp");
             rd.forward(request, response);
         } else {
@@ -47,32 +47,42 @@ public class controlador extends HttpServlet {
             String buscador = request.getParameter("buscador");
             String iniciarSesion = request.getParameter("iniciarSesion");
             String registro = request.getParameter("registrar");
-            if(opcion != null){
-                if("index".equals(opcion)){ 
+            String actualizarCuenta = request.getParameter("actualizarCuenta");
+            if (opcion != null) {
+                if ("index".equals(opcion)) {
                     rd = request.getRequestDispatcher("/index.jsp");
                     rd.forward(request, response);
-                } else if ("session".equals(opcion)){
-                    if(session.getAttribute("roles") != null){
+                } else if ("session".equals(opcion)) {
+                    if (session.getAttribute("usuario") != null) {
                         rd = request.getRequestDispatcher("/cuenta.jsp");
                         rd.forward(request, response);
                     } else {
                         rd = request.getRequestDispatcher("/login.jsp");
                         rd.forward(request, response);
                     }
+                } else if ("logout".equals(opcion)) {
+                    if (session.getAttribute("usuario") != null) {
+                        session.invalidate();
+                        rd = request.getRequestDispatcher("/index.jsp");
+                        rd.forward(request, response);
+                    }
+                } else if ("suscripcion".equals(opcion)) {
+                    rd = request.getRequestDispatcher("/suscripciones.jsp");
+                    rd.forward(request, response);
                 }
-            } else if (buscador != null && !buscador.equals("")){
+            } else if (buscador != null && !buscador.equals("")) {
                 RestauranteDAO restauranteDao = new RestauranteDAO();
                 ArrayList<Restaurante> restaurantes = restauranteDao.getRestaurantes(buscador);
                 restauranteDao.cerrarConexion();
                 request.setAttribute("listaRestaurante", restaurantes);
                 rd = request.getRequestDispatcher("/listaRestaurantes.jsp");
                 rd.forward(request, response);
-            } else if(iniciarSesion != null){
+            } else if (iniciarSesion != null) {
                 UsuarioDAO usuarioDao = new UsuarioDAO();
                 String correo = request.getParameter("correo");
-                String contraseña = request.getParameter("contrasena");
+                String contraseña = Utilidades.Utilidades.convertirSHA256(request.getParameter("contrasena"));
                 int idUsuario = usuarioDao.existeUsuario(correo, contraseña);
-                if(idUsuario != 0){
+                if (idUsuario != 0) {
                     RolDAO rolDao = new RolDAO();
                     Usuario usuario = usuarioDao.getUsuarioByidUsuario(idUsuario);
                     session.setAttribute("usuario", usuario);
@@ -86,7 +96,7 @@ public class controlador extends HttpServlet {
                     rd.forward(request, response);
                 }
                 usuarioDao.cerrarConexion();
-            } else if(registro != null) {
+            } else if (registro != null) {
                 UsuarioDAO usuarioDao = new UsuarioDAO();
                 String nombre = request.getParameter("nombre");
                 String apellido = request.getParameter("apellido");
@@ -96,10 +106,21 @@ public class controlador extends HttpServlet {
                 usuarioDao.cerrarConexion();
                 rd = request.getRequestDispatcher("/index.jsp");
                 rd.forward(request, response);
+            } else if (actualizarCuenta != null) {
+                UsuarioDAO usuarioDao = new UsuarioDAO();
+                String nombre = request.getParameter("nombre");
+                String apellido = request.getParameter("apellido");
+                String correo = request.getParameter("correo");
+                String contrasena = request.getParameter("contrasena");
+                Usuario usuario = (Usuario) session.getAttribute("usuario");
+                usuarioDao.actualizarUsuario(new Usuario(usuario.getIdUsuario(), nombre, apellido, correo, contrasena));
+                usuarioDao.cerrarConexion();
+                rd = request.getRequestDispatcher("/index.jsp");
+                rd.forward(request, response);
             } else {
                 rd = request.getRequestDispatcher("/index.jsp");
                 rd.forward(request, response);
-            } 
+            }
         }
     }
 

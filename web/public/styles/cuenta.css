@@ -5,6 +5,8 @@ body{
     background-size:cover;
 }
 
+main *{}
+
 main{
     height: 85vh;
 }

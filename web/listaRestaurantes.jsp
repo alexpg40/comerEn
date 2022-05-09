@@ -4,6 +4,7 @@
     Author     : Alex
 --%>
 
+<%@page import="Entidades.Usuario"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="Entidades.Restaurante"%>
 <%@page import="Entidades.Restaurante"%>
@@ -22,6 +23,9 @@
         <link rel="stylesheet" href="public/styles/listaRestaurantes.css">
     </head>
     <body>
+        <%
+            Usuario usuario = (Usuario) session.getAttribute("usuario");
+        %>
         <header>
             <navbar>
                 <a href="controlador?opcion=index">
@@ -30,20 +34,62 @@
                 <a href="controlador?opcion=index">
                     <h1>ComerEn</h1>
                 </a>
+                <%
+                if (usuario != null) {
+                %>
+                <div class="logUser">
+                    <a href="controlador?opcion=session" class="usuarioLogged">
+                        <img id="iconoSesion" alt='icono de sesión' src='public/img/iconoLogin.svg'>
+                        Hola, <%=usuario.getNombre()%>
+                    </a>
+                    <div class="ventanaEmergente">
+                        <a href="controlador?opcion=suscripcion">
+                            <img id='iconoSuscripcion' alt='icono cerrar sesión' src="public/img/suscripcion.png"> Suscripciones
+                        </a>
+                        <a href="controlador?opcion=logout">
+                            <img id='iconoLogout' alt='icono cerrar sesión' src="public/img/logout.png"> Cerrar Sesión
+                        </a>
+                    </div>
+                </div>
+                <%
+                } else {
+                %>
                 <a href="controlador?opcion=session">
                     <img id="iconoSesion" alt='icono de sesión' src='public/img/iconoLogin.svg'>
                 </a>
+                <%
+                }
+                %>
             </navbar>
         </header>
         <main>
             <aside class="ads">
                 ADS
             </aside>
-            <section>
+            <section id="restaurantesContainer">
                 <%
                    ArrayList<Restaurante> restaurantes = (ArrayList<Restaurante>) request.getAttribute("listaRestaurante");
                  %>
                  <h2>Resultados de "<%=request.getParameter("buscador")%>" - Nº resultados <%=restaurantes.size()%></h2>
+                 <hr/>
+                 <%
+                   for(Restaurante restaurante : restaurantes){
+                      %>
+                      <article class="restaurante">
+                          <h3 class="nombreRestaurante"><%=restaurante.getNombre()%></h3>
+                          <hr/>
+                          <section class="bodyRestaurante">
+                              <article>
+                                  <img class="imagenRestaurante" src="public/img/foto_temporal.jpg" alt="foto temporal del restaurante"/>
+                              </article>
+                              <article class="descripcionRestaurante">
+                                  <%=restaurante.getDescripcion()%>
+                              </article>
+                          </section>
+                      </article>
+                      <%
+                   }  
+                 %>
             </section>
             <aside class="ads">
                 ADS

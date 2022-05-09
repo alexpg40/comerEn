@@ -7,7 +7,6 @@ package DAO;
 
 import Entidades.Usuario;
 import Utilidades.ConexionBD;
-import java.security.MessageDigest;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -37,7 +36,7 @@ public class UsuarioDAO {
     public int existeUsuario(String correo, String contraseña){
         int idUsuario = 0;
         try {
-            String sqlStr = "SELECT idUsuario FROM Usuario WHERE correo = '" + correo + "' AND contrasena = '" + contraseña + "'";
+            String sqlStr = "SELECT idUsuario FROM usuario WHERE correo = '" + correo + "' AND contrasena = '" + contraseña + "'";
             System.out.println(sqlStr);
             Statement smt = this.conexion.createStatement();
             ResultSet result = smt.executeQuery(sqlStr);
@@ -53,7 +52,7 @@ public class UsuarioDAO {
     public Usuario getUsuarioByidUsuario(int idUsuario){
         Usuario ret = null;
         try {
-            String sqlStr = "SELECT * FROM Usuario WHERE idUsuario = " + idUsuario;
+            String sqlStr = "SELECT * FROM usuario WHERE idUsuario = " + idUsuario;
             Statement smt = this.conexion.createStatement();
             ResultSet result = smt.executeQuery(sqlStr);
             while(result.next()){
@@ -68,8 +67,9 @@ public class UsuarioDAO {
     
     public void registrarUsuario(Usuario usuario){
         try {
-            String sqlStr = "INSERT INTO Usuario VALUES (null, '" + usuario.getNombre() + "', '" 
+            String sqlStr = "INSERT INTO usuario VALUES (null, '" + usuario.getNombre() + "', '" 
             + usuario.getApellido() + "', '" + usuario.getCorreo() + "', '" + usuario.getContrasena() + "')";
+            System.out.println(sqlStr);
             Statement smt = this.conexion.createStatement();
             smt.executeUpdate(sqlStr);
         } catch (SQLException ex) {
@@ -82,7 +82,8 @@ public class UsuarioDAO {
         try {
             String sqlStr = "UPDATE usuario SET nombre = '" + usuario.getNombre() + "', apellido = '" 
                     + usuario.getApellido() + "', correo = '" + usuario.getCorreo() + "', contrasena = '" + 
-                    usuario.getContrasena()+ "' WHERE idUsuario = " + usuario.getIdUsuario();
+                    Utilidades.Utilidades.convertirSHA256(usuario.getContrasena())+ "' WHERE idUsuario = " 
+                    + usuario.getIdUsuario();
             Statement smt = this.conexion.createStatement();
             smt.executeUpdate(sqlStr);
         } catch (SQLException ex) {

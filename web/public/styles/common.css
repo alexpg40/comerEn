@@ -10,6 +10,62 @@ body{
     background-color: #f2f2f2;
 }
 
+.usuarioLogged{
+    display: flex;
+    align-items: center;
+    background-color: #f2f2f2;
+    border-radius: 5vw;
+    color: black;
+    padding-right: 2vh;
+    width: 11vw;
+}
+
+.logUser:hover > .ventanaEmergente{
+    display: block;
+}
+
+.logUser:hover > .usuarioLogged{
+    border-radius: 1.6vw 1.6vw 0vh 0vh;
+}
+
+.ventanaEmergente{
+    background-color: #f2f2f2;
+    position: fixed;
+    display: none;
+    padding: 0.5vw;
+    width: 11vw;
+    color: black;
+}
+
+.ventanaEmergente a{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.2vw;
+    margin-top: 0.2vw;
+    color: black;
+    border-bottom: 1px solid black;
+    padding: 0.5vw;
+}
+
+navbar > a{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 11vw;
+}
+
+.ventanaEmergente img{
+    width: 30px;
+}
+
+.usuarioLogged img{
+    background-color: black;
+    padding: 0.5vh;
+    border-radius: 5vh;
+    margin-right: 2vh;
+}
+
 .error{
     color: red;
 }
@@ -25,7 +81,7 @@ a{
     color: white;
 }
 
-main *{
+main > *{
     margin: 1vh;
 }
 
