@@ -13,19 +13,7 @@
         <link rel="stylesheet" href="styles/common.css">
     </head>
     <body>
-        <header>
-            <navbar>
-                <a href="controlador?opcion='index'">
-                    <img id="iconoWeb" alt='logo de comerEn' src='public/img/icono.svg'>
-                </a>
-                <a href="controlador?opcion='index'">
-                    <h1>ComerEn</h1>
-                </a>
-                <a href="controlador?opcion='sesion'">
-                    <img id="iconoSesion" alt='icono de sesión' src='public/img/iconoLogin.svg'>
-                </a>
-            </navbar>
-        </header>
+        <jsp:include page="./header.jsp" />
         <aside class="ads">
             ADS
         </aside>

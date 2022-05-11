@@ -4,9 +4,25 @@
         <servlet-name>controlador</servlet-name>
         <servlet-class>comeren.es.controlador.controlador</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>dueno</servlet-name>
+        <servlet-class>comeren.es.controlador.dueno</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>administrador</servlet-name>
+        <servlet-class>comeren.es.controlador.administrador</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>controlador</servlet-name>
         <url-pattern>/controlador</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>dueno</servlet-name>
+        <url-pattern>/dueno</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>administrador</servlet-name>
+        <url-pattern>/administrador</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

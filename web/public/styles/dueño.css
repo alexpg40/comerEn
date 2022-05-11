@@ -1,0 +1,26 @@
+body{
+    background-image: url(../img/fondoHeader.jpg);
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-size:cover;
+}
+
+main{
+    height: 85vh;
+}
+
+section{
+    margin: auto auto;
+    height: 75vh;
+    padding:1vw;
+    width: 70vw;
+    background-color: #f2f2f2;
+}
+
+hr{
+    width:75%; 
+}
+
+h2{
+    font-size: 2.5rem;
+}

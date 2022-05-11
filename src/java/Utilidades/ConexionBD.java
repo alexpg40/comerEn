@@ -46,7 +46,7 @@ public class ConexionBD {
             Class.forName("com.mysql.jdbc.Driver");
             conexion = DriverManager.getConnection(url, usuario, passwords);
         } catch (SQLException ex) {
-            System.out.println("Fallo al realizar la conexión con la base de datos");
+            System.out.println("Fallo al realizar la conexión con la base de datos" + ex.getMessage());
         } catch (ClassNotFoundException ex) {
             System.out.println("Clase no encotrada");
         }

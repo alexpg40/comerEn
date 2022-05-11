@@ -5,15 +5,17 @@
  */
 package Utilidades;
 
+import Entidades.Rol;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 
 /**
  *
  * @author alex
  */
 public class Utilidades {
- 
+
     public static String convertirSHA256(String password) {
         MessageDigest md = null;
         try {
@@ -32,5 +34,14 @@ public class Utilidades {
 
         return sb.toString();
     }
-    
+
+    public static boolean isRol(String nombre_rol, ArrayList<Rol> roles) {
+        for (int i = 0; i < roles.size(); i++) {
+            if (roles.get(i).getNombreRol().equalsIgnoreCase(nombre_rol)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

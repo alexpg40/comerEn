@@ -11,6 +11,7 @@ import DAO.UsuarioDAO;
 import Entidades.Restaurante;
 import Entidades.Rol;
 import Entidades.Usuario;
+import Utilidades.Utilidades;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
@@ -69,6 +70,9 @@ public class controlador extends HttpServlet {
                 } else if ("suscripcion".equals(opcion)) {
                     rd = request.getRequestDispatcher("/suscripciones.jsp");
                     rd.forward(request, response);
+                } else if ("dueno".equals(opcion)) {
+                    rd = request.getRequestDispatcher("/dueno");
+                   rd.forward(request, response);
                 }
             } else if (buscador != null && !buscador.equals("")) {
                 RestauranteDAO restauranteDao = new RestauranteDAO();
@@ -80,7 +84,7 @@ public class controlador extends HttpServlet {
             } else if (iniciarSesion != null) {
                 UsuarioDAO usuarioDao = new UsuarioDAO();
                 String correo = request.getParameter("correo");
-                String contraseña = Utilidades.Utilidades.convertirSHA256(request.getParameter("contrasena"));
+                String contraseña = Utilidades.convertirSHA256(request.getParameter("contrasena"));
                 int idUsuario = usuarioDao.existeUsuario(correo, contraseña);
                 if (idUsuario != 0) {
                     RolDAO rolDao = new RolDAO();
@@ -88,8 +92,16 @@ public class controlador extends HttpServlet {
                     session.setAttribute("usuario", usuario);
                     ArrayList<Rol> rolesUsuario = rolDao.obtenerRolesUsuario(idUsuario);
                     session.setAttribute("roles", rolesUsuario);
-                    rd = request.getRequestDispatcher("/index.jsp");
-                    rd.forward(request, response);
+                    if(rolesUsuario.isEmpty()){
+                        rd = request.getRequestDispatcher("/index.jsp");
+                        rd.forward(request, response);
+                    } else if(Utilidades.isRol("dueño", rolesUsuario)){
+                        rd = request.getRequestDispatcher("/dueno");
+                        rd.forward(request, response);
+                    } else if(Utilidades.isRol("administrador", rolesUsuario)){
+                        rd = request.getRequestDispatcher("/administrador.jsp");
+                        rd.forward(request, response);
+                    }
                 } else {
                     request.setAttribute("usuario_no_existe", "usuario_no_existe");
                     rd = request.getRequestDispatcher("/login.jsp");
