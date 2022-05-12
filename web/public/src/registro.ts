@@ -1,29 +1,25 @@
 window.onload = () => {
-    try{
-        handlerRegistro();
-    }catch(err){
-        alert(err.message);
-    }
-}
-
-const handlerRegistro = () => {
-    let submitInput = document.getElementsByName('registrar')[0] as HTMLInputElement;
     let form = document.getElementById('formIniciarSesion') as HTMLFormElement;
-    submitInput.addEventListener('click', evt => {
+    form.addEventListener('submit', evt => {
         evt.preventDefault();
         if(validarRegistro()){
             form.submit();
         } else {
-            if(!validarNombre()) alert('El nombre debe tener 3 carácteres o más');
-            if(!validarApellido()) alert('El apellido debe tener 3 carácteres o más');
-            if(!validarCorreo()) alert('El formato del correo electrónico no es valido');
-            if(!validarContraseña()) alert('La contraseña debe tener 8 caracteres y al menos un número');
+            let erroresContainer = document.getElementById('erroresContainer');
+            while(erroresContainer.hasChildNodes()){
+                erroresContainer.removeChild(erroresContainer.childNodes[0])
+            }
+            if(!validarNombre()) handlerError('El nombre debe tener 3 carácteres o más');
+            if(!validarApellido()) handlerError('El apellido debe tener 3 carácteres o más');
+            if(!validarCorreo()) handlerError('El formato del correo electrónico no es valido');
+            if(!validarContraseña()) handlerError('La contraseña debe tener 8 caracteres y al menos un número');
+            if(!validarRContraseña()) handlerError('La contraseña no coinciden');
         }
     })
 }
 
 const validarRegistro = () => {
-    return validarNombre() && validarApellido() && validarCorreo() && validarContraseña();
+    return validarNombre() && validarApellido() && validarCorreo() && validarContraseña() && validarRContraseña();
 }
 
 const validarNombre = () => {
@@ -52,4 +48,18 @@ const validarContraseña = () => {
     const regexContraseña = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
     let contraseña = document.getElementsByName('contrasena')[0] as HTMLInputElement;
     return regexContraseña.test(contraseña.value);
+}
+
+const validarRContraseña = () => {
+    let contraseña = document.getElementsByName('contrasena')[0] as HTMLInputElement;
+    let rcontraseña = document.getElementsByName('rContrasena')[0] as HTMLInputElement;
+    return contraseña.value === rcontraseña.value;
+}
+
+const handlerError = (error : string) => {
+    const erroresContainer = document.getElementById('erroresContainer');
+    let pError = document.createElement('p');
+    pError.className = 'error';
+    pError.append(error);
+    erroresContainer.appendChild(pError);
 }

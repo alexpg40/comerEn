@@ -9,6 +9,10 @@ main{
     height: 85vh;
 }
 
+main * {
+    margin: 0.5vw;
+}
+
 section{
     width: 40%;
     margin: auto auto;

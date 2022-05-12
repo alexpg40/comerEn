@@ -19,11 +19,11 @@
     </head>
     <body>
         <%
-            ArrayList<Restaurante> restaurantes = new ArrayList<>();
+            ArrayList<Restaurante> restaurantes = (ArrayList<Restaurante>) session.getAttribute("restaurantes");
         %>
         <jsp:include page="./header.jsp" />
         <main>
-            <section>
+            <section class="container">
                 <h2>Tus Restaurantes</h2>
                 <hr/>
                 <section id="restaurantes">
@@ -32,10 +32,35 @@
                     %>
                     <article class="restauranteContainer">
                         <article class="restaurantes">
-                        
+                            <h3 class="nombreRestaurante"><%=restaurante.getNombre()%></h3>
+                            <hr/>
+                            <section class="bodyRestaurante">
+                                <article>
+                                    <img class="imagenRestaurante" src="public/img/foto_temporal.jpg" alt="foto temporal del restaurante"/>
+                                </article>
+                                <article class="containerDescripcion">
+                                    <article class="descripcionRestaurante">
+                                        <%=restaurante.getDescripcion()%>
+                                    </article>
+                                    <article class="valoracionRestaurante">
+                                        ★★★★★
+                                    </article>
+                                </article>
+                            </section>
                         </article>
                         <article class="botones">
-                            
+                            <a href="dueno?ocultar=<%=restaurante.getIdRestaurante()%>" class="botonOcultar">
+                                Ocultar
+                            </a>
+                            <a href="dueno?editar=<%=restaurante.getIdRestaurante()%>" class="botonEditar">
+                                Editar
+                            </a>
+                            <a href="dueno?eliminar=<%=restaurante.getIdRestaurante()%>" class="botonEliminar">
+                                Eliminar
+                            </a>
+                            <a href="dueno?ver=<%=restaurante.getIdRestaurante()%>" class="botonVer">
+                                Ver
+                            </a>
                         </article>
                     </article>
                     <%

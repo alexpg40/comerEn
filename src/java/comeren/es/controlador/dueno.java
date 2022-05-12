@@ -52,6 +52,7 @@ public class dueno extends HttpServlet {
         } else{
             ArrayList<Restaurante> restaurantesbyIdDueño = restauranteDao.getRestaurantesbyIdDueño(usuario.getIdUsuario());
             restauranteDao.cerrarConexion();
+            session.setAttribute("restaurantes", restaurantesbyIdDueño);
             rd = request.getRequestDispatcher("/dueño.jsp");
             rd.forward(request, response);
         }

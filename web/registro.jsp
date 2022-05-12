@@ -29,6 +29,15 @@
                     <label>Repite la contraseña: <input type="password" name="rContrasena"/></label>
                     <input type="submit" value="Registrar Sesion" name="registrar"/>
                 </form>
+                <article id="erroresContainer">
+                <%
+                  if(request.getAttribute("usuario_no_valido") != null){
+                      %>
+                      <p class="error">Datos no validos</p>
+                      <%
+                  }  
+                %>
+            </article>
             </section>
         </main>
         <footer>

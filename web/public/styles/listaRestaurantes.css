@@ -16,7 +16,7 @@ body{
 }
 
 .bodyRestaurante{
-    padding: 1vw;
+    padding: 0.5vw;
     display: flex;
 }
 
@@ -37,9 +37,40 @@ h3{
 .restaurante{
     display: flex;
     margin: 0.75vw;
-    width: 500px;
-    padding: 1vw;
+    width: 30vw;
     background-color: white;
     flex-direction: column;
-    border: 1px solid #4F5902;
+    border: 5px solid #4F5902;
+    padding: 1vw;
+}
+
+.imagenRestaurante{
+    width: 10vw;
+}
+
+h3{
+    font-size: 1.5rem;
+    margin-bottom: 1vh;
+}
+
+.restauranteContainer{
+    display: flex;
+}
+
+.bodyRestaurante{
+    display: flex;
+    flex-direction: row;
+}
+
+.descripcionRestaurante{
+   height: 11vh;
+   width: 14vw;
+   overflow: hidden;
+}
+
+.containerDescripcion{
+    width: 20vw;
+    font-size: 1.1rem;
+    margin: 1vw;
+    height: 15vh;
 }

@@ -9,7 +9,7 @@ main{
     height: 85vh;
 }
 
-section{
+.container{
     margin: auto auto;
     height: 75vh;
     padding:1vw;
@@ -23,4 +23,86 @@ hr{
 
 h2{
     font-size: 2.5rem;
+}
+
+.botones a{
+    width: 8vw;
+    border-radius: 5vw;
+    color: white;
+}
+
+.botonOcultar{
+    background-color: #0038FF;
+}
+
+.botonEditar{
+    background-color: #4F5902;
+}
+
+.botonVer{
+    background-color: #4F5902;
+}
+
+.botonEliminar{
+    background-color: #FF0000;
+}
+
+.imagenRestaurante{
+    width: 13vw;
+}
+
+.restaurantes{
+    margin: 1vw;
+    display: flex;
+    width: 50vw;
+    flex-direction: column;
+    border: 5px solid #4F5902;
+    padding: 1vw;
+}
+
+h3{
+    font-size: 1.5rem;
+    margin-bottom: 1vh;
+}
+
+.restauranteContainer{
+    display: flex;
+}
+
+.bodyRestaurante{
+    display: flex;
+    flex-direction: row;
+}
+
+.descripcionRestaurante{
+   height: 11vh;
+   width: 20vw;
+       overflow: hidden;
+
+}
+
+.botones{
+    margin: 2vw;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 1vw;
+}
+
+.botones a{
+    margin: 1vw;
+    display: flex;
+    font-size: 1.2rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.restaurantes hr{
+    margin-bottom: 1vw;
+}
+
+.containerDescripcion{
+     width: 20vw;
+     font-size: 1.1rem;
+    margin: 1vw;
+    height: 15vh;
 }

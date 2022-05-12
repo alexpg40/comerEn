@@ -72,7 +72,7 @@ public class controlador extends HttpServlet {
                     rd.forward(request, response);
                 } else if ("dueno".equals(opcion)) {
                     rd = request.getRequestDispatcher("/dueno");
-                   rd.forward(request, response);
+                    rd.forward(request, response);
                 }
             } else if (buscador != null && !buscador.equals("")) {
                 RestauranteDAO restauranteDao = new RestauranteDAO();
@@ -92,13 +92,13 @@ public class controlador extends HttpServlet {
                     session.setAttribute("usuario", usuario);
                     ArrayList<Rol> rolesUsuario = rolDao.obtenerRolesUsuario(idUsuario);
                     session.setAttribute("roles", rolesUsuario);
-                    if(rolesUsuario.isEmpty()){
+                    if (rolesUsuario.isEmpty()) {
                         rd = request.getRequestDispatcher("/index.jsp");
                         rd.forward(request, response);
-                    } else if(Utilidades.isRol("dueño", rolesUsuario)){
+                    } else if (Utilidades.isRol("dueño", rolesUsuario)) {
                         rd = request.getRequestDispatcher("/dueno");
                         rd.forward(request, response);
-                    } else if(Utilidades.isRol("administrador", rolesUsuario)){
+                    } else if (Utilidades.isRol("administrador", rolesUsuario)) {
                         rd = request.getRequestDispatcher("/administrador.jsp");
                         rd.forward(request, response);
                     }
@@ -114,10 +114,18 @@ public class controlador extends HttpServlet {
                 String apellido = request.getParameter("apellido");
                 String correo = request.getParameter("correo");
                 String contrasena = request.getParameter("contrasena");
-                usuarioDao.registrarUsuario(new Usuario(nombre, apellido, correo, contrasena));
+                String rContrasena = request.getParameter("rContrasena");
+                if (Utilidades.validarUsuario(nombre, apellido, correo, contrasena, rContrasena)) {
+                    usuarioDao.registrarUsuario(new Usuario(nombre, apellido, correo, contrasena));
+                    rd = request.getRequestDispatcher("/index.jsp");
+                    rd.forward(request, response);
+                } else {
+                    request.setAttribute("usuario_no_valido", "usuario_no_valido");
+                    rd = request.getRequestDispatcher("/registro.jsp");
+                    rd.forward(request, response);
+                }
                 usuarioDao.cerrarConexion();
-                rd = request.getRequestDispatcher("/index.jsp");
-                rd.forward(request, response);
+
             } else if (actualizarCuenta != null) {
                 UsuarioDAO usuarioDao = new UsuarioDAO();
                 String nombre = request.getParameter("nombre");

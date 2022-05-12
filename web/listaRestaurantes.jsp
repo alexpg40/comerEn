@@ -24,7 +24,6 @@
     </head>
     <body>
         <jsp:include page="./header.jsp" />
-
         <main>
             <aside class="ads">
                 ADS
@@ -45,8 +44,13 @@
                         <article>
                             <img class="imagenRestaurante" src="public/img/foto_temporal.jpg" alt="foto temporal del restaurante"/>
                         </article>
-                        <article class="descripcionRestaurante">
-                            <%=restaurante.getDescripcion()%>
+                        <article class="containerDescripcion">
+                            <article class="descripcionRestaurante">
+                                <%=restaurante.getDescripcion()%>
+                            </article>
+                            <article class="valoracionRestaurante">
+                                ★★★★★
+                            </article>
                         </article>
                     </section>
                 </article>

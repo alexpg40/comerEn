@@ -44,4 +44,33 @@ public class Utilidades {
         return false;
     }
 
+    public static boolean validarUsuario(String nombre, String apellido, String correo, String contrasena, String rContrasena){
+        boolean a = validarNombre(nombre);
+        boolean b = validarApellido(apellido);
+        boolean c = validarCorreo(correo);
+        boolean d = validarContrasena(contrasena);
+        boolean e = validarRContrasena(contrasena, rContrasena);
+        return validarNombre(nombre) && validarApellido(apellido) && validarCorreo(correo) && validarContrasena(contrasena) && validarRContrasena(contrasena, rContrasena);
+    }
+    
+    private static boolean validarNombre(String nombre){
+        return nombre.length() > 3 && !nombre.equals("");
+    } 
+    
+    private static boolean validarApellido(String apellido){
+        return apellido.length() > 3 && !apellido.equals("");
+    }
+    
+    private static boolean validarCorreo(String correo){
+        return !correo.matches("^[\\w-+]+(\\.[\\w-]{1,62}){0,126}@[\\w-]{1,63}(\\.[\\w-]{1,62})+/[\\w-]+$");
+    }
+    
+    private static boolean validarContrasena(String contrasena){
+        return !contrasena.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$");
+    }
+    
+    private static boolean validarRContrasena(String contrasena, String rcontrasena){
+        return contrasena.equals(rcontrasena);
+    }
+    
 }

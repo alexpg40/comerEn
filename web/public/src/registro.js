@@ -1,33 +1,30 @@
 window.onload = () => {
-    try {
-        handlerRegistro();
-    }
-    catch (err) {
-        alert(err.message);
-    }
-};
-const handlerRegistro = () => {
-    let submitInput = document.getElementsByName('registrar')[0];
     let form = document.getElementById('formIniciarSesion');
-    submitInput.addEventListener('click', evt => {
+    form.addEventListener('submit', evt => {
         evt.preventDefault();
         if (validarRegistro()) {
             form.submit();
         }
         else {
+            let erroresContainer = document.getElementById('erroresContainer');
+            while (erroresContainer.hasChildNodes()) {
+                erroresContainer.removeChild(erroresContainer.childNodes[0]);
+            }
             if (!validarNombre())
-                alert('El nombre debe tener 3 carácteres o más');
+                handlerError('El nombre debe tener 3 carácteres o más');
             if (!validarApellido())
-                alert('El apellido debe tener 3 carácteres o más');
+                handlerError('El apellido debe tener 3 carácteres o más');
             if (!validarCorreo())
-                alert('El formato del correo electrónico no es valido');
+                handlerError('El formato del correo electrónico no es valido');
             if (!validarContraseña())
-                alert('La contraseña debe tener 8 caracteres y al menos un número');
+                handlerError('La contraseña debe tener 8 caracteres y al menos un número');
+            if (!validarRContraseña())
+                handlerError('La contraseña no coinciden');
         }
     });
 };
 const validarRegistro = () => {
-    return validarNombre() && validarApellido() && validarCorreo() && validarContraseña();
+    return validarNombre() && validarApellido() && validarCorreo() && validarContraseña() && validarRContraseña();
 };
 const validarNombre = () => {
     let nombreInput = document.getElementsByName('nombre')[0];
@@ -52,5 +49,17 @@ const validarContraseña = () => {
     const regexContraseña = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
     let contraseña = document.getElementsByName('contrasena')[0];
     return regexContraseña.test(contraseña.value);
+};
+const validarRContraseña = () => {
+    let contraseña = document.getElementsByName('contrasena')[0];
+    let rcontraseña = document.getElementsByName('rContrasena')[0];
+    return contraseña.value === rcontraseña.value;
+};
+const handlerError = (error) => {
+    const erroresContainer = document.getElementById('erroresContainer');
+    let pError = document.createElement('p');
+    pError.className = 'error';
+    pError.append(error);
+    erroresContainer.appendChild(pError);
 };
 //# sourceMappingURL=registro.js.map
