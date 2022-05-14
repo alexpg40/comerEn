@@ -98,8 +98,8 @@ public class controlador extends HttpServlet {
                     } else if (Utilidades.isRol("dueño", rolesUsuario)) {
                         rd = request.getRequestDispatcher("/dueno");
                         rd.forward(request, response);
-                    } else if (Utilidades.isRol("administrador", rolesUsuario)) {
-                        rd = request.getRequestDispatcher("/administrador.jsp");
+                    } else if (Utilidades.isRol("admin", rolesUsuario)) {
+                        rd = request.getRequestDispatcher("/administrador");
                         rd.forward(request, response);
                     }
                 } else {

@@ -6,10 +6,12 @@
 package comeren.es.controlador;
 
 import java.io.IOException;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -29,7 +31,16 @@ public class administrador extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+        HttpSession session = request.getSession(true);
+        RequestDispatcher rd = null;
+        if (request.getParameter("buscar") != null) {
+
+        } else if (request.getParameter("crear_restaurante") != null) {
+
+        } else {
+            rd = request.getRequestDispatcher("/administrador.jsp");
+            rd.forward(request, response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

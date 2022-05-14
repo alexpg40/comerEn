@@ -28,7 +28,16 @@
                         if(Utilidades.isRol("dueño", roles)){
                             %>
                             <a href="controlador?opcion=dueno">
-                                <img id='iconoLogout' alt='icono cerrar sesión' src="public/img/restaurante.png"> Tus Restaurantes
+                                <img id='iconoDueño' alt='icono dueño' src="public/img/restaurante.png"> Tus Restaurantes
+                            </a>
+                            <%
+                        }
+                    %>
+                    <%
+                        if(Utilidades.isRol("admin", roles)){
+                            %>
+                            <a href="controlador?opcion=admin">
+                                <img id='iconoAdmin' alt='icono administrador' src="public/img/restaurante.png"> Administrador
                             </a>
                             <%
                         }

@@ -1,0 +1,77 @@
+body{
+    background-image: url(../img/fondoHeader.jpg);
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-size:cover;
+}
+
+section{
+    margin: auto auto;
+    height: 75vh;
+    padding:1vw;
+    width: 70vw;
+    background-color: #f2f2f2;
+}
+
+main{
+    height: 85vh;
+}
+
+hr{
+    width: 75%;
+}
+
+h2{
+    font-size: 2.2rem;
+}
+
+#buscador{
+    padding: 1.5vh;
+    border: 0;
+    font-size: 1.1rem;
+    border-radius: 2vw;
+    width: 40vw;
+}
+
+input[type="submit"]{
+    cursor: pointer;
+    background-color: #4F5902;
+    padding: 1.5vh;
+    border: 0;
+    font-size: 1.1rem;
+    color: white;
+    width: 7vw;
+    border-radius: 1.5vw;
+}
+
+section * {
+    margin: 1vh;
+}
+
+article{
+    margin: auto auto;
+}
+
+.formCrearRestaurante{
+    display: flex;
+    flex-direction: column;
+}
+
+.formCrearRestaurante label{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 45vw;
+    font-size: 1.2rem;
+}
+
+label input{
+    width: 30vw;
+    padding: 1.2vh;
+    border-radius: 1vw;
+    border: 0;
+}
+
+.formCrearRestaurante input[type="submit"]{
+    width: 15vw;
+}
