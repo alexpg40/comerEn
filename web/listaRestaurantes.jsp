@@ -19,6 +19,9 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>comerEn - Buscador</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@500&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="public/styles/common.css">
         <link rel="stylesheet" href="public/styles/listaRestaurantes.css">
     </head>
@@ -37,23 +40,25 @@
                 <%
                     for (Restaurante restaurante : restaurantes) {
                 %>
-                <article class="restaurante">
-                    <h3 class="nombreRestaurante"><%=restaurante.getNombre()%></h3>
-                    <hr/>
-                    <section class="bodyRestaurante">
-                        <article>
-                            <img class="imagenRestaurante" src="public/img/foto_temporal.jpg" alt="foto temporal del restaurante"/>
-                        </article>
-                        <article class="containerDescripcion">
-                            <article class="descripcionRestaurante">
-                                <%=restaurante.getDescripcion()%>
+                <a href="controlador?restaurante=<%=restaurante.getIdRestaurante()%>">
+                    <article class="restaurante">
+                        <h3 class="nombreRestaurante"><%=restaurante.getNombre()%></h3>
+                        <hr/>
+                        <section class="bodyRestaurante">
+                            <article>
+                                <img class="imagenRestaurante" src="public/img/foto_temporal.jpg" alt="foto temporal del restaurante"/>
                             </article>
-                            <article class="valoracionRestaurante">
-                                ★★★★★
+                            <article class="containerDescripcion">
+                                <article class="descripcionRestaurante">
+                                    <%=restaurante.getDescripcion()%>
+                                </article>
+                                <article class="valoracionRestaurante">
+                                    ★★★★★
+                                </article>
                             </article>
-                        </article>
-                    </section>
-                </article>
+                        </section>
+                    </article>
+                </a>
                 <%
                     }
                 %>

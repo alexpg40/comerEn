@@ -12,15 +12,31 @@ package Entidades;
 public class Suscripcion {
     
     private int idSuscripcion;
-    private int idUsuario;
     private float precio;
     private String descripcion;
+    private int duracion;
 
-    public Suscripcion(int idSuscripcion, int idUsuario, float precio, String descripcion) {
+    public Suscripcion(int idSuscripcion, float precio, String descripcion, int duracion) {
         this.idSuscripcion = idSuscripcion;
-        this.idUsuario = idUsuario;
         this.precio = precio;
         this.descripcion = descripcion;
+        this.duracion = duracion;
+    }
+
+    public int getIdSuscripcion() {
+        return idSuscripcion;
+    }
+
+    public float getPrecio() {
+        return precio;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public int getDuracion() {
+        return duracion;
     }
     
 }

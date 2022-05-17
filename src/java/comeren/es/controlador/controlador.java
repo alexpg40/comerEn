@@ -5,11 +5,15 @@
  */
 package comeren.es.controlador;
 
+import DAO.EtiquetaDAO;
 import DAO.RestauranteDAO;
 import DAO.RolDAO;
+import DAO.SuscripcionDAO;
 import DAO.UsuarioDAO;
+import Entidades.Etiqueta;
 import Entidades.Restaurante;
 import Entidades.Rol;
+import Entidades.Suscripcion;
 import Entidades.Usuario;
 import Utilidades.Utilidades;
 import java.io.IOException;
@@ -46,6 +50,7 @@ public class controlador extends HttpServlet {
         } else {
             String opcion = request.getParameter("opcion");
             String buscador = request.getParameter("buscador");
+            String restaurante = request.getParameter("restaurante");
             String iniciarSesion = request.getParameter("iniciarSesion");
             String registro = request.getParameter("registrar");
             String actualizarCuenta = request.getParameter("actualizarCuenta");
@@ -68,6 +73,13 @@ public class controlador extends HttpServlet {
                         rd.forward(request, response);
                     }
                 } else if ("suscripcion".equals(opcion)) {
+                    SuscripcionDAO suscripcionDao = new SuscripcionDAO();
+                    ArrayList<Suscripcion> suscripciones = suscripcionDao.getSuscripciones();
+                    Usuario usuario = (Usuario) session.getAttribute("usuario");
+                    ArrayList<Suscripcion> suscripcionesByIdUsuario = suscripcionDao.getSuscripcionesByIdUsuario(usuario.getIdUsuario());
+                    suscripcionDao.cerrarConexion();
+                    request.setAttribute("suscripciones", suscripciones);
+                    request.setAttribute("suscripciones_usuario", suscripcionesByIdUsuario);
                     rd = request.getRequestDispatcher("/suscripciones.jsp");
                     rd.forward(request, response);
                 } else if ("dueno".equals(opcion)) {
@@ -137,7 +149,18 @@ public class controlador extends HttpServlet {
                 usuarioDao.cerrarConexion();
                 rd = request.getRequestDispatcher("/index.jsp");
                 rd.forward(request, response);
-            } else {
+            } else if(restaurante != null){
+                RestauranteDAO restauranteDao = new RestauranteDAO();
+                EtiquetaDAO etiquetaDao = new EtiquetaDAO();
+                ArrayList<Etiqueta> etiquitasByIdRestaurante = etiquetaDao.getEtiquitasByIdRestaurante(Integer.parseInt(restaurante));
+                etiquetaDao.cerrarConexion();
+                Restaurante restauranteById = restauranteDao.getRestauranteById(Integer.parseInt(restaurante));
+                restauranteDao.cerrarConexion();
+                request.setAttribute("restaurante",restauranteById);
+                request.setAttribute("etiquetas", etiquitasByIdRestaurante);
+                rd = request.getRequestDispatcher("/restaurante.jsp");
+                rd.forward(request, response);
+            }else {
                 rd = request.getRequestDispatcher("/index.jsp");
                 rd.forward(request, response);
             }

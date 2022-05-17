@@ -5,9 +5,13 @@
  */
 package DAO;
 
+import Entidades.Etiqueta;
 import Utilidades.ConexionBD;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 
 /**
  *
@@ -28,6 +32,22 @@ public class EtiquetaDAO {
         } catch (SQLException ex) {
             System.out.println("Fallo al cerrar la conexión con la base de datos!");
         }
+    }
+    
+    public ArrayList<Etiqueta> getEtiquitasByIdRestaurante(int idRestaurante){
+        ArrayList<Etiqueta> ret = new ArrayList<>();
+        try{
+            String sqlStr = "SELECT etiqueta.* FROM etiqueta INNER JOIN restaurante_etiqueta ON etiqueta.idEtiqueta = restaurante_etiqueta.idEtiqueta "
+                    + "WHERE restaurante_etiqueta.idRestaurante =" + idRestaurante;
+            Statement smt = this.conexion.createStatement();
+            ResultSet result = smt.executeQuery(sqlStr);
+            while(result.next()){
+                ret.add(new Etiqueta(result.getInt("idEtiqueta"), result.getString("nombre")));
+            }
+        } catch(SQLException ex){
+            System.out.println("Error al intentar recuperar las etiquetas del restaurante!");
+        }
+        return ret;
     }
     
 }

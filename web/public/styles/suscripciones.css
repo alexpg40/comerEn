@@ -1,0 +1,131 @@
+body{
+    background-image: url(../img/fondoHeader.jpg);
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-size:cover;
+}
+
+main{
+    height: 85vh;
+}
+
+main > section{
+    width: 70%;
+    margin: auto auto;
+    height: 80vh;
+    background-color: white;
+    padding: 2vh;
+    box-shadow:
+    0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+    0 4.7px 5.3px rgba(0, 0, 0, 0.048),
+    0 5.5px 6px rgba(0, 0, 0, 0.06),
+    0 6.3px 9.9px rgba(0, 0, 0, 0.072),
+    0 9.8px 14.4px rgba(0, 0, 0, 0.086),
+    0 9px 20px rgba(0, 0, 0, 0.12)
+  ;
+}
+
+h2{
+    font-size: 2rem;
+}
+
+hr{
+    width: 70%;
+}
+
+.tusSuscripciones{
+    padding:2vh;
+}
+
+.suscripcion{
+    margin: 0.5vw;
+    width: 12vw;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    background-color: whitesmoke;
+    justify-content: center;
+    flex-direction: column;
+    padding: 2vh;
+    box-shadow:
+    0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+    0 4.7px 5.3px rgba(0, 0, 0, 0.048),
+    0 5.5px 6px rgba(0, 0, 0, 0.06),
+    0 6.3px 9.9px rgba(0, 0, 0, 0.072),
+    0 9.8px 14.4px rgba(0, 0, 0, 0.086),
+    0 9px 20px rgba(0, 0, 0, 0.12)
+  ;
+}
+
+.suscripcion * {
+    margin: 0.3vw;
+}
+
+.suscripcion img{
+    width: 5vw;
+}
+
+.precio{
+    background-color: #6E8C03;
+    width: 10vw;
+    color: white;
+    padding: 0.5vw;
+}
+
+.suscripcion hr{
+    border-color: #6E8C03;
+}
+
+.tusSuscripciones{
+    display: flex;
+}
+
+.tus_suscripcion{
+    margin: 0.5vw;
+    background-color: whitesmoke;
+    width: 25vw;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    padding: 2vh;
+    box-shadow:
+    0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+    0 4.7px 5.3px rgba(0, 0, 0, 0.048),
+    0 5.5px 6px rgba(0, 0, 0, 0.06),
+    0 6.3px 9.9px rgba(0, 0, 0, 0.072),
+    0 9.8px 14.4px rgba(0, 0, 0, 0.086),
+    0 9px 20px rgba(0, 0, 0, 0.12)
+  ;
+}
+
+.tus_suscripcion img{
+    width: 10vw;
+}
+
+.tus_suscripcion * {
+    margin: 0.3vw;
+}
+
+.tus_suscripcion .descripcion{
+    width: 10vw;
+
+}
+
+.baja{
+    background-color: red;
+    padding: 1vh;
+    width: 5vw;
+}
+
+.renovar{
+    background-color: #6E8C03;
+    padding: 1vh;
+    width: 5vw;
+}
+
+.botones{
+    display: flex;
+    flex-direction: column;
+    width: 10vw;
+}

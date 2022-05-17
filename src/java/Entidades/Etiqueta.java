@@ -18,5 +18,15 @@ public class Etiqueta {
         this.idEtiqueta = idEtiqueta;
         this.nombre = nombre;
     }
+
+    public int getIdEtiqueta() {
+        return idEtiqueta;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+    
+    
     
 }

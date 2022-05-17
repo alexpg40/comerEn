@@ -10,13 +10,19 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>comerEn - Index</title>
+        <title>comerEn - Sesion</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="public/styles/common.css">
         <link rel="stylesheet" href="public/styles/cuenta.css">
         <script src="public/src/cuenta.js"></script>
     </head>
     <body>
         <jsp:include page="./header.jsp" />
+        <%
+            Usuario usuario = (Usuario) session.getAttribute("usuario");
+        %>
         </header>
         <main>
             <section>

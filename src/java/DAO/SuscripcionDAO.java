@@ -5,9 +5,13 @@
  */
 package DAO;
 
+import Entidades.Suscripcion;
 import Utilidades.ConexionBD;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 
 /**
  *
@@ -27,6 +31,60 @@ public class SuscripcionDAO {
             this.conexion.close();
         } catch (SQLException ex) {
             System.out.println("Fallo al cerrar la conexión con la base de datos!");
+        }
+    }
+    
+    public ArrayList<Suscripcion> getSuscripciones(){
+        ArrayList<Suscripcion> ret = new ArrayList<>();  
+        try{
+            String sqlStr = "SELECT * FROM suscripcion";
+            Statement smt = this.conexion.createStatement();
+            ResultSet result = smt.executeQuery(sqlStr);
+            while(result.next()){
+                ret.add(new Suscripcion(result.getInt("idSuscripcion"), result.getFloat("precio"), 
+                        result.getString("descripcion"), result.getInt("duracion")));
+            }
+        } catch(SQLException ex){
+            System.out.println("Error al intentar recuperar las suscripciones!");
+        }
+        return ret;
+    }
+    
+    public ArrayList<Suscripcion> getSuscripcionesByIdUsuario(int idUsuario){
+        ArrayList<Suscripcion> ret = new ArrayList<>();
+        try{
+            String sqlStr = "SELECT suscripcion.* FROM suscripcion INNER JOIN usuario_suscripcion ON"
+                + " suscripcion.idSuscripcion = usuario_suscripcion.idSuscripcion "
+                + "WHERE usuario_suscripcion.idUsuario = " + idUsuario;
+            Statement smt = this.conexion.createStatement();
+            ResultSet result = smt.executeQuery(sqlStr);
+            while(result.next()){
+                ret.add(new Suscripcion(result.getInt("idSuscripcion"), result.getFloat("precio"), 
+                        result.getString("descripcion"), result.getInt("duracion")));
+            }
+        } catch(SQLException ex){
+            System.out.println("Error al intentar recuperar las suscripciones!");
+        }
+        return ret;
+    }
+    
+    public void comprarSuscripcion(int idSuscripcion, int idUsuario){
+         try {
+            String sqlStr = "INSERT INTO usuario_suscripcion VALUES (" + idUsuario + ", " + idSuscripcion + ")";
+            Statement smt = this.conexion.createStatement();
+            smt.executeUpdate(sqlStr);
+        } catch (SQLException ex) {
+            System.out.println("Error al insertar la suscripcion" + ex.getMessage());
+        }
+    }
+    
+    public void anularSuscripcion(int idSuscripcion, int idUsuario){
+        try {
+            String sqlStr = "DELETE FROM usuario_suscripcion WHERE idUsuario =" + idUsuario + " AND idSuscripcion = " + idSuscripcion;
+            Statement smt = this.conexion.createStatement();
+            smt.executeUpdate(sqlStr);
+        } catch (SQLException ex) {
+            System.out.println("Error al insertar la suscripcion" + ex.getMessage());
         }
     }
     

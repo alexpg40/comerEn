@@ -1,0 +1,51 @@
+body{
+    background-image: url(../img/fondoHeader.jpg);
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-size:cover;
+}
+
+main{
+    height: 85vh;
+}
+
+section{
+    width: 70%;
+    margin: auto auto;
+    height: 80vh;
+    background-color: #f2f2f2;
+    padding: 2vh;
+}
+
+hr{
+    border-color: #4F5902;
+    width: 80%;
+    margin-top: 1vh;
+}
+
+h2{
+    font-size: 2rem;
+    padding-left: 2.5vw;
+}
+
+.etiquetas{
+    display: flex;
+    justify-content: space-around;
+    width: 20vw;
+    padding: 1vh;
+    background-color: #4F5902;
+}
+
+.etiqueta{
+    padding: 1vh;
+    background-color: #f2f2f2;
+    font-size: 1rem;
+}
+
+#imagenRestaurante{
+    width: 20vw;
+}
+
+#descripcionRestaurante{
+    width: 30vw;
+}

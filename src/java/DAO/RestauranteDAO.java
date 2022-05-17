@@ -70,4 +70,22 @@ public class RestauranteDAO {
         return ret;
     }
     
+    public Restaurante getRestauranteById(int idRestaurante){
+        Restaurante ret = null;
+        try{
+            String sqlStr = "SELECT * FROM restaurante WHERE idRestaurante = " + idRestaurante;
+            Statement smt = this.conexion.createStatement();
+            ResultSet result = smt.executeQuery(sqlStr);
+            while(result.next()){
+                ret = new Restaurante(result.getInt("idRestaurante"), result.getInt("idDueño"), 
+                        result.getInt("idAdmin"), result.getString("nombre"), result.getString("descripcion"),
+                        result.getTime("horario_abre"), result.getTime("horario_cierra"),
+                        result.getString("icono"));
+            }
+        } catch(SQLException ex){
+            System.out.println("Error al intentar recuperar el restaurante!");
+        }
+        return ret;
+    }
+    
 }
