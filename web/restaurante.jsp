@@ -25,11 +25,9 @@
            Restaurante restaurante = (Restaurante) request.getAttribute("restaurante");
            ArrayList<Etiqueta> etiquetas = (ArrayList<Etiqueta>) request.getAttribute("etiquetas");
          %>
-        <jsp:include page="./header.jsp" />
+        <jsp:include page="./componentes/header.jsp" />
         <main>
-            <aside class="ads">
-                ADS
-            </aside>
+            <jsp:include page="./componentes/ads.jsp" />
             <section>
                 <h2><%=restaurante.getNombre()%></h2>
                 <hr/>
@@ -51,9 +49,7 @@
                     </p>
                 </article>
             </section>
-            <aside class="ads">
-                ADS
-            </aside>
+            <jsp:include page="./componentes/ads.jsp" />
         </main>
         <footer>
             © Alex Perez 2022

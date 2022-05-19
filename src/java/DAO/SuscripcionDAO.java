@@ -42,7 +42,7 @@ public class SuscripcionDAO {
             ResultSet result = smt.executeQuery(sqlStr);
             while(result.next()){
                 ret.add(new Suscripcion(result.getInt("idSuscripcion"), result.getFloat("precio"), 
-                        result.getString("descripcion"), result.getInt("duracion")));
+                        result.getString("descripcion"), result.getString("categoria")));
             }
         } catch(SQLException ex){
             System.out.println("Error al intentar recuperar las suscripciones!");
@@ -60,7 +60,7 @@ public class SuscripcionDAO {
             ResultSet result = smt.executeQuery(sqlStr);
             while(result.next()){
                 ret.add(new Suscripcion(result.getInt("idSuscripcion"), result.getFloat("precio"), 
-                        result.getString("descripcion"), result.getInt("duracion")));
+                        result.getString("descripcion"), result.getString("categoria")));
             }
         } catch(SQLException ex){
             System.out.println("Error al intentar recuperar las suscripciones!");
@@ -86,6 +86,21 @@ public class SuscripcionDAO {
         } catch (SQLException ex) {
             System.out.println("Error al insertar la suscripcion" + ex.getMessage());
         }
+    }
+    
+    public boolean tieneAnuncios(int idUsuario){
+        try{
+            String sqlStr = "SELECT suscripcion.* FROM suscripcion INNER JOIN usuario_suscripcion ON suscripcion.idSuscripcion"
+                    + " = usuario_suscripcion.idSuscripcion WHERE usuario_suscripcion.idUsuario = " + idUsuario
+                    + " AND suscripcion.categoria = 'publicidad'";
+            System.out.println(sqlStr);
+            Statement smt = this.conexion.createStatement();
+            ResultSet result = smt.executeQuery(sqlStr);
+            return !result.next();  
+        } catch(SQLException ex){
+            System.out.println("Error al intentar recuperar las suscripciones!");
+        }
+        return true;
     }
     
 }

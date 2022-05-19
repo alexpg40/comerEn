@@ -36,8 +36,11 @@
                     <%
                         if(Utilidades.isRol("admin", roles)){
                             %>
-                            <a href="controlador?opcion=admin">
-                                <img id='iconoAdmin' alt='icono administrador' src="public/img/restaurante.png"> Administrador
+                            <a href="administrador?opcion=restaurantes">
+                                <img id='iconoAdmin' alt='icono administrador' src="public/img/restaurante.png"> Ad.Restaurantes
+                            </a>
+                            <a href="administrador?opcion=usuarios">
+                                <img id='iconoAdminUsuario' alt='icono administrador' src="public/img/iconoLogin.svg"> Ad.Usuarios
                             </a>
                             <%
                         }

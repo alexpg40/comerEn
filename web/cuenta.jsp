@@ -19,7 +19,7 @@
         <script src="public/src/cuenta.js"></script>
     </head>
     <body>
-        <jsp:include page="./header.jsp" />
+        <jsp:include page="./componentes/header.jsp" />
         <%
             Usuario usuario = (Usuario) session.getAttribute("usuario");
         %>

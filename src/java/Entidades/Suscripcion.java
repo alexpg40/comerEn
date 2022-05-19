@@ -14,13 +14,13 @@ public class Suscripcion {
     private int idSuscripcion;
     private float precio;
     private String descripcion;
-    private int duracion;
+    private String categoria;
 
-    public Suscripcion(int idSuscripcion, float precio, String descripcion, int duracion) {
+    public Suscripcion(int idSuscripcion, float precio, String descripcion, String categoria) {
         this.idSuscripcion = idSuscripcion;
         this.precio = precio;
         this.descripcion = descripcion;
-        this.duracion = duracion;
+        this.categoria = categoria;
     }
 
     public int getIdSuscripcion() {
@@ -35,8 +35,8 @@ public class Suscripcion {
         return descripcion;
     }
 
-    public int getDuracion() {
-        return duracion;
+    public String getCategoria() {
+        return categoria;
     }
     
 }

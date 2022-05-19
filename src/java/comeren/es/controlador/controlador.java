@@ -85,6 +85,9 @@ public class controlador extends HttpServlet {
                 } else if ("dueno".equals(opcion)) {
                     rd = request.getRequestDispatcher("/dueno");
                     rd.forward(request, response);
+                } else if ("admin".equals(opcion)) {
+                    rd = request.getRequestDispatcher("/administrador");
+                    rd.forward(request, response);
                 }
             } else if (buscador != null && !buscador.equals("")) {
                 RestauranteDAO restauranteDao = new RestauranteDAO();
@@ -103,6 +106,9 @@ public class controlador extends HttpServlet {
                     Usuario usuario = usuarioDao.getUsuarioByidUsuario(idUsuario);
                     session.setAttribute("usuario", usuario);
                     ArrayList<Rol> rolesUsuario = rolDao.obtenerRolesUsuario(idUsuario);
+                    SuscripcionDAO suscripcioDao = new SuscripcionDAO();
+                    boolean tieneAnuncios = suscripcioDao.tieneAnuncios(idUsuario);
+                    session.setAttribute("anuncios", tieneAnuncios);
                     session.setAttribute("roles", rolesUsuario);
                     if (rolesUsuario.isEmpty()) {
                         rd = request.getRequestDispatcher("/index.jsp");

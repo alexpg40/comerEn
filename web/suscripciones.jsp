@@ -21,11 +21,9 @@
         <link rel="stylesheet" href="public/styles/suscripciones.css">
     </head>
     <body>
-        <jsp:include page="./header.jsp" />
+        <jsp:include page="./componentes/header.jsp" />
         <main>
-            <aside class="ads">
-                ADS
-            </aside>
+            <jsp:include page="./componentes/ads.jsp" />
             <section>
                 <article class="suscripciones">
                     <h2>Tus Suscripciones</h2>
@@ -82,9 +80,7 @@
                     </section>
                 </article>
             </section>
-            <aside class="ads">
-                ADS
-            </aside>  
+            <jsp:include page="./componentes/ads.jsp" />
         </main>
         <footer>
             © Alex Perez 2022

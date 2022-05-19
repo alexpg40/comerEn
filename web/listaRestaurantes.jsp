@@ -26,11 +26,9 @@
         <link rel="stylesheet" href="public/styles/listaRestaurantes.css">
     </head>
     <body>
-        <jsp:include page="./header.jsp" />
+        <jsp:include page="./componentes/header.jsp" />
         <main>
-            <aside class="ads">
-                ADS
-            </aside>
+            <jsp:include page="./componentes/ads.jsp" />
             <section id="restaurantesContainer">
                 <%
                     ArrayList<Restaurante> restaurantes = (ArrayList<Restaurante>) request.getAttribute("listaRestaurante");
@@ -63,9 +61,7 @@
                     }
                 %>
             </section>
-            <aside class="ads">
-                ADS
-            </aside>  
+            <jsp:include page="./componentes/ads.jsp" /> 
         </main>
         <footer>
             © Alex Perez 2022

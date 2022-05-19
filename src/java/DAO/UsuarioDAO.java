@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 /**
  *
@@ -89,6 +90,42 @@ public class UsuarioDAO {
         } catch (SQLException ex) {
             System.out.println("Error al actualizar el usuario" + ex.getMessage());
         }
+    }
+    
+    public ArrayList<Usuario> getUsuariosNotAdmin(){
+        ArrayList<Usuario> ret = new ArrayList<>();
+        try {
+            String sqlStr = "SELECT usuario.* FROM usuario INNER JOIN usuario_rol ON "
+                    + "usuario.idUsuario = usuario_rol.idUsuario INNER JOIN rol ON "
+                    + "usuario_rol.idRol = rol.idRol WHERE rol.nombre != 'admin'";
+            Statement smt = this.conexion.createStatement();
+            ResultSet result = smt.executeQuery(sqlStr);
+            while(result.next()){
+                ret.add(new Usuario(result.getString("icono"), result.getInt("idUsuario"), result.getString("nombre"), 
+                        result.getString("apellido"), result.getString("correo")));
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error al actualizar el usuario" + ex.getMessage());
+        }
+        return ret;
+    }
+    
+    public ArrayList<Usuario> getUsuariosByNombre(String nombre){
+        ArrayList<Usuario> ret = new ArrayList<>();
+        try {
+            String sqlStr = "SELECT usuario.* FROM usuario INNER JOIN usuario_rol ON "
+                    + "usuario.idUsuario = usuario_rol.idUsuario INNER JOIN rol ON "
+                    + "usuario_rol.idRol = rol.idRol WHERE rol.nombre != 'admin' AND usuario.nombre LIKE'%" + nombre + "%'";
+            Statement smt = this.conexion.createStatement();
+            ResultSet result = smt.executeQuery(sqlStr);
+            while(result.next()){
+                ret.add(new Usuario(result.getString("icono"), result.getInt("idUsuario"), result.getString("nombre"), 
+                        result.getString("apellido"), result.getString("correo")));
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error al actualizar el usuario" + ex.getMessage());
+        }
+        return ret;
     }
     
 }

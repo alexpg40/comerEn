@@ -14,10 +14,10 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="public/styles/common.css">
-        <link rel="stylesheet" href="public/styles/administrador.css">
+        <link rel="stylesheet" href="public/styles/adminRestaurantes.css">
     </head>
     <body>
-        <jsp:include page="./header.jsp" />
+        <jsp:include page="./componentes/header.jsp" />
         <main>
             <section>
                 <article>

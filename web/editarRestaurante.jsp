@@ -16,7 +16,7 @@
         <link rel="stylesheet" href="styles/common.css">
     </head>
     <body>
-         <jsp:include page="./header.jsp" />
+         <jsp:include page="./componentes/header.jsp" />
         <aside class="ads">
             ADS
         </aside>

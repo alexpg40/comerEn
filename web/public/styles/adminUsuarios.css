@@ -1,0 +1,121 @@
+body{
+    background-image: url(../img/fondoHeader.jpg);
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-size:cover;
+}
+
+main > section{
+    margin: auto auto;
+    height: 75vh;
+    padding:1vw;
+    width: 70vw;
+    background-color: #f2f2f2;
+}
+
+main{
+    height: 85vh;
+}
+
+hr{
+    width: 75%;
+}
+
+h2{
+    font-size: 2.2rem;
+}
+
+#buscador{
+    padding: 1.5vh;
+    border: 0;
+    font-size: 1.1rem;
+    border-radius: 2vw;
+    width: 40vw;
+}
+
+input[type="submit"]{
+    cursor: pointer;
+    background-color: #4F5902;
+    padding: 1.5vh;
+    border: 0;
+    font-size: 1.1rem;
+    color: white;
+    width: 7vw;
+    border-radius: 1.5vw;
+}
+
+section * {
+    margin: 1vh;
+}
+
+article{
+    margin: auto auto;
+}
+
+.formCrearRestaurante{
+    display: flex;
+    flex-direction: column;
+}
+
+.formCrearRestaurante label{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 45vw;
+    font-size: 1.2rem;
+}
+
+label input{
+    width: 30vw;
+    padding: 1.2vh;
+    border-radius: 1vw;
+    border: 0;
+}
+
+.formCrearRestaurante input[type="submit"]{
+    width: 15vw;
+}
+
+.usuarios{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.usuario{
+    background-color: white;
+    display: flex;
+    margin: 1vh;
+    align-items: center;
+    box-shadow:
+    0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+    0 4.7px 5.3px rgba(0, 0, 0, 0.048),
+    0 5.5px 6px rgba(0, 0, 0, 0.06),
+    0 6.3px 9.9px rgba(0, 0, 0, 0.072),
+    0 9.8px 14.4px rgba(0, 0, 0, 0.086),
+    0 9px 20px rgba(0, 0, 0, 0.12)
+  ;
+    justify-content: space-around;
+    width: 75%; 
+}
+
+.usuario img {
+    background-color: black;
+    border-radius: 100%;
+    padding: 1vh;
+}
+
+.usuario a{
+    padding: 1vh;
+    cursor: pointer;
+    font-size: 1.2rem;
+    font-weight: bolder;
+}
+
+.botonEditar{
+    background-color: blue;
+}
+
+.botonEliminar{
+    background-color: red; 
+}

@@ -18,7 +18,7 @@
         <link rel="stylesheet" href="public/styles/registro.css">
     </head>
     <body>
-        <jsp:include page="./header.jsp" />
+        <jsp:include page="./componentes/header.jsp" />
         <main>
             <section>
                 <h2>Registrar Sesión</h2>

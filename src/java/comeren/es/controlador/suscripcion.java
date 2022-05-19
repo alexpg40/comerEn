@@ -50,6 +50,8 @@ public class suscripcion extends HttpServlet {
         ArrayList<Suscripcion> suscripcionesByIdUsuario = suscripcionDao.getSuscripcionesByIdUsuario(usuario.getIdUsuario());
         request.setAttribute("suscripciones", suscripciones);
         request.setAttribute("suscripciones_usuario", suscripcionesByIdUsuario);
+        boolean tieneAnuncios = suscripcionDao.tieneAnuncios(usuario.getIdUsuario());
+        session.setAttribute("anuncios", tieneAnuncios);
         suscripcionDao.cerrarConexion();
         rd = request.getRequestDispatcher("/suscripciones.jsp");
         rd.forward(request, response);

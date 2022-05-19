@@ -17,6 +17,7 @@ public class Usuario {
     private String nombre;
     private String apellido;
     private String correo;
+    private String icono;
     private String contrasena;
     
     public Usuario(String nombre, String apellido, String correo, String contrasena){
@@ -32,6 +33,14 @@ public class Usuario {
         this.apellido = apellido;
         this.correo = correo;
         this.contrasena = Utilidades.convertirSHA256(contrasena);
+    }
+    
+    public Usuario(String icono, int idUsuario, String  nombre, String apellido, String correo){
+        this.idUsuario = idUsuario;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.icono = icono;
+        this.correo = correo;
     }
     
     public Usuario(int idUsuario, String  nombre, String apellido, String correo){

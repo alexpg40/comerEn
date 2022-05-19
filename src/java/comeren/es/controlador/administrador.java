@@ -5,7 +5,11 @@
  */
 package comeren.es.controlador;
 
+import DAO.UsuarioDAO;
+import Entidades.Usuario;
+import com.google.gson.Gson;
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -33,12 +37,32 @@ public class administrador extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession(true);
         RequestDispatcher rd = null;
-        if (request.getParameter("buscar") != null) {
-
-        } else if (request.getParameter("crear_restaurante") != null) {
-
-        } else {
-            rd = request.getRequestDispatcher("/administrador.jsp");
+        if (request.getParameter("opcion") != null) {
+            if (request.getParameter("opcion").equals("usuarios")) {
+                rd = request.getRequestDispatcher("/adminUsuarios.jsp");
+                rd.forward(request, response);
+            } else if (request.getParameter("opcion").equals("restaurantes")) {
+                rd = request.getRequestDispatcher("/adminRestaurantes.jsp");
+                rd.forward(request, response);
+            }
+        } else if (request.getParameter("buscarUsuarios") != null) {
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            UsuarioDAO usuarioDao = new UsuarioDAO();
+            ArrayList<Usuario> usuariosNotAdmin = usuarioDao.getUsuariosNotAdmin();
+            String json = new Gson().toJson(usuariosNotAdmin);
+            System.out.println(json);
+            response.getWriter().write(json);
+        } else if(request.getParameter("buscarUsuario") != null){
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            UsuarioDAO usuarioDao = new UsuarioDAO();
+            ArrayList<Usuario> usuariosNotAdmin = usuarioDao.getUsuariosByNombre(request.getParameter("buscarUsuario"));
+            String json = new Gson().toJson(usuariosNotAdmin);
+            System.out.println(json);
+            response.getWriter().write(json);
+        }else {
+            rd = request.getRequestDispatcher("/adminRestaurantes.jsp");
             rd.forward(request, response);
         }
     }

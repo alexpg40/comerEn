@@ -24,7 +24,7 @@
         <%
             ArrayList<Restaurante> restaurantes = (ArrayList<Restaurante>) session.getAttribute("restaurantes");
         %>
-        <jsp:include page="./header.jsp" />
+        <jsp:include page="./componentes/header.jsp" />
         <main>
             <section class="container">
                 <h2>Tus Restaurantes</h2>
