@@ -22,7 +22,7 @@
     </head>
     <body>
         <%
-            ArrayList<Restaurante> restaurantes = (ArrayList<Restaurante>) request.getAttribute("restaurantes");
+            ArrayList<Restaurante> restaurantes = (ArrayList<Restaurante>) session.getAttribute("restaurantes");
         %>
         <jsp:include page="./componentes/header.jsp" />
         <main>
@@ -52,8 +52,8 @@
                             </section>
                         </article>
                         <article class="botones">
-                            <a href="administrador?ocultarRestaurante=<%=restaurante.getIdRestaurante()%>" class="botonOcultar">
-                                Ocultar
+                            <a href="administrador?<%= restaurante.getOculto() ? "mostrar" : "ocultar"%>Restaurante=<%=restaurante.getIdRestaurante()%>" class="boton<%= restaurante.getOculto() ? "Mostrar" : "Ocultar"%>">
+                                <%= restaurante.getOculto() ? "Mostar" : "Ocultar"%>
                             </a>
                             <a href="administrador?editarRestaurante=<%=restaurante.getIdRestaurante()%>" class="botonEditar">
                                 Editar

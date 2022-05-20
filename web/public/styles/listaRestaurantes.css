@@ -15,6 +15,11 @@ body{
     height: 150px;
 }
 
+#restaurantes{
+    overflow: auto;
+    height: 40vh;
+}
+
 .bodyRestaurante{
     padding: 0.5vw;
     display: flex;

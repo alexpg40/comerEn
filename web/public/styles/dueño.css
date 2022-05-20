@@ -36,6 +36,10 @@ h2{
     background-color: #0038FF;
 }
 
+.botonMostrar{
+    background-color: #804000;
+}
+
 .botonEditar{
     background-color: #4F5902;
 }
@@ -114,4 +118,9 @@ h3{
      font-size: 1.1rem;
     margin: 1vw;
     height: 15vh;
+}
+
+#restaurantes{
+    overflow: auto;
+    height: 65vh;
 }

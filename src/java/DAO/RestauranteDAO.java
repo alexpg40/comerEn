@@ -44,10 +44,10 @@ public class RestauranteDAO {
                 ret.add(new Restaurante(result.getInt("idRestaurante"), result.getInt("idDueño"), 
                         result.getInt("idAdmin"), result.getString("nombre"), result.getString("descripcion"),
                         result.getTime("horario_abre"), result.getTime("horario_cierra"),
-                        result.getString("icono")));
+                        result.getString("icono"), result.getBoolean("oculto")));
             }
         } catch(SQLException ex){
-            System.out.println("Error al intentar recuperar los restaurantes!");
+            System.out.println("Error al intentar recuperar los restaurantes!" + ex.getMessage());
         }
         return ret;
     }
@@ -62,7 +62,7 @@ public class RestauranteDAO {
                 ret.add(new Restaurante(result.getInt("idRestaurante"), result.getInt("idDueño"), 
                         result.getInt("idAdmin"), result.getString("nombre"), result.getString("descripcion"),
                         result.getTime("horario_abre"), result.getTime("horario_cierra"),
-                        result.getString("icono")));
+                        result.getString("icono"), result.getBoolean("oculto")));
             }
         } catch(SQLException ex){
             System.out.println("Error al intentar recuperar los restaurantes!");
@@ -80,10 +80,46 @@ public class RestauranteDAO {
                 ret = new Restaurante(result.getInt("idRestaurante"), result.getInt("idDueño"), 
                         result.getInt("idAdmin"), result.getString("nombre"), result.getString("descripcion"),
                         result.getTime("horario_abre"), result.getTime("horario_cierra"),
-                        result.getString("icono"));
+                        result.getString("icono"), result.getBoolean("oculto"));
             }
         } catch(SQLException ex){
             System.out.println("Error al intentar recuperar el restaurante!");
+        }
+        return ret;
+    }
+    
+    public int borrarRestaurante(int idRestaurante){
+        int ret = 0;
+        try {
+            String sqlStr = "DELETE FROM restaurante WHERE idRestaurante = " + idRestaurante;
+            Statement smt = this.conexion.createStatement();
+            ret = smt.executeUpdate(sqlStr);
+        } catch (SQLException ex) {
+            System.out.println("Error al borrar el restaurante" + ex.getMessage());
+        }
+        return ret;
+    }
+    
+    public int ocultarRestaurante(int idRestaurante){
+        int ret = 0;
+        try {
+            String sqlStr = "UPDATE restaurante SET oculto = 1 WHERE idRestaurante = " + idRestaurante;
+            Statement smt = this.conexion.createStatement();
+            ret = smt.executeUpdate(sqlStr);
+        } catch (SQLException ex) {
+            System.out.println("Error al ocultar el restaurante" + ex.getMessage());
+        }
+        return ret;
+    }
+    
+    public int mostrarRestaurante(int idRestaurante){
+        int ret = 0;
+        try {
+            String sqlStr = "UPDATE restaurante SET oculto = 0 WHERE idRestaurante = " + idRestaurante;
+            Statement smt = this.conexion.createStatement();
+            ret = smt.executeUpdate(sqlStr);
+        } catch (SQLException ex) {
+            System.out.println("Error al mostrar el restaurante" + ex.getMessage());
         }
         return ret;
     }

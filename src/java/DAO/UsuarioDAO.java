@@ -98,9 +98,7 @@ public class UsuarioDAO {
     public ArrayList<Usuario> getUsuariosNotAdmin(){
         ArrayList<Usuario> ret = new ArrayList<>();
         try {
-            String sqlStr = "SELECT usuario.* FROM usuario INNER JOIN usuario_rol ON "
-                    + "usuario.idUsuario = usuario_rol.idUsuario INNER JOIN rol ON "
-                    + "usuario_rol.idRol = rol.idRol WHERE rol.nombre != 'admin'";
+            String sqlStr = "SELECT usuario.* FROM usuario LEFT JOIN usuario_rol ON usuario.idUsuario = usuario_rol.idUsuario WHERE usuario_rol.idRol IS NULL OR usuario_rol.idRol != 1";
             Statement smt = this.conexion.createStatement();
             ResultSet result = smt.executeQuery(sqlStr);
             while(result.next()){
@@ -116,10 +114,9 @@ public class UsuarioDAO {
     public ArrayList<Usuario> getUsuariosByNombre(String nombre){
         ArrayList<Usuario> ret = new ArrayList<>();
         try {
-            String sqlStr = "SELECT usuario.* FROM usuario INNER JOIN usuario_rol ON "
-                    + "usuario.idUsuario = usuario_rol.idUsuario INNER JOIN rol ON "
-                    + "usuario_rol.idRol = rol.idRol WHERE rol.nombre != 'admin' AND usuario.nombre LIKE'%" + nombre + "%'";
+            String sqlStr = "SELECT usuario.* FROM usuario LEFT JOIN usuario_rol ON usuario.idUsuario = usuario_rol.idUsuario WHERE (usuario_rol.idRol IS NULL OR usuario_rol.idRol != 1) AND usuario.nombre LIKE'%" + nombre + "%'";
             Statement smt = this.conexion.createStatement();
+            System.out.println(sqlStr);
             ResultSet result = smt.executeQuery(sqlStr);
             while(result.next()){
                 ret.add(new Usuario(result.getString("icono"), result.getInt("idUsuario"), result.getString("nombre"), 
