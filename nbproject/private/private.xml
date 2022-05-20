@@ -21,6 +21,8 @@
             <file>file:/home/Alex/Proyectos/comerEn/src/java/DAO/EtiquetaDAO.java</file>
             <file>file:/home/Alex/Proyectos/comerEn/nbproject/build-impl.xml</file>
             <file>file:/home/Alex/Proyectos/comerEn/web/login.jsp</file>
+            <file>file:/home/Alex/Proyectos/comerEn/web/paginaError.jsp</file>
+            <file>file:/home/Alex/Proyectos/comerEn/web/public/styles/editarUsuario.css</file>
             <file>file:/home/Alex/Proyectos/comerEn/web/public/src/index.js.map</file>
             <file>file:/home/Alex/Proyectos/comerEn/src/java/Entidades/Ubicacion.java</file>
             <file>file:/home/Alex/Proyectos/comerEn/web/suscripciones.jsp</file>
@@ -57,6 +59,7 @@
             <file>file:/home/Alex/Proyectos/comerEn/src/java/SistemaRecomendacion/TablaValoracionesUsuarios.java</file>
             <file>file:/home/Alex/Proyectos/comerEn/web/dueño.jsp</file>
             <file>file:/home/Alex/Proyectos/comerEn/web/public/img/ads.png</file>
+            <file>file:/home/Alex/Proyectos/comerEn/web/editarUsuario.jsp</file>
             <file>file:/home/Alex/Proyectos/comerEn/src/java/DAO/UsuarioDAO.java</file>
             <file>file:/home/Alex/Proyectos/comerEn/src/java/DAO/UbicacionDAO.java</file>
             <file>file:/home/Alex/Proyectos/comerEn/web/public/styles/login.css</file>

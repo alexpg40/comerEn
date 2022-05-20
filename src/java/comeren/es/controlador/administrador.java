@@ -5,8 +5,11 @@
  */
 package comeren.es.controlador;
 
+import DAO.RolDAO;
 import DAO.UsuarioDAO;
+import Entidades.Rol;
 import Entidades.Usuario;
+import Utilidades.Utilidades;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -33,7 +36,7 @@ public class administrador extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException    {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession(true);
         RequestDispatcher rd = null;
@@ -50,18 +53,87 @@ public class administrador extends HttpServlet {
             response.setCharacterEncoding("UTF-8");
             UsuarioDAO usuarioDao = new UsuarioDAO();
             ArrayList<Usuario> usuariosNotAdmin = usuarioDao.getUsuariosNotAdmin();
+            usuarioDao.cerrarConexion();
             String json = new Gson().toJson(usuariosNotAdmin);
-            System.out.println(json);
             response.getWriter().write(json);
-        } else if(request.getParameter("buscarUsuario") != null){
+        } else if (request.getParameter("buscarUsuario") != null) {
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
             UsuarioDAO usuarioDao = new UsuarioDAO();
             ArrayList<Usuario> usuariosNotAdmin = usuarioDao.getUsuariosByNombre(request.getParameter("buscarUsuario"));
+            usuarioDao.cerrarConexion();
             String json = new Gson().toJson(usuariosNotAdmin);
-            System.out.println(json);
             response.getWriter().write(json);
-        }else {
+        } else if (request.getParameter("editarUsuario") != null) {
+            UsuarioDAO usuarioDao = new UsuarioDAO();
+            Usuario usuarioByidUsuario = usuarioDao.getUsuarioByidUsuario(Integer.parseInt(request.getParameter("editarUsuario")));
+            usuarioDao.cerrarConexion();
+            session.setAttribute("usuario_editar", usuarioByidUsuario);
+            RolDAO rolDao = new RolDAO();
+            ArrayList<Rol> rolesFaltantes = rolDao.getRolesFaltantes(usuarioByidUsuario.getIdUsuario());
+            ArrayList<Rol> obtenerRolesUsuario = rolDao.obtenerRolesUsuario(usuarioByidUsuario.getIdUsuario());
+            rolDao.cerrarConexion();
+            request.setAttribute("rolesFaltantes", rolesFaltantes);
+            request.setAttribute("rolesUsuario", obtenerRolesUsuario);
+            rd = request.getRequestDispatcher("/editarUsuario.jsp");
+            rd.forward(request, response);
+        } else if (request.getParameter("eliminarUsuario") != null) {
+            UsuarioDAO usuarioDao = new UsuarioDAO();
+            int ret = usuarioDao.borrarUsuario(Integer.parseInt(request.getParameter("eliminarUsuario")));
+            if (ret == 0) {
+                request.setAttribute("error", "No se pudo borrar el usuario de la base de datos correctamente!");
+                rd = request.getRequestDispatcher("/paginaError.jsp");
+                rd.forward(request, response);
+            }
+            rd = request.getRequestDispatcher("/adminUsuarios.jsp");
+            rd.forward(request, response);
+        } else if (request.getParameter("quitarRol") != null) {
+            RolDAO rolDao = new RolDAO();
+            if (session.getAttribute("usuario_editar") != null) {
+                Usuario usuarioEditar = (Usuario) session.getAttribute("usuario_editar");
+                rolDao.deleteRolUsuario(usuarioEditar.getIdUsuario(), Integer.parseInt(request.getParameter("rol")));
+                rd = request.getRequestDispatcher("/adminUsuarios.jsp");
+                rd.forward(request, response);
+            } else {
+                request.setAttribute("error", "No hay ningun usuario seleccionado para editar!");
+                rd = request.getRequestDispatcher("/paginaError.jsp");
+                rd.forward(request, response);
+            }
+        } else if (request.getParameter("insertarRol") != null) {
+            RolDAO rolDao = new RolDAO();
+            if (session.getAttribute("usuario_editar") != null) {
+                Usuario usuarioEditar = (Usuario) session.getAttribute("usuario_editar");
+                rolDao.submitRolUsuario(usuarioEditar.getIdUsuario(), Integer.parseInt(request.getParameter("rol")));
+                rd = request.getRequestDispatcher("/adminUsuarios.jsp");
+                rd.forward(request, response);
+            } else {
+                request.setAttribute("error", "No hay ningun usuario seleccionado para editar!");
+                rd = request.getRequestDispatcher("/paginaError.jsp");
+                rd.forward(request, response);
+            }
+        } else if (request.getParameter("actualizarUsuario") != null) {
+            if (session.getAttribute("usuario_editar") != null) {
+                UsuarioDAO usuarioDao = new UsuarioDAO();
+                String nombre = request.getParameter("nombre");
+                String apellido = request.getParameter("apellido");
+                String correo = request.getParameter("correo");
+                if (Utilidades.validarUsuario(nombre, apellido, correo)) {
+                    Usuario usuario = (Usuario) session.getAttribute("usuario_editar");
+                    usuarioDao.actualizarUsuario(new Usuario(usuario.getIdUsuario(), nombre, apellido, correo));
+                    rd = request.getRequestDispatcher("/adminUsuarios.jsp");
+                    rd.forward(request, response);
+                } else {
+                    request.setAttribute("error", "Datos para actualizar el usuario no son validos!");
+                    rd = request.getRequestDispatcher("/paginaError.jsp");
+                    rd.forward(request, response);
+                }
+                usuarioDao.cerrarConexion();
+            } else {
+                request.setAttribute("error", "No hay ningun usuario seleccionado para editar!");
+                rd = request.getRequestDispatcher("/paginaError.jsp");
+                rd.forward(request, response);
+            }
+        } else {
             rd = request.getRequestDispatcher("/adminRestaurantes.jsp");
             rd.forward(request, response);
         }

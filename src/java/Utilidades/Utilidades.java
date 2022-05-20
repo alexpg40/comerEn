@@ -45,12 +45,11 @@ public class Utilidades {
     }
 
     public static boolean validarUsuario(String nombre, String apellido, String correo, String contrasena, String rContrasena){
-        boolean a = validarNombre(nombre);
-        boolean b = validarApellido(apellido);
-        boolean c = validarCorreo(correo);
-        boolean d = validarContrasena(contrasena);
-        boolean e = validarRContrasena(contrasena, rContrasena);
         return validarNombre(nombre) && validarApellido(apellido) && validarCorreo(correo) && validarContrasena(contrasena) && validarRContrasena(contrasena, rContrasena);
+    }
+    
+    public static boolean validarUsuario(String nombre, String apellido, String correo){
+        return validarNombre(nombre) && validarApellido(apellido) && validarCorreo(correo);
     }
     
     private static boolean validarNombre(String nombre){

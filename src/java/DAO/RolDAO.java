@@ -50,4 +50,39 @@ public class RolDAO {
         return ret;
     }
     
+    public ArrayList<Rol> getRolesFaltantes(int idUsuario){
+        ArrayList<Rol> ret = new ArrayList<>();
+        try {
+            String sqlStr = "SELECT rol.* FROM rol WHERE rol.idRol NOT IN (SELECT usuario_rol.idRol FROM usuario_rol WHERE idUsuario = " + idUsuario + ");";
+            Statement smt = this.conexion.createStatement();
+            ResultSet result = smt.executeQuery(sqlStr);
+            while(result.next()){
+                ret.add(new Rol(result.getInt("idRol"), result.getString("nombre")));
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error al los roles faltantes del usuario" + ex.getMessage());
+        }
+        return ret;
+    }
+    
+    public void submitRolUsuario(int idUsuario, int idRol){
+        try {
+            String sqlStr = "INSERT INTO usuario_rol VALUES (" + idUsuario + ", " + idRol + ")";
+            Statement smt = this.conexion.createStatement();
+            smt.executeUpdate(sqlStr);
+        } catch (SQLException ex) {
+            System.out.println("Error al insertar el rol del usuario" + ex.getMessage());
+        }
+    }
+    
+    public void deleteRolUsuario(int idUsuario, int idRol){
+        try {
+            String sqlStr = "DELETE FROM usuario_rol WHERE  idUsuario = " + idUsuario + " AND idRol = " + idRol;
+            Statement smt = this.conexion.createStatement();
+            smt.executeUpdate(sqlStr);
+        } catch (SQLException ex) {
+            System.out.println("Error al borrar el rol del usuario" + ex.getMessage());
+        }
+    }
+    
 }

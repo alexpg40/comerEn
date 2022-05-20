@@ -1,0 +1,105 @@
+body{
+    background-image: url(../img/fondoHeader.jpg);
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-size:cover;
+}
+
+main{
+    height: 85vh;
+    display: flex;
+    justify-content: center;
+}
+
+section{
+    width: 40%;
+    margin: auto auto;
+    height: 80vh;
+    background-color: #f2f2f2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+hr{
+    width: 75%;
+}
+
+h2{
+    font-size: 2vw;
+}
+
+.iconoPerfil{
+    width: 8vw;
+    margin: 1vw;
+    background-color: black;
+    padding: 1vw;
+    border-radius: 5vw;
+}
+
+#formActualizarCuenta{
+    display: flex;
+    margin: 1vw;
+    align-items: center;
+    flex-direction: column;
+}
+
+#formActualizarCuenta *{
+    margin-bottom: 0.5vw;
+}
+
+input:not([type ='submit']){
+    padding: 0.75vh;
+    padding-left: 2vh;
+    border: 1px solid black;
+    border-radius: 1vw;
+    font-size: 1vw;
+    width: 16vw;
+}
+
+label{
+    font-size: 1.2vw;
+    display: flex;
+    width: 30vw;
+    justify-content: space-between;
+}
+
+input[type="submit"]{
+    padding: 1vw;
+    width: 10vw;
+    border-radius: 2vw;
+    border: 0;
+    margin-top: 3vh;
+    background-color: #4F5902;
+    color: white;
+    font-size: 1vw;
+}
+
+input[type="submit"]:hover{
+    cursor: pointer;
+    background-color: #6E8C03;
+}
+
+#formQuitarRol, #formInsertarRol{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 1vw;
+}
+
+select{
+    font-size: 1.2rem;
+}
+
+hr{
+    margin-bottom: 3vw;
+}
+
+.formulario{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}

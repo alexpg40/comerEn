@@ -27,6 +27,8 @@ public class Usuario {
         this.contrasena = Utilidades.convertirSHA256(contrasena);
     }
     
+    
+    
     public Usuario(int idUsuario, String nombre, String apellido, String correo, String contrasena){
         this.idUsuario = idUsuario;
         this.nombre = nombre;
@@ -70,6 +72,8 @@ public class Usuario {
         return contrasena;
     }
     
-    
+    public String getIcono(){
+        return this.icono;
+    }
     
 }

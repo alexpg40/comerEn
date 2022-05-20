@@ -57,7 +57,7 @@ public class UsuarioDAO {
             Statement smt = this.conexion.createStatement();
             ResultSet result = smt.executeQuery(sqlStr);
             while(result.next()){
-                ret = new Usuario(result.getInt("idUsuario"), result.getString("nombre"), 
+                ret = new Usuario(result.getString("icono"), result.getInt("idUsuario"), result.getString("nombre"), 
                         result.getString("apellido"), result.getString("correo"));
             }
         } catch (SQLException ex) {
@@ -82,9 +82,11 @@ public class UsuarioDAO {
     public void actualizarUsuario(Usuario usuario){
         try {
             String sqlStr = "UPDATE usuario SET nombre = '" + usuario.getNombre() + "', apellido = '" 
-                    + usuario.getApellido() + "', correo = '" + usuario.getCorreo() + "', contrasena = '" + 
-                    Utilidades.Utilidades.convertirSHA256(usuario.getContrasena())+ "' WHERE idUsuario = " 
-                    + usuario.getIdUsuario();
+                    + usuario.getApellido() + "', correo = '" + usuario.getCorreo() +"'";
+            if(usuario.getContrasena() != null){
+                sqlStr+= " , contrasena = '" + Utilidades.Utilidades.convertirSHA256(usuario.getContrasena()) + "'";
+            }
+            sqlStr+= " WHERE idUsuario = " + usuario.getIdUsuario();
             Statement smt = this.conexion.createStatement();
             smt.executeUpdate(sqlStr);
         } catch (SQLException ex) {
@@ -122,6 +124,18 @@ public class UsuarioDAO {
                 ret.add(new Usuario(result.getString("icono"), result.getInt("idUsuario"), result.getString("nombre"), 
                         result.getString("apellido"), result.getString("correo")));
             }
+        } catch (SQLException ex) {
+            System.out.println("Error al actualizar el usuario" + ex.getMessage());
+        }
+        return ret;
+    }
+    
+    public int borrarUsuario(int idUsuario){
+        int ret = 0;
+        try {
+            String sqlStr = "DELETE FROM usuario WHERE idUsuario = " + idUsuario;
+            Statement smt = this.conexion.createStatement();
+            ret = smt.executeUpdate(sqlStr);
         } catch (SQLException ex) {
             System.out.println("Error al actualizar el usuario" + ex.getMessage());
         }
