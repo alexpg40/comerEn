@@ -25,7 +25,7 @@
                     <hr/>
                     <form action="administrador">
                         <input id="buscador" type="text" name="buscador" placeholder="Restaurante, ciudades, comida italiana..."/>
-                        <input type="submit" name="buscar" value="Buscar"/>
+                        <input type="submit" name="buscarRestaurante" value="Buscar"/>
                     </form>
                 </article>
                 <article>

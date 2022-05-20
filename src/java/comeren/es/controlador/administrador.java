@@ -5,8 +5,10 @@
  */
 package comeren.es.controlador;
 
+import DAO.RestauranteDAO;
 import DAO.RolDAO;
 import DAO.UsuarioDAO;
+import Entidades.Restaurante;
 import Entidades.Rol;
 import Entidades.Usuario;
 import Utilidades.Utilidades;
@@ -133,7 +135,20 @@ public class administrador extends HttpServlet {
                 rd = request.getRequestDispatcher("/paginaError.jsp");
                 rd.forward(request, response);
             }
-        } else {
+        }else if(request.getParameter("buscarRestaurante") != null){
+            RestauranteDAO restauranteDao = new RestauranteDAO(); 
+            ArrayList<Restaurante> restaurantes = restauranteDao.getRestaurantes(request.getParameter("buscador"));
+            request.setAttribute("restaurantes", restaurantes);
+            rd = request.getRequestDispatcher("/listaRestaurantesAdmin.jsp");
+            rd.forward(request, response);
+            
+        } else if(request.getParameter("editarRestaurante") != null){
+            RestauranteDAO restauranteDao = new RestauranteDAO();
+            Restaurante restaurante = restauranteDao.getRestauranteById(Integer.parseInt(request.getParameter("editarRestaurante")));
+            request.setAttribute("restaurante", restaurante);
+            rd = request.getRequestDispatcher("/editarRestaurante.jsp");
+            rd.forward(request, response);
+        }else {
             rd = request.getRequestDispatcher("/adminRestaurantes.jsp");
             rd.forward(request, response);
         }

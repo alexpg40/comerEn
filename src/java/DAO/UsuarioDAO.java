@@ -87,6 +87,7 @@ public class UsuarioDAO {
                 sqlStr+= " , contrasena = '" + Utilidades.Utilidades.convertirSHA256(usuario.getContrasena()) + "'";
             }
             sqlStr+= " WHERE idUsuario = " + usuario.getIdUsuario();
+            System.out.println(sqlStr);
             Statement smt = this.conexion.createStatement();
             smt.executeUpdate(sqlStr);
         } catch (SQLException ex) {
