@@ -52,8 +52,8 @@
                             </section>
                         </article>
                         <article class="botones">
-                            <a href="dueno?ocultar=<%=restaurante.getIdRestaurante()%>" class="botonOcultar">
-                                Ocultar
+                            <a href="dueno?<%= restaurante.getOculto() ? "mostrar" : "ocultar"%>=<%=restaurante.getIdRestaurante()%>" class="boton<%= restaurante.getOculto() ? "Mostrar" : "Ocultar"%>">
+                                <%= restaurante.getOculto() ? "Mostar" : "Ocultar"%>
                             </a>
                             <a href="dueno?editar=<%=restaurante.getIdRestaurante()%>" class="botonEditar">
                                 Editar
