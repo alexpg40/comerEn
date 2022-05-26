@@ -6,11 +6,9 @@
 package comeren.es.controlador;
 
 import DAO.RestauranteDAO;
-import DAO.UsuarioDAO;
 import Entidades.Restaurante;
 import Entidades.Usuario;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

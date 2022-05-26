@@ -140,4 +140,17 @@ public class RestauranteDAO {
         return ret;
     }
     
+    public int darAltaRestaurante(String nombreRestaurante, int idDueño, int idAdmin){
+        int ret = 0;
+        try {
+            String sqlStr = "INSERT INTO restaurante(idRestaurante, nombre, idDueño, idAdmin) VALUES(NULL, '"+ nombreRestaurante + "', "+ idDueño + ", " + idAdmin + ")";
+            System.out.println(sqlStr);
+            Statement smt = this.conexion.createStatement();
+            ret = smt.executeUpdate(sqlStr);
+        } catch (SQLException ex) {
+            System.out.println("Error al crear el restaurante" + ex.getMessage());
+        }
+        return ret;
+    }
+    
 }

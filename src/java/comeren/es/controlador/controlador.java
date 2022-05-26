@@ -109,6 +109,7 @@ public class controlador extends HttpServlet {
                     RolDAO rolDao = new RolDAO();
                     Usuario usuario = usuarioDao.getUsuarioByidUsuario(idUsuario);
                     session.setAttribute("usuario", usuario);
+                    session.setAttribute("idUsuario", idUsuario);
                     ArrayList<Rol> rolesUsuario = rolDao.obtenerRolesUsuario(idUsuario);
                     SuscripcionDAO suscripcioDao = new SuscripcionDAO();
                     boolean tieneAnuncios = suscripcioDao.tieneAnuncios(idUsuario);

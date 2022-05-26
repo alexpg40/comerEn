@@ -5,11 +5,13 @@
  */
 package Entidades;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Alex
  */
-public class Rol {
+public class Rol implements Serializable{
     
     private int idRol;
     private String nombreRol;

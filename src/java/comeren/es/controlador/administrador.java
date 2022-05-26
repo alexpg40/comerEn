@@ -11,6 +11,8 @@ import DAO.UsuarioDAO;
 import Entidades.Restaurante;
 import Entidades.Rol;
 import Entidades.Usuario;
+import Utilidades.Correos;
+import Utilidades.GeneradorContraseñas;
 import Utilidades.Utilidades;
 import com.google.gson.Gson;
 import java.io.IOException;
@@ -194,7 +196,31 @@ public class administrador extends HttpServlet {
             }
             restauranteDao.cerrarConexion();
         } else if(request.getParameter("crear_restaurante") != null){
-        
+            Integer admin = (Integer) session.getAttribute("idUsuario");
+            String nombreRestaurante = (String) request.getParameter("nombreRestaurante");
+            String nombreDueno = (String) request.getParameter("nombreDueno");
+            String apellidoDueno = (String) request.getParameter("correoDueno");
+            String correoDueno = (String) request.getParameter("correoDueno");
+            String contraseña = GeneradorContraseñas.getPassword();
+            UsuarioDAO usuarioDao = new UsuarioDAO();
+            RestauranteDAO restauranteDao = new RestauranteDAO();
+            usuarioDao.registrarUsuario(new Usuario(nombreDueno, apellidoDueno, correoDueno, contraseña));
+            int idUsuario = usuarioDao.existeUsuario(correoDueno, Utilidades.convertirSHA256(contraseña));
+            if(idUsuario != 0){
+                restauranteDao.darAltaRestaurante(nombreRestaurante, idUsuario, admin);
+                RolDAO rolDao = new RolDAO();
+                rolDao.submitRolUsuario(idUsuario, 2);
+                rolDao.cerrarConexion();
+                Correos correos = new Correos();
+                correos.sendEmail("Alta Dueño comerEn", "Has sido dado de alta en ComerEn con la contraseña " + contraseña, correoDueno);
+                rd = request.getRequestDispatcher("/adminRestaurantes.jsp");
+                rd.forward(request, response);
+            } else {
+                request.setAttribute("error", "No se pudo crear el usuario en la base de datos correctamente!");
+                rd = request.getRequestDispatcher("/paginaError.jsp");
+                rd.forward(request, response);
+            }
+            usuarioDao.cerrarConexion();
         } else {
             rd = request.getRequestDispatcher("/adminRestaurantes.jsp");
             rd.forward(request, response);
