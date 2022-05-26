@@ -24,4 +24,25 @@ public class Comentario {
         this.comentario = comentario;
         this.valoracion = valoracion;
     }
+
+    public int getIdComentario() {
+        return idComentario;
+    }
+
+    public int getIdUsuario() {
+        return idUsuario;
+    }
+
+    public int getIdRestaurante() {
+        return idRestaurante;
+    }
+
+    public String getComentario() {
+        return comentario;
+    }
+
+    public int getValoracion() {
+        return valoracion;
+    }  
+    
 }

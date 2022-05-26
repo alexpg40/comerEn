@@ -5,9 +5,13 @@
  */
 package DAO;
 
+import Entidades.Fotografia;
 import Utilidades.ConexionBD;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 
 /**
  *
@@ -28,6 +32,22 @@ public class FotografiaDAO {
         } catch (SQLException ex) {
             System.out.println("Fallo al cerrar la conexión con la base de datos!");
         }
+    }
+    
+    public ArrayList<Fotografia> getFotografiasByIdRestaurante(int idRestaurante){
+        ArrayList<Fotografia> ret = new ArrayList<>();
+        try{
+            String sqlStr = "SELECT * FROM fotografia WHERE idRestaurante = " + idRestaurante;
+            Statement smt = this.conexion.createStatement();
+            ResultSet result = smt.executeQuery(sqlStr);
+            while(result.next()){
+                ret.add(new Fotografia(result.getInt("idFotografia"), result.getInt("idRestaurante"), 
+                        result.getString("ubicacion")));
+            }
+        } catch(SQLException ex){
+            System.out.println("Error al intentar recuperar los restaurantes!");
+        }
+        return ret;
     }
     
 }

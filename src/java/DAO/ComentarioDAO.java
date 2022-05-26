@@ -5,9 +5,13 @@
  */
 package DAO;
 
+import Entidades.Comentario;
 import Utilidades.ConexionBD;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 
 /**
  *
@@ -28,6 +32,23 @@ public class ComentarioDAO {
         } catch (SQLException ex) {
             System.out.println("Fallo al cerrar la conexión con la base de datos!");
         }
+    }
+    
+    public ArrayList<Comentario> getComentariosByIdRestaurante(int idRestaurante){
+        ArrayList<Comentario> ret = new ArrayList<>();
+        try{
+            String sqlStr = "SELECT * FROM comentario WHERE idRestaurante = " + idRestaurante;
+            Statement smt = this.conexion.createStatement();
+            ResultSet result = smt.executeQuery(sqlStr);
+            while(result.next()){
+                ret.add(new Comentario(result.getInt("idComentario"), result.getInt("idUsuario"), 
+                        result.getInt("idRestaurante"), result.getString("comentario"), 
+                        result.getInt("valoracion")));
+            }
+        } catch(SQLException ex){
+            System.out.println("Error al intentar recuperar los restaurantes!");
+        }
+        return ret;
     }
     
 }

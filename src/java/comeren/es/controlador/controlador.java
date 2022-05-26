@@ -5,12 +5,16 @@
  */
 package comeren.es.controlador;
 
+import DAO.ComentarioDAO;
 import DAO.EtiquetaDAO;
+import DAO.FotografiaDAO;
 import DAO.RestauranteDAO;
 import DAO.RolDAO;
 import DAO.SuscripcionDAO;
 import DAO.UsuarioDAO;
+import Entidades.Comentario;
 import Entidades.Etiqueta;
+import Entidades.Fotografia;
 import Entidades.Restaurante;
 import Entidades.Rol;
 import Entidades.Suscripcion;
@@ -158,11 +162,21 @@ public class controlador extends HttpServlet {
             } else if(restaurante != null){
                 RestauranteDAO restauranteDao = new RestauranteDAO();
                 EtiquetaDAO etiquetaDao = new EtiquetaDAO();
+                ComentarioDAO comentarioDao = new ComentarioDAO();
+                FotografiaDAO fotografiaDao = new FotografiaDAO();
                 ArrayList<Etiqueta> etiquitasByIdRestaurante = etiquetaDao.getEtiquitasByIdRestaurante(Integer.parseInt(restaurante));
-                etiquetaDao.cerrarConexion();
+                ArrayList<Comentario> comentariosByIdRestaurante = comentarioDao.getComentariosByIdRestaurante(Integer.parseInt(restaurante));
+                ArrayList<Fotografia> fotografiasByIdRestaurante = fotografiaDao.getFotografiasByIdRestaurante(Integer.parseInt(restaurante));
                 Restaurante restauranteById = restauranteDao.getRestauranteById(Integer.parseInt(restaurante));
+                int valoracionMediaRestaurante = restauranteDao.valoracionMediaRestaurante(Integer.parseInt(restaurante));
+                comentarioDao.cerrarConexion();
+                fotografiaDao.cerrarConexion();
+                etiquetaDao.cerrarConexion();
                 restauranteDao.cerrarConexion();
+                request.setAttribute("valoracion", valoracionMediaRestaurante);
                 request.setAttribute("restaurante",restauranteById);
+                request.setAttribute("comentarios", comentariosByIdRestaurante);
+                request.setAttribute("fotografias", fotografiasByIdRestaurante);
                 request.setAttribute("etiquetas", etiquitasByIdRestaurante);
                 rd = request.getRequestDispatcher("/restaurante.jsp");
                 rd.forward(request, response);

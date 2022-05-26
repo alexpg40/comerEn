@@ -124,4 +124,20 @@ public class RestauranteDAO {
         return ret;
     }
     
+    public int valoracionMediaRestaurante(int idRestaurante){
+        int ret = 0;
+        try {
+            String sqlStr = "SELECT AVG(valoracion) FROM comentario WHERE idRestaurante = " + idRestaurante;
+            System.out.println(sqlStr);
+            Statement smt = this.conexion.createStatement();
+            ResultSet result = smt.executeQuery(sqlStr);
+            if(result.next()){
+                ret = result.getInt(1);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error al recuperar la valoracion del restaurante" + ex.getMessage());
+        }
+        return ret;
+    }
+    
 }

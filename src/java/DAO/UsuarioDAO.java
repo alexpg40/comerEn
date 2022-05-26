@@ -69,7 +69,7 @@ public class UsuarioDAO {
     public void registrarUsuario(Usuario usuario){
         try {
             String sqlStr = "INSERT INTO usuario VALUES (null, '" + usuario.getNombre() + "', '" 
-            + usuario.getApellido() + "', '" + usuario.getCorreo() + "', '" + usuario.getContrasena() + "')";
+            + usuario.getApellido() + "', '" + usuario.getCorreo() + "', DEFAULT, '" + usuario.getContrasena() + "')";
             System.out.println(sqlStr);
             Statement smt = this.conexion.createStatement();
             smt.executeUpdate(sqlStr);

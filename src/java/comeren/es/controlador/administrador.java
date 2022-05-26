@@ -193,6 +193,8 @@ public class administrador extends HttpServlet {
                 rd.forward(request, response);
             }
             restauranteDao.cerrarConexion();
+        } else if(request.getParameter("crear_restaurante") != null){
+        
         } else {
             rd = request.getRequestDispatcher("/adminRestaurantes.jsp");
             rd.forward(request, response);

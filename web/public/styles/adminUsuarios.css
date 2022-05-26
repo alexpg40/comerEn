@@ -96,7 +96,7 @@ label input{
     0 9px 20px rgba(0, 0, 0, 0.12)
   ;
     justify-content: space-around;
-    width: 75%; 
+    width: 90%; 
 }
 
 .usuario img {
@@ -118,4 +118,10 @@ label input{
 
 .botonEliminar{
     background-color: red; 
+}
+
+#sectionUsuario{
+    height: 45vh;
+    width: 80%;
+    overflow: auto;
 }

@@ -20,4 +20,17 @@ public class Fotografia {
         this.idRestaurante = idRestaurante;
         this.ubicacion = ubicacion;
     }
+
+    public int getIdFotografia() {
+        return idFotografia;
+    }
+
+    public int getIdRestaurante() {
+        return idRestaurante;
+    }
+
+    public String getUbicacion() {
+        return ubicacion;
+    }
+    
 }
