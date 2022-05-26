@@ -153,4 +153,27 @@ public class RestauranteDAO {
         return ret;
     }
     
+    public ArrayList<Restaurante> getRestaurantesPopulares(){
+        ArrayList<Restaurante> ret = new ArrayList<>();
+        try{
+            String sqlStr = "SELECT restaurante.*, AVG(comentario.valoracion) "
+                    + "FROM restaurante INNER JOIN comentario "
+                    + "ON restaurante.idRestaurante = comentario.idRestaurante "
+                    + "WHERE restaurante.oculto = 0 GROUP BY idRestaurante "
+                    + "ORDER BY AVG(comentario.valoracion) DESC "
+                    + "LIMIT 5";
+            Statement smt = this.conexion.createStatement();
+            ResultSet result = smt.executeQuery(sqlStr);
+            while(result.next()){
+                ret.add(new Restaurante(result.getInt("idRestaurante"), result.getInt("idDueño"), 
+                        result.getInt("idAdmin"), result.getString("nombre"), result.getString("descripcion"),
+                        result.getTime("horario_abre"), result.getTime("horario_cierra"),
+                        result.getString("icono"), result.getBoolean("oculto")));
+            }
+        } catch(SQLException ex){
+            System.out.println("Error al intentar recuperar los restaurantes!" + ex.getMessage());
+        }
+        return ret;
+    }
+    
 }

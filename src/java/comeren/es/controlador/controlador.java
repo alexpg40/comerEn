@@ -60,6 +60,10 @@ public class controlador extends HttpServlet {
             String actualizarCuenta = request.getParameter("actualizarCuenta");
             if (opcion != null) {
                 if ("index".equals(opcion)) {
+                    RestauranteDAO restauranteDao = new RestauranteDAO();
+                    ArrayList<Restaurante> restaurantesPopulares = restauranteDao.getRestaurantesPopulares();
+                    request.setAttribute("restaurantes", restaurantesPopulares);
+                    restauranteDao.cerrarConexion();
                     rd = request.getRequestDispatcher("/index.jsp");
                     rd.forward(request, response);
                 } else if ("session".equals(opcion)) {
@@ -140,6 +144,10 @@ public class controlador extends HttpServlet {
                 String rContrasena = request.getParameter("rContrasena");
                 if (Utilidades.validarUsuario(nombre, apellido, correo, contrasena, rContrasena)) {
                     usuarioDao.registrarUsuario(new Usuario(nombre, apellido, correo, contrasena));
+                    RestauranteDAO restauranteDao = new RestauranteDAO();
+                    ArrayList<Restaurante> restaurantesPopulares = restauranteDao.getRestaurantesPopulares();
+                    request.setAttribute("restaurantes", restaurantesPopulares);
+                    restauranteDao.cerrarConexion();
                     rd = request.getRequestDispatcher("/index.jsp");
                     rd.forward(request, response);
                 } else {
@@ -158,6 +166,10 @@ public class controlador extends HttpServlet {
                 Usuario usuario = (Usuario) session.getAttribute("usuario");
                 usuarioDao.actualizarUsuario(new Usuario(usuario.getIdUsuario(), nombre, apellido, correo, contrasena));
                 usuarioDao.cerrarConexion();
+                RestauranteDAO restauranteDao = new RestauranteDAO();
+                ArrayList<Restaurante> restaurantesPopulares = restauranteDao.getRestaurantesPopulares();
+                request.setAttribute("restaurantes", restaurantesPopulares);
+                restauranteDao.cerrarConexion();
                 rd = request.getRequestDispatcher("/index.jsp");
                 rd.forward(request, response);
             } else if(restaurante != null){
@@ -182,6 +194,10 @@ public class controlador extends HttpServlet {
                 rd = request.getRequestDispatcher("/restaurante.jsp");
                 rd.forward(request, response);
             }else {
+                RestauranteDAO restauranteDao = new RestauranteDAO();
+                    ArrayList<Restaurante> restaurantesPopulares = restauranteDao.getRestaurantesPopulares();
+                    request.setAttribute("restaurantes", restaurantesPopulares);
+                    restauranteDao.cerrarConexion();
                 rd = request.getRequestDispatcher("/index.jsp");
                 rd.forward(request, response);
             }
