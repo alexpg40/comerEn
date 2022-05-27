@@ -1,24 +1,19 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const services_1 = require("./services");
 window.onload = () => {
     init();
 };
 const init = async () => {
-    let usuarios = await getUsuarios();
+    let usuarios = await (0, services_1.getUsuarios)();
     crearUsuarios(usuarios);
     let buscadorUsuario = document.getElementsByName('buscarUsuarios')[0];
     let inputBuscador = document.getElementsByName('buscador')[0];
     buscadorUsuario.onclick = async (eve) => {
         eve.preventDefault();
-        let usuariosBuscador = await getUsuario(inputBuscador.value);
+        let usuariosBuscador = await (0, services_1.getUsuario)(inputBuscador.value);
         crearUsuarios(usuariosBuscador);
     };
-};
-const getUsuarios = () => {
-    const URL = 'http://localhost:8080/comerEn/administrador?buscarUsuarios';
-    return request(URL);
-};
-const getUsuario = (usuario) => {
-    const URL = `http://localhost:8080/comerEn/administrador?buscarUsuario=${usuario}`;
-    return request(URL);
 };
 const crearUsuarios = (usuarios) => {
     let sectionUsuario = document.getElementById('sectionUsuario');
@@ -29,15 +24,6 @@ const crearUsuarios = (usuarios) => {
         sectionUsuario.appendChild(crearFilaUsuario(usuario));
     });
 };
-async function request(url, config = {}) {
-    return fetch(url, config)
-        .then((response) => {
-        if (response.ok)
-            return response.json();
-        throw new Error('Error al intengar recuperar los usuarios de la base de datos');
-    })
-        .then((json) => json);
-}
 const crearFilaUsuario = (usuario) => {
     const { idUsuario, nombre, apellido, correo, icono } = usuario;
     let articleUsuario = document.createElement('article');

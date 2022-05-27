@@ -1,13 +1,8 @@
+import {getUsuarios, getUsuario} from './services'
+import {Usuario} from './d'
+
 window.onload = () => {
     init();
-}
-
-interface Usuario{
-    idUsuario: Number
-    nombre: string
-    apellido: string
-    correo: string
-    icono: string
 }
 
 const init =  async () => {
@@ -22,16 +17,6 @@ const init =  async () => {
     }
 }
 
-const getUsuarios =  () => {
-    const URL = 'http://localhost:8080/comerEn/administrador?buscarUsuarios'
-    return request<Array<Usuario>>(URL);
-}
-
-const getUsuario = (usuario: string) => {
-    const URL = `http://localhost:8080/comerEn/administrador?buscarUsuario=${usuario}`
-    return request<Array<Usuario>>(URL);
-}
-
 const crearUsuarios = (usuarios : Array<Usuario>) => {
     let sectionUsuario = document.getElementById('sectionUsuario');
     while(sectionUsuario.hasChildNodes()){
@@ -40,18 +25,6 @@ const crearUsuarios = (usuarios : Array<Usuario>) => {
     usuarios.forEach(usuario => {
         sectionUsuario.appendChild(crearFilaUsuario(usuario));
     })
-}
-
-async function request<TResponse>(
-    url: string,
-    config: RequestInit = {}
-) : Promise<TResponse> {
-    return fetch(url, config)
-    .then((response) => {
-        if(response.ok) return response.json();
-        throw new Error('Error al intengar recuperar los usuarios de la base de datos')
-    })
-    .then((json) => json as TResponse)
 }
 
 const crearFilaUsuario = (usuario: Usuario) => {
