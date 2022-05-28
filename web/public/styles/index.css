@@ -146,3 +146,25 @@ h3{
 #restaurantesContainer a{
     color:black;
 }
+
+.autocomplete{
+    background-color: #f2f2f2;
+    width: 600px;
+    margin-top: 1vh;
+    overflow: auto;
+    display: none;
+    max-height: 10vh;
+    font-size: 1.4rem;
+    position: fixed;
+    border: 1px solid #4F5902;
+}
+
+.sugerencia{
+    color: black;
+    display: block;
+    border-bottom: 1px solid #4F5902;
+}
+
+.autocomplete p, a{
+    padding: 1.25vh;
+}
