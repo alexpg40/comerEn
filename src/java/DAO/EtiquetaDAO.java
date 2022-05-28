@@ -50,4 +50,19 @@ public class EtiquetaDAO {
         return ret;
     }
     
+    public ArrayList<Etiqueta> getEtiquitasByNombre(String nombre){
+        ArrayList<Etiqueta> ret = new ArrayList<>();
+        try{
+            String sqlStr = "SELECT * from etiqueta WHERE nombre LIKE '%" + nombre + "%'";
+            Statement smt = this.conexion.createStatement();
+            ResultSet result = smt.executeQuery(sqlStr);
+            while(result.next()){
+                ret.add(new Etiqueta(result.getInt("idEtiqueta"), result.getString("nombre")));
+            }
+        } catch(SQLException ex){
+            System.out.println("Error al intentar recuperar las etiquetas del restaurante!");
+        }
+        return ret;
+    }
+    
 }
