@@ -1,20 +1,27 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const services_1 = require("./services");
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+import { getUsuarios, getUsuario } from './services';
 window.onload = () => {
     init();
 };
-const init = async () => {
-    let usuarios = await (0, services_1.getUsuarios)();
+const init = () => __awaiter(void 0, void 0, void 0, function* () {
+    let usuarios = yield getUsuarios();
     crearUsuarios(usuarios);
     let buscadorUsuario = document.getElementsByName('buscarUsuarios')[0];
     let inputBuscador = document.getElementsByName('buscador')[0];
-    buscadorUsuario.onclick = async (eve) => {
+    buscadorUsuario.onclick = (eve) => __awaiter(void 0, void 0, void 0, function* () {
         eve.preventDefault();
-        let usuariosBuscador = await (0, services_1.getUsuario)(inputBuscador.value);
+        let usuariosBuscador = yield getUsuario(inputBuscador.value);
         crearUsuarios(usuariosBuscador);
-    };
-};
+    });
+});
 const crearUsuarios = (usuarios) => {
     let sectionUsuario = document.getElementById('sectionUsuario');
     while (sectionUsuario.hasChildNodes()) {

@@ -1,4 +1,4 @@
-import {getEtiquetas, getRestaurantes} from './services'
+import {getEtiquetas, getRestaurantes} from './services.js'
 import {Restaurante, Etiqueta} from './d'
 
 window.onload = () => {
@@ -26,8 +26,9 @@ const handlerSubmit = (eve : Event) : void => {
 
 const handlerAutoComplete = async (eve : Event): Promise<void> => {
     const input = eve.target as HTMLInputElement;
-    if(input.value.length > 0 ){
-        const autoComplete = document.querySelector('.autocomplete') as HTMLElement;
+    const autoComplete = document.querySelector('.autocomplete') as HTMLElement;
+    borrarAutoComplete();
+    if(input.value.length > 2 ){
         autoComplete.style.display = 'block';
         const restaurantes = await getRestaurantes(input.value);
         if(restaurantes.length > 0){
@@ -37,25 +38,48 @@ const handlerAutoComplete = async (eve : Event): Promise<void> => {
         if(etiquetas.length > 0){
             crearAutoCompleteEtiquetas(etiquetas);
         }
+    } else{
+        autoComplete.style.display = 'none';
     }
+    if(!autoComplete.hasChildNodes()) mostrarNoHaySugerencias();
 }
 
 const crearAutoCompleteRestaurantes = (restaurantes: Array<Restaurante>): void => {
     const autoComplete = document.querySelector('.autocomplete');
     restaurantes.forEach(({idRestaurante, nombre}) => {
-        const aRestaurante = document.createElement('a');
-        aRestaurante.append(nombre);
-        aRestaurante.href = `http://localhost:8080/comerEn/controlador?restaurante=${idRestaurante}`
-        autoComplete.appendChild(aRestaurante);
+        const URL = `http://localhost:8080/comerEn/controlador?restaurante=${idRestaurante}`
+        const aRestaurante = crearSugerencia(nombre , URL)
+        autoComplete.appendChild(aRestaurante)
     })
 }
 
 const crearAutoCompleteEtiquetas = (etiquetas : Array<Etiqueta>) : void => {
     const autoComplete = document.querySelector('.autocomplete');
     etiquetas.forEach(({idEtiqueta, nombre}) => {
-        const aEtiqueta = document.createElement('a');
-        aEtiqueta.append(nombre);
-        aEtiqueta.href = `http://localhost:8080/comerEn/controlador?etiquetas=${idEtiqueta}`
-        aEtiqueta.appendChild(aEtiqueta)
+        const URL = `http://localhost:8080/comerEn/controlador?etiquetas=${idEtiqueta}`
+        const aEtiqueta = crearSugerencia(nombre , URL)
+        autoComplete.appendChild(aEtiqueta)
     })
+}
+
+const crearSugerencia = (texto : string, url : string) : HTMLAnchorElement => {
+    const aSugerencia = document.createElement('a');
+    aSugerencia.className = 'sugerencia';
+    aSugerencia.append(texto);
+    aSugerencia.href = url;
+    return aSugerencia;
+}
+
+const borrarAutoComplete = () : void => {
+    const autoComplete = document.querySelector('.autocomplete');
+    while(autoComplete.hasChildNodes()){
+        autoComplete.removeChild(autoComplete.childNodes[0]);
+    }
+}
+
+const mostrarNoHaySugerencias = () => {
+    const autoComplete = document.querySelector('.autocomplete');
+    const pNoHaySugerencias = document.createElement('p');
+    pNoHaySugerencias.append('No hay sugerencias con los datos introducidos!');
+    autoComplete.append(pNoHaySugerencias);
 }
