@@ -34,4 +34,9 @@ export const getEtiquetas = (etiquetas) => {
     const URL = `http://localhost:8080/comerEn/controlador?buscarEtiquetas=${etiquetas}`;
     return request(URL);
 };
+export const getRestaurantesCercanos = (punto) => {
+    const { latitude, longitude } = punto;
+    const URL = `http://localhost:8080/comerEn/controlador?buscarRestaurantesCercanos=${longitude}|${latitude}`;
+    return request(URL);
+};
 //# sourceMappingURL=services.js.map

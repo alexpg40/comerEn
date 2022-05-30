@@ -1,4 +1,4 @@
-import {Restaurante, Etiqueta, Usuario} from './d'
+import {Restaurante, Etiqueta, Usuario, Punto} from './d'
 
 async function request<TResponse>(
     url: string,
@@ -30,4 +30,10 @@ export const getRestaurantes = (restaurantes: string) => {
 export const getEtiquetas = (etiquetas: string) => {
     const URL = `http://localhost:8080/comerEn/controlador?buscarEtiquetas=${etiquetas}`
     return request<Array<Etiqueta>>(URL);
+}
+
+export const getRestaurantesCercanos = (punto : Punto) => {
+    const {latitude, longitude} = punto;
+    const URL = `http://localhost:8080/comerEn/controlador?buscarRestaurantesCercanos=${longitude}|${latitude}`
+    return request<Array<Restaurante>>(URL);
 }

@@ -22,3 +22,8 @@ export interface Etiqueta{
     idEtiqueta: Number
     nombre: string
 }
+
+export interface Punto{
+    longitude: Number
+    latitude: Number
+}
