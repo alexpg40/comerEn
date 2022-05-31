@@ -30,13 +30,21 @@ export const getRestaurantes = (restaurantes) => {
     const URL = `http://localhost:8080/comerEn/controlador?buscarRestaurantes=${restaurantes}`;
     return request(URL);
 };
+export const getRestaurantesPopulares = () => {
+    const URL = `http://localhost:8080/comerEn/controlador?getRestaurantesPopulares=getRestaurantesPopulare`;
+    return request(URL);
+};
 export const getEtiquetas = (etiquetas) => {
     const URL = `http://localhost:8080/comerEn/controlador?buscarEtiquetas=${etiquetas}`;
     return request(URL);
 };
-export const getRestaurantesCercanos = (punto) => {
+export const getLocalidades = (localidad) => {
+    const URL = `http://localhost:8080/comerEn/controlador?buscarLocalidades=${localidad}`;
+    return request(URL);
+};
+export const getRestaurantesCercanos = (punto, radio = 40) => {
     const { latitude, longitude } = punto;
-    const URL = `http://localhost:8080/comerEn/controlador?buscarRestaurantesCercanos=${longitude}|${latitude}`;
+    const URL = `http://localhost:8080/comerEn/controlador?buscarRestaurantesCercanos=${longitude}|${latitude}&radio=${radio}`;
     return request(URL);
 };
 //# sourceMappingURL=services.js.map

@@ -22,10 +22,12 @@ public class Restaurante {
     private Time horario_cierre;
     private String icono;
     private boolean oculto;
+    private String localidad;
     
     public Restaurante(int idRestaurante, int idDueño, int idAdmin, 
             String nombre, String descripcion, Time horario_abre, 
-            Time horario_cierre, String icono, boolean oculto){
+            Time horario_cierre, String icono, boolean oculto,
+            String localidad){
         this.idRestaurante = idRestaurante;
         this.idDueño = idDueño;
         this.idAdmin = idAdmin;
@@ -35,6 +37,7 @@ public class Restaurante {
         this.horario_cierre = horario_cierre;
         this.icono = icono;
         this.oculto = oculto;
+        this.localidad = localidad;
     }
 
     public int getIdRestaurante() {
@@ -71,6 +74,10 @@ public class Restaurante {
     
     public boolean getOculto(){
         return this.oculto;
+    }
+
+    public String getLocalidad() {
+        return localidad;
     }
     
 }

@@ -50,6 +50,21 @@ public class UsuarioDAO {
         return idUsuario;
     }
     
+    public int existeUsuario(String correo){
+        int idUsuario = 0;
+        try {
+            String sqlStr = "SELECT idUsuario FROM usuario WHERE correo = '" + correo + "'";
+            Statement smt = this.conexion.createStatement();
+            ResultSet result = smt.executeQuery(sqlStr);
+            while(result.next()){
+                idUsuario = result.getInt(1);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error al recuperar el usuario" + ex.getMessage());
+        }
+        return idUsuario;
+    }
+    
     public Usuario getUsuarioByidUsuario(int idUsuario){
         Usuario ret = null;
         try {
@@ -70,7 +85,6 @@ public class UsuarioDAO {
         try {
             String sqlStr = "INSERT INTO usuario VALUES (null, '" + usuario.getNombre() + "', '" 
             + usuario.getApellido() + "', '" + usuario.getCorreo() + "', DEFAULT, '" + usuario.getContrasena() + "')";
-            System.out.println(sqlStr);
             Statement smt = this.conexion.createStatement();
             smt.executeUpdate(sqlStr);
         } catch (SQLException ex) {
@@ -78,6 +92,16 @@ public class UsuarioDAO {
         }
     }
     
+    
+    public void cambiarContraseña(String contraseña, int idUsuario){
+        try {
+            String sqlStr = "UPDATE usuario SET contrasena = '" + contraseña + "' WHERE idUsuario = " + idUsuario;
+            Statement smt = this.conexion.createStatement();
+            smt.executeUpdate(sqlStr);
+        } catch (SQLException ex) {
+            System.out.println("Error al actualizar el usuario" + ex.getMessage());
+        }
+    }
     
     public void actualizarUsuario(Usuario usuario){
         try {
@@ -87,7 +111,6 @@ public class UsuarioDAO {
                 sqlStr+= " , contrasena = '" + Utilidades.Utilidades.convertirSHA256(usuario.getContrasena()) + "'";
             }
             sqlStr+= " WHERE idUsuario = " + usuario.getIdUsuario();
-            System.out.println(sqlStr);
             Statement smt = this.conexion.createStatement();
             smt.executeUpdate(sqlStr);
         } catch (SQLException ex) {

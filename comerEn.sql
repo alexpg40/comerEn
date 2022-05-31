@@ -1,4 +1,4 @@
--- MariaDB dump 10.19  Distrib 10.7.3-MariaDB, for Linux (x86_64)
+-- MariaDB dump 10.19  Distrib 10.7.4-MariaDB, for Linux (x86_64)
 --
 -- Host: localhost    Database: comeren
 -- ------------------------------------------------------
@@ -33,7 +33,7 @@ CREATE TABLE `comentario` (
   KEY `FK_idRestaurante_comentario` (`idRestaurante`),
   CONSTRAINT `FK_idRestaurante_comentario` FOREIGN KEY (`idRestaurante`) REFERENCES `restaurante` (`idRestaurante`),
   CONSTRAINT `FK_idUsuario_comentario` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`idUsuario`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,6 +42,11 @@ CREATE TABLE `comentario` (
 
 LOCK TABLES `comentario` WRITE;
 /*!40000 ALTER TABLE `comentario` DISABLE KEYS */;
+INSERT INTO `comentario` VALUES
+(1,7,1,'Lorem ipsum dolor sit amet consectetur, adipiscing elit etiam mi ante suscipit, libero potenti mattis sociis.',4),
+(2,7,1,'Lorem ipsum dolor sit amet consectetur, adipiscing elit etiam mi ante suscipit, libero potenti mattis sociis.',4),
+(3,7,1,'Lorem ipsum dolor sit amet consectetur, adipiscing elit etiam mi ante suscipit, libero potenti mattis sociis.',1),
+(4,7,3,'',5);
 /*!40000 ALTER TABLE `comentario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -56,7 +61,7 @@ CREATE TABLE `etiqueta` (
   `idEtiqueta` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(30) NOT NULL,
   PRIMARY KEY (`idEtiqueta`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -67,7 +72,8 @@ LOCK TABLES `etiqueta` WRITE;
 /*!40000 ALTER TABLE `etiqueta` DISABLE KEYS */;
 INSERT INTO `etiqueta` VALUES
 (1,'Comida Rapida'),
-(2,'Hamburguesas');
+(2,'Hamburguesas'),
+(3,'Servicio 24h');
 /*!40000 ALTER TABLE `etiqueta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -83,8 +89,9 @@ CREATE TABLE `fotografia` (
   `idRestaurante` int(11) NOT NULL,
   `ubicacion` varchar(40) NOT NULL,
   PRIMARY KEY (`idFotografia`),
-  CONSTRAINT `FK_idRestaurante_fotografia` FOREIGN KEY (`idFotografia`) REFERENCES `restaurante` (`idRestaurante`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  KEY `FK_idRestaurante_fotografia` (`idRestaurante`),
+  CONSTRAINT `FK_idRestaurante_fotografia` FOREIGN KEY (`idRestaurante`) REFERENCES `restaurante` (`idRestaurante`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -93,6 +100,10 @@ CREATE TABLE `fotografia` (
 
 LOCK TABLES `fotografia` WRITE;
 /*!40000 ALTER TABLE `fotografia` DISABLE KEYS */;
+INSERT INTO `fotografia` VALUES
+(1,1,'foto_temporal.jpg'),
+(2,1,'foto_temporal.jpg'),
+(3,1,'foto_temporal.jpg');
 /*!40000 ALTER TABLE `fotografia` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -106,18 +117,19 @@ DROP TABLE IF EXISTS `restaurante`;
 CREATE TABLE `restaurante` (
   `idRestaurante` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(30) NOT NULL,
-  `descripcion` varchar(300) NOT NULL,
+  `descripcion` varchar(300) NOT NULL DEFAULT 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
   `horario_abre` time DEFAULT '09:00:00',
   `horario_cierra` time DEFAULT '23:00:00',
-  `icono` varchar(40) NOT NULL,
+  `icono` varchar(40) DEFAULT NULL,
   `idDueño` int(11) NOT NULL,
   `idAdmin` int(11) NOT NULL,
+  `oculto` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`idRestaurante`),
   KEY `FK_idDueño_restaurante` (`idDueño`),
   KEY `FK_idAdmin_restaurante` (`idAdmin`),
   CONSTRAINT `FK_idAdmin_restaurante` FOREIGN KEY (`idAdmin`) REFERENCES `usuario` (`idUsuario`),
   CONSTRAINT `FK_idDueño_restaurante` FOREIGN KEY (`idDueño`) REFERENCES `usuario` (`idUsuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -127,7 +139,8 @@ CREATE TABLE `restaurante` (
 LOCK TABLES `restaurante` WRITE;
 /*!40000 ALTER TABLE `restaurante` DISABLE KEYS */;
 INSERT INTO `restaurante` VALUES
-(1,'McDonalds','Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.','09:00:00','23:00:00','asdasd',5,1);
+(1,'McDonalds','Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.','09:00:00','23:00:00','asdasd',5,1,0),
+(3,'Restaurante Prueba','Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.','09:00:00','23:00:00',NULL,19,6,0);
 /*!40000 ALTER TABLE `restaurante` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -156,7 +169,8 @@ LOCK TABLES `restaurante_etiqueta` WRITE;
 /*!40000 ALTER TABLE `restaurante_etiqueta` DISABLE KEYS */;
 INSERT INTO `restaurante_etiqueta` VALUES
 (1,1),
-(1,2);
+(1,2),
+(1,3);
 /*!40000 ALTER TABLE `restaurante_etiqueta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -257,7 +271,7 @@ CREATE TABLE `usuario` (
   `icono` varchar(40) NOT NULL DEFAULT 'iconoLogin.svg',
   `contrasena` char(64) NOT NULL,
   PRIMARY KEY (`idUsuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -271,7 +285,10 @@ INSERT INTO `usuario` VALUES
 (3,'duenio','duenio','duenio@duenio.com','iconoLogin.svg','ebe55a7b7c34aa9eec135591f5573560311179dc3a4b0cfdeef5f1d8bd64ed74'),
 (4,'duenio','duenio','duenio@duenio.com','iconoLogin.svg','a0ccddd9e5ddd2617e88f6515a2998f0119b6e99fd2bfef049550ad983af9fa0'),
 (5,'duenio1','duenio','duenio@duenio.com','iconoLogin.svg','ce493bb975e763dcbe185d6671846b1576e99c905b9f929dd80b9d1014297e4f'),
-(6,'admin','admin','admin2@admin2.com','iconoLogin.svg','686dd4419d5da11febc928e2f4df2daa16dd8e3d6b8201b80abf99a32f4d4b83');
+(6,'admin','admin','admin2@admin2.com','iconoLogin.svg','686dd4419d5da11febc928e2f4df2daa16dd8e3d6b8201b80abf99a32f4d4b83'),
+(7,'Usuario','usuario3','usuario3@usuario.com','iconoLogin.svg','a0ccddd9e5ddd2617e88f6515a2998f0119b6e99fd2bfef049550ad983af9fa0'),
+(8,'duenio2','duenio2','duenio2@duenio2.com','iconoLogin.svg','a0ccddd9e5ddd2617e88f6515a2998f0119b6e99fd2bfef049550ad983af9fa0'),
+(19,'Dueno Prueba','comeren.correo@gmail.com','comeren.correo@gmail.com','iconoLogin.svg','bc7556b38f05370da76ce4e95e6ba5ae64294c53ecec9f7fb99a4da89578259f');
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -301,7 +318,9 @@ LOCK TABLES `usuario_rol` WRITE;
 INSERT INTO `usuario_rol` VALUES
 (1,1),
 (5,2),
-(6,1);
+(6,1),
+(8,2),
+(19,2);
 /*!40000 ALTER TABLE `usuario_rol` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -328,6 +347,8 @@ CREATE TABLE `usuario_suscripcion` (
 
 LOCK TABLES `usuario_suscripcion` WRITE;
 /*!40000 ALTER TABLE `usuario_suscripcion` DISABLE KEYS */;
+INSERT INTO `usuario_suscripcion` VALUES
+(7,1);
 /*!40000 ALTER TABLE `usuario_suscripcion` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -340,4 +361,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-20 10:57:50
+-- Dump completed on 2022-05-26 14:54:39

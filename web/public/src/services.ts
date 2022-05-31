@@ -27,13 +27,23 @@ export const getRestaurantes = (restaurantes: string) => {
     return request<Array<Restaurante>>(URL);
 }
 
+export const getRestaurantesPopulares = () => {
+    const URL = `http://localhost:8080/comerEn/controlador?getRestaurantesPopulares=getRestaurantesPopulare`
+    return request<Array<Restaurante>>(URL);
+}
+
 export const getEtiquetas = (etiquetas: string) => {
     const URL = `http://localhost:8080/comerEn/controlador?buscarEtiquetas=${etiquetas}`
     return request<Array<Etiqueta>>(URL);
 }
 
-export const getRestaurantesCercanos = (punto : Punto) => {
+export const getLocalidades = (localidad: string) => {
+    const URL = `http://localhost:8080/comerEn/controlador?buscarLocalidades=${localidad}`
+    return request<Array<string>>(URL);
+}
+
+export const getRestaurantesCercanos = (punto : Punto, radio = 40) => {
     const {latitude, longitude} = punto;
-    const URL = `http://localhost:8080/comerEn/controlador?buscarRestaurantesCercanos=${longitude}|${latitude}`
+    const URL = `http://localhost:8080/comerEn/controlador?buscarRestaurantesCercanos=${longitude}|${latitude}&radio=${radio}`
     return request<Array<Restaurante>>(URL);
 }

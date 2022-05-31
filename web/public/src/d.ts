@@ -16,6 +16,7 @@ export interface Restaurante{
     idDueño: Number
     idAdmin: Number
     oculto: boolean
+    localidad: string
 }
 
 export interface Etiqueta{

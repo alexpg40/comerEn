@@ -1,4 +1,4 @@
-import {getUsuarios, getUsuario} from './services'
+import {getUsuarios, getUsuario} from './services.js'
 import {Usuario} from './d'
 
 window.onload = () => {

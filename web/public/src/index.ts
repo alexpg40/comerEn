@@ -1,12 +1,10 @@
-import {getEtiquetas, getRestaurantes, getRestaurantesCercanos} from './services.js'
-import {Restaurante, Etiqueta, Punto} from './d'
+import {getEtiquetas, getRestaurantes, getRestaurantesCercanos, getLocalidades, getRestaurantesPopulares} from './services.js'
+import {Restaurante, Etiqueta} from './d'
+
+var restaurantesG : Array<Restaurante> = []
 
 window.onload = () => {
-    const form = document.getElementsByTagName('form')[0];
-    const input = document.getElementsByName('buscador')[0];
-    form.addEventListener('submit', handlerSubmit);
-    input.addEventListener('input', handlerAutoComplete);
-    initLocalizacion()
+    init()
 }
 
 const validarInput = (input : String) : Boolean => {
@@ -14,15 +12,55 @@ const validarInput = (input : String) : Boolean => {
     return true;
 }
 
+const init = () => {
+    initListeners()
+    initLocalizacion()
+    initRestaurantes()
+}
 
+const initListeners = () => {
+    const form = document.getElementsByTagName('form')[0];
+    const input = document.getElementsByName('buscador')[0];
+    const valoracionMin = document.getElementsByName('valoracionMin')[0] as HTMLInputElement;
+    const distanciaMax = document.getElementsByName('radio')[0] as HTMLInputElement;
+    valoracionMin.addEventListener('input', handlerOutputVal)
+    distanciaMax.addEventListener('input', handlerOutputDis)
+    form.addEventListener('submit', handlerSubmit);
+    input.addEventListener('input', handlerAutoComplete);
+}
 
-const handlerSubmit = (eve : Event) : void => {
+const initRestaurantes = async () => {
+    restaurantesG = await getRestaurantesPopulares();
+}
+
+const handlerOutputVal = (eve : Event) => {
+    const output = document.querySelector('#outValoracion');
+    const valoracionMin = eve.target as HTMLInputElement;
+    output.textContent = crearEstrellas(parseInt(valoracionMin.value))
+}
+
+const handlerOutputDis = (eve : Event) => {
+    const output = document.querySelector('#outRadio');
+    const valoracionMin = eve.target as HTMLInputElement;
+    output.textContent = `${valoracionMin.value} km`
+}
+
+const handlerSubmit = async (eve : Event) => {
     eve.preventDefault();
     const form = document.getElementsByTagName('form')[0];
     const input = document.getElementsByName('buscador')[0] as HTMLInputElement;
     let inputValido = validarInput(input.value);
-    if(inputValido) { form.submit(); return };
-    alert('Necesitas al menos tres carácteres');
+    if(inputValido) {
+        const restaurantes = await getRestaurantes(input.value);
+        if(restaurantes.length > 1){ 
+            ocultarRestaurante();
+            crearRestaurantes('Resultados de la busqueda', restaurantes) 
+        } else if(restaurantes.length = 1){
+            form.submit();
+        }
+    } else {
+        alert('Necesitas al menos tres carácteres');
+    }
 }
 
 const handlerAutoComplete = async (eve : Event): Promise<void> => {
@@ -39,8 +77,12 @@ const handlerAutoComplete = async (eve : Event): Promise<void> => {
         if(etiquetas.length > 0){
             crearAutoCompleteEtiquetas(etiquetas);
         }
+        const localidades = await getLocalidades(input.value);
+        if(localidades.length > 0){
+            crearAutoCompleteLocalidades(localidades);
+        }
     } else{
-        autoComplete.style.display = 'none';
+        ocultarRestaurante()
     }
     if(!autoComplete.hasChildNodes()) mostrarNoHaySugerencias();
 }
@@ -49,7 +91,16 @@ const crearAutoCompleteRestaurantes = (restaurantes: Array<Restaurante>): void =
     const autoComplete = document.querySelector('.autocomplete');
     restaurantes.forEach(({idRestaurante, nombre}) => {
         const URL = `http://localhost:8080/comerEn/controlador?restaurante=${idRestaurante}`
-        const aRestaurante = crearSugerencia(nombre , URL)
+        const aRestaurante = crearSugerencia(nombre , URL, 'restaurante')
+        autoComplete.appendChild(aRestaurante)
+    })
+}
+
+const crearAutoCompleteLocalidades = (localidades: Array<string>): void => {
+    const autoComplete = document.querySelector('.autocomplete');
+    localidades.forEach((localidad ) => {
+        const URL = `http://localhost:8080/comerEn/controlador?localidad=${localidad}`
+        const aRestaurante = crearSugerencia(localidad , URL, 'marker')
         autoComplete.appendChild(aRestaurante)
     })
 }
@@ -58,13 +109,16 @@ const crearAutoCompleteEtiquetas = (etiquetas : Array<Etiqueta>) : void => {
     const autoComplete = document.querySelector('.autocomplete');
     etiquetas.forEach(({idEtiqueta, nombre}) => {
         const URL = `http://localhost:8080/comerEn/controlador?etiquetas=${idEtiqueta}`
-        const aEtiqueta = crearSugerencia(nombre , URL)
+        const aEtiqueta = crearSugerencia(nombre , URL, 'tag')
         autoComplete.appendChild(aEtiqueta)
     })
 }
 
-const crearSugerencia = (texto : string, url : string) : HTMLAnchorElement => {
+const crearSugerencia = (texto : string, url : string, imgUrl: string) : HTMLAnchorElement => {
     const aSugerencia = document.createElement('a');
+    const imgSugerencia = document.createElement('img');
+    imgSugerencia.src = `public/img/${imgUrl}.png`
+    aSugerencia.append(imgSugerencia)
     aSugerencia.className = 'sugerencia';
     aSugerencia.append(texto);
     aSugerencia.href = url;
@@ -107,9 +161,10 @@ const errorLocalizacion = async () => {
 }
 
 const crearRestaurantes = (nombreSeccion: string, restaurantes: Array<Restaurante>) => {
+    restaurantesG = restaurantes;
     const h2Seccion = document.querySelector('#restaurantes > h2');
     h2Seccion.textContent = nombreSeccion;
-    const sectionRestaurantes = document.querySelector('#restaurantesContainer');
+    const sectionRestaurantes = document.querySelector('.restaurantes');
     while(sectionRestaurantes.hasChildNodes()){
         sectionRestaurantes.removeChild(sectionRestaurantes.childNodes[0])
     }
@@ -152,4 +207,17 @@ const crearRestaurante = (restaurante : Restaurante) => {
     articleValoracion.append('★★★★★')
     articleCointainerDescripcion.appendChild(articleValoracion)
     return aRestaurante
+}
+
+const ocultarRestaurante = () => {
+    const autoComplete = document.querySelector('.autocomplete') as HTMLElement;
+    autoComplete.style.display = 'none';
+}
+
+const crearEstrellas = (nEstrellas : number) => {
+    let ret = ''
+    for(let i = 0; i < nEstrellas; i++){
+        ret += '★'
+    }
+    return ret;
 }

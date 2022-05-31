@@ -32,7 +32,12 @@ main > section{
 #restaurantes{
     background-color: #f2f2f2;
     padding: 1vw;
-    margin: 1vw;
+    margin: auto auto;
+    max-width: 80vw;
+}
+
+#filtros{
+    width: 15vw;
 }
 
 #restaurantes > hr{
@@ -64,6 +69,7 @@ input[type="submit"]{
     background-color: #4F5902;
     border-radius: 2vw;
     font-size: 0.75vw;
+    margin-left: 1vw;
 }
 
 section form{
@@ -76,6 +82,13 @@ section form{
 }
 
 #restaurantesContainer{
+    overflow: auto;
+    display: flex;
+    align-items: center;
+    height: 40vh;
+}
+
+.restaurantes{
     overflow: auto;
     display: flex;
     flex-wrap: wrap;
@@ -153,7 +166,7 @@ h3{
     margin-top: 1vh;
     overflow: auto;
     display: none;
-    max-height: 10vh;
+    max-height: 25vh;
     font-size: 1.4rem;
     position: fixed;
     border: 1px solid #4F5902;
@@ -161,10 +174,37 @@ h3{
 
 .sugerencia{
     color: black;
-    display: block;
+    display: flex;
     border-bottom: 1px solid #4F5902;
 }
 
-.autocomplete p, a{
+.autocomplete > a{
     padding: 1.25vh;
+}
+
+.sugerencia > *{
+    margin-right: 1vw;
+}
+
+.sugerencia:hover{
+    background-color: #4F5902;
+    color: white;
+}
+
+#filtros input[type="submit"]{
+    width: 8vw;
+    height: 2vw;
+    font-size: 1vw;
+}
+
+#filtros form{
+    display: flex;
+    flex-direction: column;
+}
+
+#filtros label{
+    margin-bottom: 1vw;
+    display: flex;
+    align-items: center;
+    flex-direction:column;
 }

@@ -7,31 +7,63 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { getEtiquetas, getRestaurantes, getRestaurantesCercanos } from './services.js';
+import { getEtiquetas, getRestaurantes, getRestaurantesCercanos, getLocalidades, getRestaurantesPopulares } from './services.js';
+var restaurantesG = [];
 window.onload = () => {
-    const form = document.getElementsByTagName('form')[0];
-    const input = document.getElementsByName('buscador')[0];
-    form.addEventListener('submit', handlerSubmit);
-    input.addEventListener('input', handlerAutoComplete);
-    initLocalizacion();
+    init();
 };
 const validarInput = (input) => {
     if (input.length < 3)
         return false;
     return true;
 };
-const handlerSubmit = (eve) => {
+const init = () => {
+    initListeners();
+    initLocalizacion();
+    initRestaurantes();
+};
+const initListeners = () => {
+    const form = document.getElementsByTagName('form')[0];
+    const input = document.getElementsByName('buscador')[0];
+    const valoracionMin = document.getElementsByName('valoracionMin')[0];
+    const distanciaMax = document.getElementsByName('radio')[0];
+    valoracionMin.addEventListener('input', handlerOutputVal);
+    distanciaMax.addEventListener('input', handlerOutputDis);
+    form.addEventListener('submit', handlerSubmit);
+    input.addEventListener('input', handlerAutoComplete);
+};
+const initRestaurantes = () => __awaiter(void 0, void 0, void 0, function* () {
+    restaurantesG = yield getRestaurantesPopulares();
+});
+const handlerOutputVal = (eve) => {
+    const output = document.querySelector('#outValoracion');
+    const valoracionMin = eve.target;
+    output.textContent = crearEstrellas(parseInt(valoracionMin.value));
+};
+const handlerOutputDis = (eve) => {
+    const output = document.querySelector('#outRadio');
+    const valoracionMin = eve.target;
+    output.textContent = `${valoracionMin.value} km`;
+};
+const handlerSubmit = (eve) => __awaiter(void 0, void 0, void 0, function* () {
     eve.preventDefault();
     const form = document.getElementsByTagName('form')[0];
     const input = document.getElementsByName('buscador')[0];
     let inputValido = validarInput(input.value);
     if (inputValido) {
-        form.submit();
-        return;
+        const restaurantes = yield getRestaurantes(input.value);
+        if (restaurantes.length > 1) {
+            ocultarRestaurante();
+            crearRestaurantes('Resultados de la busqueda', restaurantes);
+        }
+        else if (restaurantes.length = 1) {
+            form.submit();
+        }
     }
-    ;
-    alert('Necesitas al menos tres carácteres');
-};
+    else {
+        alert('Necesitas al menos tres carácteres');
+    }
+});
 const handlerAutoComplete = (eve) => __awaiter(void 0, void 0, void 0, function* () {
     const input = eve.target;
     const autoComplete = document.querySelector('.autocomplete');
@@ -46,9 +78,13 @@ const handlerAutoComplete = (eve) => __awaiter(void 0, void 0, void 0, function*
         if (etiquetas.length > 0) {
             crearAutoCompleteEtiquetas(etiquetas);
         }
+        const localidades = yield getLocalidades(input.value);
+        if (localidades.length > 0) {
+            crearAutoCompleteLocalidades(localidades);
+        }
     }
     else {
-        autoComplete.style.display = 'none';
+        ocultarRestaurante();
     }
     if (!autoComplete.hasChildNodes())
         mostrarNoHaySugerencias();
@@ -57,7 +93,15 @@ const crearAutoCompleteRestaurantes = (restaurantes) => {
     const autoComplete = document.querySelector('.autocomplete');
     restaurantes.forEach(({ idRestaurante, nombre }) => {
         const URL = `http://localhost:8080/comerEn/controlador?restaurante=${idRestaurante}`;
-        const aRestaurante = crearSugerencia(nombre, URL);
+        const aRestaurante = crearSugerencia(nombre, URL, 'restaurante');
+        autoComplete.appendChild(aRestaurante);
+    });
+};
+const crearAutoCompleteLocalidades = (localidades) => {
+    const autoComplete = document.querySelector('.autocomplete');
+    localidades.forEach((localidad) => {
+        const URL = `http://localhost:8080/comerEn/controlador?localidad=${localidad}`;
+        const aRestaurante = crearSugerencia(localidad, URL, 'marker');
         autoComplete.appendChild(aRestaurante);
     });
 };
@@ -65,12 +109,15 @@ const crearAutoCompleteEtiquetas = (etiquetas) => {
     const autoComplete = document.querySelector('.autocomplete');
     etiquetas.forEach(({ idEtiqueta, nombre }) => {
         const URL = `http://localhost:8080/comerEn/controlador?etiquetas=${idEtiqueta}`;
-        const aEtiqueta = crearSugerencia(nombre, URL);
+        const aEtiqueta = crearSugerencia(nombre, URL, 'tag');
         autoComplete.appendChild(aEtiqueta);
     });
 };
-const crearSugerencia = (texto, url) => {
+const crearSugerencia = (texto, url, imgUrl) => {
     const aSugerencia = document.createElement('a');
+    const imgSugerencia = document.createElement('img');
+    imgSugerencia.src = `public/img/${imgUrl}.png`;
+    aSugerencia.append(imgSugerencia);
     aSugerencia.className = 'sugerencia';
     aSugerencia.append(texto);
     aSugerencia.href = url;
@@ -107,9 +154,10 @@ const errorLocalizacion = () => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 const crearRestaurantes = (nombreSeccion, restaurantes) => {
+    restaurantesG = restaurantes;
     const h2Seccion = document.querySelector('#restaurantes > h2');
     h2Seccion.textContent = nombreSeccion;
-    const sectionRestaurantes = document.querySelector('#restaurantesContainer');
+    const sectionRestaurantes = document.querySelector('.restaurantes');
     while (sectionRestaurantes.hasChildNodes()) {
         sectionRestaurantes.removeChild(sectionRestaurantes.childNodes[0]);
     }
@@ -151,5 +199,16 @@ const crearRestaurante = (restaurante) => {
     articleValoracion.append('★★★★★');
     articleCointainerDescripcion.appendChild(articleValoracion);
     return aRestaurante;
+};
+const ocultarRestaurante = () => {
+    const autoComplete = document.querySelector('.autocomplete');
+    autoComplete.style.display = 'none';
+};
+const crearEstrellas = (nEstrellas) => {
+    let ret = '';
+    for (let i = 0; i < nEstrellas; i++) {
+        ret += '★';
+    }
+    return ret;
 };
 //# sourceMappingURL=index.js.map

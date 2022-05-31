@@ -20,28 +20,12 @@
         <jsp:include page="./componentes/header.jsp" />
         <main>
             <section>
-                <h2>Iniciar Sesión</h2>
+                <h2>Recuperar Contraseña</h2>
                 <hr/>
                 <form action="controlador" method="post" id="formIniciarSesion">
                     <label>Correo electrónico: <input type="email" name="correo"/></label>
-                    <label>Contraseña: <input type="password" name="contrasena"/></label>
-                    <input type="submit" value="Iniciar Sesion" name="iniciarSesion"/>
+                    <input type="submit" value="Enviar correo" name="recuperarContrasena"/>
                 </form>
-                <%
-                    if (request.getAttribute("usuario_no_existe") != null) {
-                %>
-                <p class="error">Ese usuario no exite, comprueba que los datos sean correctos</p>
-                <%
-                    }
-                %>
-                <%
-                    if (request.getAttribute("correo_recuperar_contrasena") != null) {
-                %>
-                <p class="error">Se ha envidado un correo con la contraseña nueva</p>
-                <%
-                    }
-                %>
-                <p>Si no tienes una cuenta, puedes registrarte<a href="registro.jsp">aquí</a></p>
                 <p>Si has olvidado la contraseña pulsa <a href="recuperarContraseña.jsp">aquí</a></p>
             </section>
         </main>

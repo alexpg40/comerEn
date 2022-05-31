@@ -33,7 +33,12 @@
                 <%
                     ArrayList<Restaurante> restaurantes = (ArrayList<Restaurante>) request.getAttribute("listaRestaurante");
                 %>
-                <h2>Resultados de "<%=request.getParameter("buscador")%>" - Nº resultados <%=restaurantes.size()%></h2>
+                <h2>
+                <%
+                    if(request.getParameter("buscador") != null ){%>Resultados de "<%=request.getParameter("buscador")%>" - <%}
+                %>
+                Nº resultados <%=restaurantes.size()%>
+                </h2>
                 <hr/>
                 <%
                     for (Restaurante restaurante : restaurantes) {

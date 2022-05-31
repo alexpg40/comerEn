@@ -36,7 +36,7 @@
                             <input type="submit" value="Buscar">
                         </form>
                         <div class="autocomplete">
-                            
+
                         </div>
                     </div>
                 </article>
@@ -44,31 +44,60 @@
                     <h2>Restaurantes más Populares</h2>
                     <hr/>
                     <section id="restaurantesContainer">
-                        <%
-                            for (Restaurante restaurante : restaurauntes) {
-                        %>
-                        <a href="controlador?restaurante=<%=restaurante.getIdRestaurante()%>">
-                            <article class="restaurante">
-                                <h3 class="nombreRestaurante"><%=restaurante.getNombre()%></h3>
-                                <hr/>
-                                <section class="bodyRestaurante">
-                                    <article>
-                                        <img class="imagenRestaurante" src="public/img/foto_temporal.jpg" alt="foto temporal del restaurante"/>
-                                    </article>
-                                    <article class="containerDescripcion">
-                                        <article class="descripcionRestaurante">
-                                            <%=restaurante.getDescripcion()%>
+                        <article id="filtros">
+                            <form>
+                                <label>
+                                    Distancia Máxima
+                                    <input type="range" name="radio" min="5" value="5" step="5" max="50"/>
+                                    <output id="outRadio" for="radio">5</output>
+                                </label>
+                                <label>Localidad 
+                                    <select name="localidad">
+                                        <option>Todas</option>
+                                        <%
+                                            for (Restaurante restaurante : restaurauntes) {
+                                        %>
+                                        <option><%=restaurante.getLocalidad()%></option>
+                                        <%
+                                            }
+                                        %>
+                                    </select>
+                                </label>
+                                <label>
+                                    Puntuación minima
+                                        <input type="range" name="valoracionMin" value="1" min="1" max="5"/>
+                                        <output id="outValoracion" for="valoracionMin">★</output>
+                                </label>
+                                <input type="submit" value="Filtrar" name="filtrar"/>
+                            </form>
+                        </article>
+                        <article class="restaurantes">
+                            <%
+                                for (Restaurante restaurante : restaurauntes) {
+                            %>
+                            <a href="controlador?restaurante=<%=restaurante.getIdRestaurante()%>">
+                                <article class="restaurante">
+                                    <h3 class="nombreRestaurante"><%=restaurante.getNombre()%></h3>
+                                    <hr/>
+                                    <section class="bodyRestaurante">
+                                        <article>
+                                            <img class="imagenRestaurante" src="public/img/foto_temporal.jpg" alt="foto temporal del restaurante"/>
                                         </article>
-                                        <article class="valoracionRestaurante">
-                                            ★★★★★
+                                        <article class="containerDescripcion">
+                                            <article class="descripcionRestaurante">
+                                                <%=restaurante.getDescripcion()%>
+                                            </article>
+                                            <article class="valoracionRestaurante">
+                                                ★★★★★
+                                            </article>
                                         </article>
-                                    </article>
-                                </section>
-                            </article>
-                        </a>
-                        <%
-                            }
-                        %>
+                                    </section>
+                                </article>
+                            </a>
+                            <%
+                                }
+                            %>
+                        </article>
                     </section>
                 </article>
             </section>

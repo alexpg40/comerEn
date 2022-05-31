@@ -19,6 +19,8 @@ import Entidades.Restaurante;
 import Entidades.Rol;
 import Entidades.Suscripcion;
 import Entidades.Usuario;
+import Utilidades.Correos;
+import Utilidades.GeneradorContraseñas;
 import Utilidades.Utilidades;
 import com.google.gson.Gson;
 import java.io.IOException;
@@ -50,6 +52,11 @@ public class controlador extends HttpServlet {
         HttpSession session = request.getSession(true);
         RequestDispatcher rd = null;
         if (session.isNew()) {
+            RestauranteDAO restauranteDao = new RestauranteDAO();
+            ArrayList<Restaurante> restaurantesPopulares = restauranteDao.getRestaurantesPopulares();
+            request.setAttribute("restaurantes", restaurantesPopulares);
+            restauranteDao.cerrarConexion();
+            request.setAttribute("restaurantes", restaurantesPopulares);
             rd = request.getRequestDispatcher("/index.jsp");
             rd.forward(request, response);
         } else {
@@ -101,10 +108,35 @@ public class controlador extends HttpServlet {
             } else if (buscador != null && !buscador.equals("")) {
                 RestauranteDAO restauranteDao = new RestauranteDAO();
                 ArrayList<Restaurante> restaurantes = restauranteDao.getRestaurantes(buscador);
-                restauranteDao.cerrarConexion();
-                request.setAttribute("listaRestaurante", restaurantes);
-                rd = request.getRequestDispatcher("/listaRestaurantes.jsp");
-                rd.forward(request, response);
+                if (restaurantes.size() == 1) {
+                    request.setAttribute("restaurante", restaurantes.get(0));
+                    EtiquetaDAO etiquetaDao = new EtiquetaDAO();
+                    ArrayList<Etiqueta> etiquetas = etiquetaDao.getEtiquitasByIdRestaurante(restaurantes.get(0).getIdRestaurante());
+                    etiquetaDao.cerrarConexion();
+                    FotografiaDAO fotografiaDao = new FotografiaDAO();
+                    ArrayList<Fotografia> fotografias = fotografiaDao.getFotografiasByIdRestaurante(restaurantes.get(0).getIdRestaurante());
+                    fotografiaDao.cerrarConexion();
+                    ComentarioDAO comentarioDao = new ComentarioDAO();
+                    ArrayList<Comentario> comentarios = comentarioDao.getComentariosByIdRestaurante(restaurantes.get(0).getIdRestaurante());
+                    comentarioDao.cerrarConexion();
+                    int valoracionMediaRestaurante = restauranteDao.valoracionMediaRestaurante(restaurantes.get(0).getIdRestaurante());
+                    restauranteDao.cerrarConexion();
+                    rd = request.getRequestDispatcher("/restaurante.jsp");
+                    request.setAttribute("comentarios", comentarios);
+                    request.setAttribute("fotografias", fotografias);
+                    request.setAttribute("etiquetas", etiquetas);
+                    request.setAttribute("valoracion", valoracionMediaRestaurante);
+                    rd.forward(request, response);
+                } else if (restaurantes.size() > 1) {
+                    restauranteDao.cerrarConexion();
+                    request.setAttribute("listaRestaurante", restaurantes);
+                    rd = request.getRequestDispatcher("/listaRestaurantes.jsp");
+                    rd.forward(request, response);
+                } else if (restaurantes.size() == 0) {
+                    restauranteDao.cerrarConexion();
+                    rd = request.getRequestDispatcher("/index.jsp");
+                    rd.forward(request, response);
+                }
             } else if (iniciarSesion != null) {
                 UsuarioDAO usuarioDao = new UsuarioDAO();
                 String correo = request.getParameter("correo");
@@ -210,10 +242,74 @@ public class controlador extends HttpServlet {
                 etiquetaDao.cerrarConexion();
                 String json = new Gson().toJson(etiquitasByNombre);
                 response.getWriter().write(json);
-            } else {
+            } else if (request.getParameter("buscarRestaurantesCercanos") != null) {
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                String[] split = request.getParameter("buscarRestaurantesCercanos").split("\\|");
+                int radio = Integer.parseInt(request.getParameter("radio"));
+                RestauranteDAO restauranteDao = new RestauranteDAO();
+                ArrayList<Restaurante> restaurantes = restauranteDao.getRestaurantesCercanos(Double.parseDouble(split[0]), Double.parseDouble(split[1]), radio);
+                restauranteDao.cerrarConexion();
+                String json = new Gson().toJson(restaurantes);
+                response.getWriter().write(json);
+            } else if (request.getParameter("buscarLocalidades") != null) {
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                RestauranteDAO restauranteDao = new RestauranteDAO();
+                ArrayList<String> localidadesRestaurantes = restauranteDao.getLocalidadesRestaurantes(request.getParameter("buscarLocalidades"));
+                restauranteDao.cerrarConexion();
+                String json = new Gson().toJson(localidadesRestaurantes);
+                response.getWriter().write(json);
+            } else if (request.getParameter("etiquetas") != null) {
+                RestauranteDAO restauranteDao = new RestauranteDAO();
+                ArrayList<Restaurante> restaurantes = restauranteDao.getRestaurantesByEtiquetas(Integer.parseInt(request.getParameter("etiquetas")));
+                request.setAttribute("listaRestaurante", restaurantes);
+                restauranteDao.cerrarConexion();
+                rd = request.getRequestDispatcher("/listaRestaurantes.jsp");
+                rd.forward(request, response);
+            } else if (request.getParameter("localidad") != null) {
+                RestauranteDAO restauranteDao = new RestauranteDAO();
+                ArrayList<Restaurante> restaurantes = restauranteDao.getRestaurantesByLocalidad(request.getParameter("localidad"));
+                request.setAttribute("listaRestaurante", restaurantes);
+                restauranteDao.cerrarConexion();
+                rd = request.getRequestDispatcher("/listaRestaurantes.jsp");
+                rd.forward(request, response);
+            } else if (request.getParameter("recuperarContrasena") != null) {
+                UsuarioDAO usuarioDao = new UsuarioDAO();
+                int existeUsuario = usuarioDao.existeUsuario(request.getParameter("correo"));
+                if (existeUsuario > 0) {
+                    String nuevaContraseña = GeneradorContraseñas.getPassword();
+                    usuarioDao.cambiarContraseña(Utilidades.convertirSHA256(nuevaContraseña), existeUsuario);
+                    usuarioDao.cerrarConexion();
+                    Correos correo = new Correos();
+                    correo.sendEmail("Recuperarción contraseña - comerEn", "Se contraseña actual ha cambiado a " + nuevaContraseña, request.getParameter("correo"));
+                    rd = request.getRequestDispatcher("/login.jsp");
+                    System.out.println(request.getParameter("correo"));
+                    request.setAttribute("correo_recuperar_contrasena", "correo_recuperar_contrasena");
+                    rd.forward(request, response);
+                } else {
+                    usuarioDao.cerrarConexion();
+                    request.setAttribute("no_existe_usuario", "no_existe_usuario");
+                    rd = request.getRequestDispatcher("/recuperarContraseña.jsp");
+                    rd.forward(request, response);
+                }
+            } else if(request.getParameter("getRestaurantesPopulares") != null){
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                RestauranteDAO restauranteDao = new RestauranteDAO();
+                ArrayList<Restaurante> restaurantePopulares = restauranteDao.getRestaurantesPopulares();
+                restauranteDao.cerrarConexion();
+                String json = new Gson().toJson(restaurantePopulares);
+            } else if(request.getParameter("filtrarRestaurantes") != null){
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                RestauranteDAO restauranteDao = new RestauranteDAO();
+                ArrayList<Restaurante> restaurantePopulares = restauranteDao.getRestaurantesFiltrados(0, 0, 0, buscador, 0);
+                restauranteDao.cerrarConexion();
+                String json = new Gson().toJson(restaurantePopulares);
+            }else {
                 RestauranteDAO restauranteDao = new RestauranteDAO();
                 ArrayList<Restaurante> restaurantesPopulares = restauranteDao.getRestaurantesPopulares();
-                request.setAttribute("restaurantes", restaurantesPopulares);
                 restauranteDao.cerrarConexion();
                 request.setAttribute("restaurantes", restaurantesPopulares);
                 rd = request.getRequestDispatcher("/index.jsp");

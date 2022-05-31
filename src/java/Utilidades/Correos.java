@@ -21,17 +21,17 @@ public class Correos {
     
     	private final Properties properties = new Properties();
 	
-	private String password = "";
+	private String password = "comeren12";
  
 	private Session session;
  
 	private void init() {
  
-		properties.put("mail.smtp.host", "smtp.gmail.com");
+		properties.put("mail.smtp.host", "smtp.office365.com");
 		properties.put("mail.smtp.starttls.enable", "true");
-		properties.put("mail.smtp.port",25);
-		properties.put("mail.smtp.mail.sender","");
-		properties.put("mail.smtp.user", "");
+		properties.put("mail.smtp.port",587);
+		properties.put("mail.smtp.mail.sender","comeren.comer@outlook.com");
+		properties.put("mail.smtp.starttls.enable","true");
 		properties.put("mail.smtp.auth", "true");
  
 		session = Session.getDefaultInstance(properties);
