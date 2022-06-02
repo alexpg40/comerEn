@@ -5,7 +5,6 @@
  */
 package SistemaRecomendacion;
 
-import DAO.ComentarioDAO;
 import DAO.EtiquetaDAO;
 import DAO.RestauranteDAO;
 import DAO.UsuarioDAO;
@@ -21,43 +20,49 @@ import java.util.Set;
  *
  * @author alex
  */
-public class Prueba {
+public class SistemaRecomendacion {
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
 
+        
         RestauranteDAO restauranteDao = new RestauranteDAO();
         ArrayList<Restaurante> restaurantes = restauranteDao.getRestaurantes("");
         restauranteDao.cerrarConexion();
-        TablaBooleana tablaBooleana = crearTablaBooleana(restaurantes);
 
+        Map<Integer, Double> calcularRecomendacion = calcularRecomendacion(restaurantes, 7);
+        
         TablaValoracionesUsuarios tablaValoraciones = crearTablaValoraciones(restaurantes);
-        //Recupero los productos valorados de cada usuario, la key es el id del usuario y el value es un array list de ids de los restaurantes
+    }
+
+    public static Map<Integer, Double> calcularRecomendacion(ArrayList<Restaurante> restaurantes, int idUsuario) {
+        Map<Integer, Double> ret = new HashMap<>();
+        
+        TablaBooleana tablaBooleana = crearTablaBooleana(restaurantes);
+        TablaValoracionesUsuarios tablaValoraciones = crearTablaValoraciones(restaurantes);
         HashMap<Integer, ArrayList<Integer>> productosValoradosByUsuario = tablaValoraciones.getProductosValoradosByUsuario();
-        //Ahora creo los perfiles de los usuarios dados sus productos valorados, la key es la id del usuario y el array es el vector del perfil de usuario
         HashMap<Integer, int[]> perfilesUsuarios = tablaBooleana.getPerfilesUsuarios(productosValoradosByUsuario);
         Set<Integer> etiquetas = tablaBooleana.getEtiquetas();
 
-        ArrayList<Integer> productosNoValoradosByUsuario = tablaValoraciones.getProductosNoValoradosByUsuario(7);
-        ArrayList<Integer> productosValorados = tablaValoraciones.getProductosValoradosByUsuario(7);
+        ArrayList<Integer> productosNoValoradosByUsuario = tablaValoraciones.getProductosNoValoradosByUsuario(idUsuario);
+        ArrayList<Integer> productosValorados = tablaValoraciones.getProductosValoradosByUsuario(idUsuario);
         int[] perfilUsuario = tablaBooleana.getPerfilUsuario(productosValorados);
 
         TablaPonderaciones tablaPonderaciones = new TablaPonderaciones(perfilesUsuarios, etiquetas);
 
-        double[] ponderacionUsuario = tablaPonderaciones.getPonderacionUsuario(7);
+        double[] ponderacionUsuario = tablaPonderaciones.getPonderacionUsuario(idUsuario);
 
-        for(double a : ponderacionUsuario){
-            System.out.println(a);
-        }
-        
+        double calcularSimilitudCosPonderacion = 0;
+
         for (Integer i : productosNoValoradosByUsuario) {
             int[] perfilProducto = tablaBooleana.getPerfilProducto(i);
-            double calcularSimilitudCosPonderacion = calcularSimilitudCosPonderacion(perfilUsuario, perfilProducto, ponderacionUsuario);
-            System.out.println( i + " - " +calcularSimilitudCosPonderacion);
+            calcularSimilitudCosPonderacion = calcularSimilitudCosPonderacion(perfilUsuario, perfilProducto, ponderacionUsuario);
+            ret.put(i, calcularSimilitudCosPonderacion);
         }
-        int a = 1;
+
+        return ret;
     }
 
     public static TablaBooleana crearTablaBooleana(ArrayList<Restaurante> restaurantes) {
@@ -123,8 +128,10 @@ public class Prueba {
             sumaProducto += perfilProducto[i];
         }
         ret = multiplicacion / (Math.sqrt(sumaUsuario) * Math.sqrt(sumaProducto));
-        
-        if(new Double(ret).isNaN()){ return 0.0;}
+
+        if (new Double(ret).isNaN()) {
+            return 0.0;
+        }
         return ret;
     }
 
