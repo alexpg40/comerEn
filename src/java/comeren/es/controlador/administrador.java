@@ -44,7 +44,16 @@ public class administrador extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession(true);
         RequestDispatcher rd = null;
-        if (request.getParameter("opcion") != null) {
+
+        if (session.isNew()) {
+            RestauranteDAO restauranteDao = new RestauranteDAO();
+            ArrayList<Restaurante> restaurantesPopulares = restauranteDao.getRestaurantesPopulares();
+            request.setAttribute("restaurantes", restaurantesPopulares);
+            restauranteDao.cerrarConexion();
+            request.setAttribute("restaurantes", restaurantesPopulares);
+            rd = request.getRequestDispatcher("/index.jsp");
+            rd.forward(request, response);
+        } else if (request.getParameter("opcion") != null) {
             if (request.getParameter("opcion").equals("usuarios")) {
                 rd = request.getRequestDispatcher("/adminUsuarios.jsp");
                 rd.forward(request, response);
@@ -156,46 +165,46 @@ public class administrador extends HttpServlet {
         } else if (request.getParameter("eliminarRestaurante") != null) {
             RestauranteDAO restauranteDao = new RestauranteDAO();
             int borrarRestaurante = restauranteDao.borrarRestaurante(Integer.parseInt(request.getParameter("eliminarRestaurante")));
-            if(borrarRestaurante == 0){
+            if (borrarRestaurante == 0) {
                 request.setAttribute("error", "No se pudo borrar el restaurante de la base de datos correctamente!");
                 rd = request.getRequestDispatcher("/paginaError.jsp");
                 rd.forward(request, response);
             } else {
-                ArrayList<Restaurante> restaurantes = restauranteDao.getRestaurantes((String)session.getAttribute("paramBusqueda"));
+                ArrayList<Restaurante> restaurantes = restauranteDao.getRestaurantes((String) session.getAttribute("paramBusqueda"));
                 session.setAttribute("restaurantes", restaurantes);
                 rd = request.getRequestDispatcher("/listaRestaurantesAdmin.jsp");
                 rd.forward(request, response);
             }
             restauranteDao.cerrarConexion();
-        } else if(request.getParameter("ocultarRestaurante") != null){
+        } else if (request.getParameter("ocultarRestaurante") != null) {
             RestauranteDAO restauranteDao = new RestauranteDAO();
             int ocultarRestaurante = restauranteDao.ocultarRestaurante(Integer.parseInt(request.getParameter("ocultarRestaurante")));
-            if(ocultarRestaurante == 0){
+            if (ocultarRestaurante == 0) {
                 request.setAttribute("error", "No se pudo ocultar el restaurante de la base de datos correctamente!");
                 rd = request.getRequestDispatcher("/paginaError.jsp");
                 rd.forward(request, response);
             } else {
-                ArrayList<Restaurante> restaurantes = restauranteDao.getRestaurantes((String)session.getAttribute("paramBusqueda"));
+                ArrayList<Restaurante> restaurantes = restauranteDao.getRestaurantes((String) session.getAttribute("paramBusqueda"));
                 restauranteDao.cerrarConexion();
                 session.setAttribute("restaurantes", restaurantes);
                 rd = request.getRequestDispatcher("/listaRestaurantesAdmin.jsp");
                 rd.forward(request, response);
             }
-        } else if(request.getParameter("mostrarRestaurante") != null){
+        } else if (request.getParameter("mostrarRestaurante") != null) {
             RestauranteDAO restauranteDao = new RestauranteDAO();
             int ocultarRestaurante = restauranteDao.mostrarRestaurante(Integer.parseInt(request.getParameter("mostrarRestaurante")));
-            if(ocultarRestaurante == 0){
+            if (ocultarRestaurante == 0) {
                 request.setAttribute("error", "No se pudo mostrar el restaurante de la base de datos correctamente!");
                 rd = request.getRequestDispatcher("/paginaError.jsp");
                 rd.forward(request, response);
             } else {
-                ArrayList<Restaurante> restaurantes = restauranteDao.getRestaurantes((String)session.getAttribute("paramBusqueda"));
+                ArrayList<Restaurante> restaurantes = restauranteDao.getRestaurantes((String) session.getAttribute("paramBusqueda"));
                 session.setAttribute("restaurantes", restaurantes);
                 rd = request.getRequestDispatcher("/listaRestaurantesAdmin.jsp");
                 rd.forward(request, response);
             }
             restauranteDao.cerrarConexion();
-        } else if(request.getParameter("crear_restaurante") != null){
+        } else if (request.getParameter("crear_restaurante") != null) {
             Integer admin = (Integer) session.getAttribute("idUsuario");
             String nombreRestaurante = (String) request.getParameter("nombreRestaurante");
             String nombreDueno = (String) request.getParameter("nombreDueno");
@@ -206,7 +215,7 @@ public class administrador extends HttpServlet {
             RestauranteDAO restauranteDao = new RestauranteDAO();
             usuarioDao.registrarUsuario(new Usuario(nombreDueno, apellidoDueno, correoDueno, contraseña));
             int idUsuario = usuarioDao.existeUsuario(correoDueno, Utilidades.convertirSHA256(contraseña));
-            if(idUsuario != 0){
+            if (idUsuario != 0) {
                 restauranteDao.darAltaRestaurante(nombreRestaurante, idUsuario, admin);
                 RolDAO rolDao = new RolDAO();
                 rolDao.submitRolUsuario(idUsuario, 2);

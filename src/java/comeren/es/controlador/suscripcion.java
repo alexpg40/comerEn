@@ -5,7 +5,9 @@
  */
 package comeren.es.controlador;
 
+import DAO.RestauranteDAO;
 import DAO.SuscripcionDAO;
+import Entidades.Restaurante;
 import Entidades.Suscripcion;
 import Entidades.Usuario;
 import java.io.IOException;
@@ -36,13 +38,21 @@ public class suscripcion extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession(true);
-        RequestDispatcher rd = null; 
+        RequestDispatcher rd = null;
         Usuario usuario = (Usuario) session.getAttribute("usuario");
         SuscripcionDAO suscripcionDao = new SuscripcionDAO();
-        if (request.getParameter("comprar") != null) {
+        if (session.isNew()) {
+            RestauranteDAO restauranteDao = new RestauranteDAO();
+            ArrayList<Restaurante> restaurantesPopulares = restauranteDao.getRestaurantesPopulares();
+            request.setAttribute("restaurantes", restaurantesPopulares);
+            restauranteDao.cerrarConexion();
+            request.setAttribute("restaurantes", restaurantesPopulares);
+            rd = request.getRequestDispatcher("/index.jsp");
+            rd.forward(request, response);
+        } else if (request.getParameter("comprar") != null) {
             int idSuscripcion = Integer.parseInt(request.getParameter("comprar"));
             suscripcionDao.comprarSuscripcion(idSuscripcion, usuario.getIdUsuario());
-        } else if(request.getParameter("baja") != null){
+        } else if (request.getParameter("baja") != null) {
             int idSuscripcion = Integer.parseInt(request.getParameter("baja"));
             suscripcionDao.anularSuscripcion(idSuscripcion, usuario.getIdUsuario());
         }

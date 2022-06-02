@@ -47,4 +47,15 @@ export const getRestaurantesCercanos = (punto, radio = 40) => {
     const URL = `http://localhost:8080/comerEn/controlador?buscarRestaurantesCercanos=${longitude}|${latitude}&radio=${radio}`;
     return request(URL);
 };
+export const getRestaurantesFiltrados = (localidad, valoracionMin, radio = 40, punto) => {
+    let URL = '';
+    if (punto) {
+        const { latitude, longitude } = punto;
+        URL = `http://localhost:8080/comerEn/controlador?filtrarRestaurantes=${longitude}|${latitude}&radio=${radio}&valoracionMin=${valoracionMin}&localidadFiltros=${localidad}`;
+    }
+    else {
+        URL = `http://localhost:8080/comerEn/controlador?filtrarRestaurantes=a&valoracionMin=${valoracionMin}&localidadFiltros=${localidad}`;
+    }
+    return request(URL);
+};
 //# sourceMappingURL=services.js.map

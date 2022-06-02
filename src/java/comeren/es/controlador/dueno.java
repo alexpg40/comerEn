@@ -39,7 +39,14 @@ public class dueno extends HttpServlet {
         RequestDispatcher rd = null;
         RestauranteDAO restauranteDao = new RestauranteDAO();
         Usuario usuario = (Usuario) session.getAttribute("usuario");
-        if(request.getParameter("editar") != null){
+        if (session.isNew()) {
+            ArrayList<Restaurante> restaurantesPopulares = restauranteDao.getRestaurantesPopulares();
+            request.setAttribute("restaurantes", restaurantesPopulares);
+            restauranteDao.cerrarConexion();
+            request.setAttribute("restaurantes", restaurantesPopulares);
+            rd = request.getRequestDispatcher("/index.jsp");
+            rd.forward(request, response);
+        } else if(request.getParameter("editar") != null){
             Restaurante restauranteById = restauranteDao.getRestauranteById(Integer.parseInt(request.getParameter("editar")));
             if(restauranteById == null){
                 request.setAttribute("error", "No se podido encontrar el restaurante en la base de datos!");

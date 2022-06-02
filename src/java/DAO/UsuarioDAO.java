@@ -12,6 +12,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -159,6 +161,62 @@ public class UsuarioDAO {
             ret = smt.executeUpdate(sqlStr);
         } catch (SQLException ex) {
             System.out.println("Error al actualizar el usuario" + ex.getMessage());
+        }
+        return ret;
+    }
+    
+    public int[] getUsuariosValoradoRestaurante(int idRestaurante){
+        
+        int[] ret = new int[2];
+        try {
+            String sqlStr = "SELECT usuario.*, comentario.valoracion"
+                    + " FROM usuario, comentario"
+                    + " WHERE usuario.idUsuario = comentario.idUsuario"
+                    + " AND comentario.idRestaurante = " + idRestaurante;
+            Statement smt = this.conexion.createStatement();
+            System.out.println(sqlStr);
+            ResultSet result = smt.executeQuery(sqlStr);
+            while(result.next()){
+                ret[0] = result.getInt("idUsuario");
+                ret[1] = result.getInt("valoracion");
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error al actualizar el usuario" + ex.getMessage());
+        }
+        return ret;
+    }
+    
+    public int getNUsuariosComentado(){
+        int ret = 0;
+        try {
+            String sqlStr = "SELECT DISTINCT COUNT(idUsuario) as numero FROM comentario";
+            Statement smt = this.conexion.createStatement();
+            System.out.println(sqlStr);
+            ResultSet result = smt.executeQuery(sqlStr);
+            while(result.next()){
+                ret = result.getInt("numero");
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error al recuperar el numero de usuarios que han comentado" + ex.getMessage());
+        }
+        return ret;
+    }
+    
+    public int getNUsuariosComentadoByidEtiqueta(int idEtiqueta){
+        int ret = 0;
+        try {
+            String sqlStr = "SELECT COUNT(DISTINCT comentario.idUsuario) as numero "
+                    + "FROM restaurante_etiqueta, comentario WHERE idEtiqueta = " + idEtiqueta + " "
+                    + "AND comentario.idRestaurante = restaurante_etiqueta.idRestaurante "
+                    + "AND comentario.valoracion >= 3";
+            Statement smt = this.conexion.createStatement();
+            System.out.println(sqlStr);
+            ResultSet result = smt.executeQuery(sqlStr);
+            while(result.next()){
+                ret = result.getInt("numero");
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error al recuperar el numero de usuarios de la etiqueta" + ex.getMessage());
         }
         return ret;
     }

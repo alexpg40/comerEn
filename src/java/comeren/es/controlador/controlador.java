@@ -293,20 +293,30 @@ public class controlador extends HttpServlet {
                     rd = request.getRequestDispatcher("/recuperarContraseña.jsp");
                     rd.forward(request, response);
                 }
-            } else if(request.getParameter("getRestaurantesPopulares") != null){
+            } else if(request.getParameter("getRestaurantesPopulares") != null){    
                 response.setContentType("application/json");
                 response.setCharacterEncoding("UTF-8");
                 RestauranteDAO restauranteDao = new RestauranteDAO();
                 ArrayList<Restaurante> restaurantePopulares = restauranteDao.getRestaurantesPopulares();
                 restauranteDao.cerrarConexion();
                 String json = new Gson().toJson(restaurantePopulares);
+                response.getWriter().write(json);
             } else if(request.getParameter("filtrarRestaurantes") != null){
                 response.setContentType("application/json");
+                String filtro = request.getParameter("valoracionMin");
                 response.setCharacterEncoding("UTF-8");
                 RestauranteDAO restauranteDao = new RestauranteDAO();
-                ArrayList<Restaurante> restaurantePopulares = restauranteDao.getRestaurantesFiltrados(0, 0, 0, buscador, 0);
+                ArrayList<Restaurante> restaurantes = null;
+                if(request.getParameter("radio") != null){
+                    String[] split = request.getParameter("filtrarRestaurantes").split("\\|");
+                    restaurantes = restauranteDao.getRestaurantesFiltrados(Double.parseDouble(split[0]), Double.parseDouble(split[1]), Integer.parseInt(request.getParameter("radio")), request.getParameter("localidadFiltros"), Integer.parseInt(request.getParameter("valoracionMin")));
+                } else{
+                    restaurantes = restauranteDao.getRestaurantesFiltrados(request.getParameter("localidadFiltros"), Integer.parseInt(request.getParameter("valoracionMin")));
+                }
                 restauranteDao.cerrarConexion();
-                String json = new Gson().toJson(restaurantePopulares);
+                String json = new Gson().toJson(restaurantes);
+                System.out.println(json);
+                response.getWriter().write(json);
             }else {
                 RestauranteDAO restauranteDao = new RestauranteDAO();
                 ArrayList<Restaurante> restaurantesPopulares = restauranteDao.getRestaurantesPopulares();

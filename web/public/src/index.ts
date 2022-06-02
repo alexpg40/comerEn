@@ -1,5 +1,5 @@
-import {getEtiquetas, getRestaurantes, getRestaurantesCercanos, getLocalidades, getRestaurantesPopulares} from './services.js'
-import {Restaurante, Etiqueta} from './d'
+import {getEtiquetas, getRestaurantes, getRestaurantesCercanos, getLocalidades, getRestaurantesPopulares, getRestaurantesFiltrados} from './services.js'
+import {Restaurante, Etiqueta, Punto} from './d'
 
 var restaurantesG : Array<Restaurante> = []
 
@@ -21,8 +21,10 @@ const init = () => {
 const initListeners = () => {
     const form = document.getElementsByTagName('form')[0];
     const input = document.getElementsByName('buscador')[0];
-    const valoracionMin = document.getElementsByName('valoracionMin')[0] as HTMLInputElement;
-    const distanciaMax = document.getElementsByName('radio')[0] as HTMLInputElement;
+    const valoracionMin = document.getElementsByName('valoracionMin')[0];
+    const distanciaMax = document.getElementsByName('radio')[0];
+    const formFiltrar = document.getElementById('formFiltrar') ;
+    formFiltrar.addEventListener('submit', handlerFiltrar)
     valoracionMin.addEventListener('input', handlerOutputVal)
     distanciaMax.addEventListener('input', handlerOutputDis)
     form.addEventListener('submit', handlerSubmit);
@@ -43,6 +45,29 @@ const handlerOutputDis = (eve : Event) => {
     const output = document.querySelector('#outRadio');
     const valoracionMin = eve.target as HTMLInputElement;
     output.textContent = `${valoracionMin.value} km`
+}
+
+const handlerFiltrar = (eve : Event) => {
+    eve.preventDefault();
+    if(navigator.geolocation){
+        navigator.geolocation.getCurrentPosition(mostrarRestaurantesFiltrados, mostrarFiltradosSinUbicacion)
+    }
+}
+
+const mostrarRestaurantesFiltrados = async ({coords})=> {
+    const inputLocalidad = document.getElementsByName('localidadFiltros')[0] as HTMLInputElement;
+    const inputValoracion = document.getElementsByName('valoracionMin')[0] as HTMLInputElement;
+    const inputRadio = document.getElementsByName('radio')[0] as HTMLInputElement;
+    restaurantesG = await getRestaurantesFiltrados(inputLocalidad.value, parseInt(inputValoracion.value), parseInt(inputRadio.value), coords);
+    crearRestaurantes('Resultados filtrados', restaurantesG)
+}
+
+const mostrarFiltradosSinUbicacion = async ()=> {
+    const inputLocalidad = document.getElementsByName('localidadFiltros')[0] as HTMLInputElement;
+    const inputValoracion = document.getElementsByName('valoracionMin')[0] as HTMLInputElement;
+    const inputRadio = document.getElementsByName('radio')[0] as HTMLInputElement;
+    restaurantesG = await getRestaurantesFiltrados(inputLocalidad.value, parseInt(inputValoracion.value));
+    crearRestaurantes('Resultados filtrados', restaurantesG)
 }
 
 const handlerSubmit = async (eve : Event) => {
@@ -154,7 +179,7 @@ const obtenerLocalizacion = async ({coords}) => {
 const errorLocalizacion = async () => {
     if(localStorage.getItem('ultimaUbicacion')){
         const strPuntos = localStorage.getItem('ultimaUbicacion');
-        const coords = { longitude: Number(strPuntos.split('|')[1]), latitude: Number(strPuntos.split('|')[0])}
+        const coords = { longitude: Number(strPuntos.split('|')[0]), latitude: Number(strPuntos.split('|')[1])}
         const restaurantes = await getRestaurantesCercanos(coords);
         crearRestaurantes('Restaurantes más cercanos desde tu última ubicación', restaurantes)
     }

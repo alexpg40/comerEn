@@ -91,6 +91,17 @@ public class TablaBooleana {
         return ret;
     }
     
+    public int[] getPerfilUsuario(ArrayList<Integer> idProductos){
+        int[] ret = new int[this.etiquetas.size()];
+        for(int i = 0; i< idProductos.size(); i++){
+            int[] perfilProducto = this.perfilesProductos.get(idProductos.get(i));
+            for(int j = 0; j < etiquetas.size(); j++){
+                ret[j] = ret[j] + perfilProducto[j];
+            }
+        }
+        return ret;
+    }
+    
     /**
      * Esta funcion devuelve los perfiles de todos los usuarios, dado un 
      * HashMap con su la id del usuario y los productos valorados
@@ -108,6 +119,18 @@ public class TablaBooleana {
             ret.put(idUsuario, perfilUsuario);
         }
         return ret;
+    }
+    
+    public Map<Integer, int[]> getPerfilesProducto(){
+        return this.perfilesProductos;
+    }
+    
+    public int[] getPerfilProducto(int idProducto){
+        return this.perfilesProductos.get(idProducto);
+    }
+    
+    public Set<Integer> getEtiquetas(){
+        return this.etiquetas;
     }
     
 }

@@ -256,17 +256,16 @@ public class RestauranteDAO {
     public ArrayList<Restaurante> getRestaurantesFiltrados(double lng, double lat, int radio, String localidad, int valoracion) {
         ArrayList<Restaurante> ret = new ArrayList<>();
         try {
-            String where = "WHERE ubicacion.idRestaurante = restaurante.idRestaurante AND valoracion >= " + valoracion;
+            String where = "WHERE ubicacion.idRestaurante = Restaurante_Valoracion.idRestaurante AND valoracion >= " + valoracion;
             if(!localidad.equals("Todas")){
-                where += " AND localidad = " + localidad;
+                where += " AND localidad = '" + localidad + "'";
             }
             String sqlStr = "SELECT Restaurante_Valoracion.*, "
-                    + "st_distance_sphere(point(Lng, Lat), point(" + lng + ", " + lat + ")) / 1000 as distance"
-                    + "FROM ubicacion, restaurante "
+                    + "st_distance_sphere(point(Lng, Lat), point(" + lng + ", " + lat + ")) / 1000 as distance "
+                    + "FROM Restaurante_Valoracion, ubicacion "
                     + where
                     + " HAVING distance <= " + radio
                     + " ORDER BY distance ASC";
-            System.out.println(sqlStr);
             Statement smt = this.conexion.createStatement();
             ResultSet result = smt.executeQuery(sqlStr);
             while (result.next()) {
@@ -280,4 +279,30 @@ public class RestauranteDAO {
         }
         return ret;
     }
+    
+    public ArrayList<Restaurante> getRestaurantesFiltrados(String localidad, int valoracion) {
+        ArrayList<Restaurante> ret = new ArrayList<>();
+        try {
+            String where = "WHERE valoracion >= " + valoracion;
+            if(!localidad.equals("Todas")){
+                where += " AND localidad = '" + localidad + "'";
+            }
+            String sqlStr = "SELECT Restaurante_Valoracion.* "
+                    + "FROM Restaurante_Valoracion "
+                    + where;
+                        System.out.println(sqlStr);
+            Statement smt = this.conexion.createStatement();
+            ResultSet result = smt.executeQuery(sqlStr);
+            while (result.next()) {
+                ret.add(new Restaurante(result.getInt("idRestaurante"), result.getInt("idDueño"),
+                        result.getInt("idAdmin"), result.getString("nombre"), result.getString("descripcion"),
+                        result.getTime("horario_abre"), result.getTime("horario_cierra"),
+                        result.getString("icono"), result.getBoolean("oculto"), result.getString("localidad")));
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error al intentar recuperar los restaurantes!" + ex.getMessage());
+        }
+        return ret;
+    }
+    
 }

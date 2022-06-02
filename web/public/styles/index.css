@@ -194,6 +194,7 @@ h3{
 #filtros input[type="submit"]{
     width: 8vw;
     height: 2vw;
+    margin: auto;
     font-size: 1vw;
 }
 

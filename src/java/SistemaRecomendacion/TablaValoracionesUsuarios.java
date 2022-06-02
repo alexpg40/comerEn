@@ -34,7 +34,6 @@ public class TablaValoracionesUsuarios {
     
     public TablaValoracionesUsuarios(Map<Integer, Map<Integer, Integer>> usuarioValoracionProductos){
         this.usuarios = usuarioValoracionProductos.keySet();
-        Set<Integer> keySet = usuarioValoracionProductos.get(123).keySet();
         Collection<Map<Integer, Integer>> productos = usuarioValoracionProductos.values();
         Iterator<Map<Integer, Integer>> iteratorProductos = productos.iterator();
         while(iteratorProductos.hasNext()){
@@ -92,6 +91,18 @@ public class TablaValoracionesUsuarios {
         return ret;
     }
     
+    
+    public ArrayList<Integer> getProductosNoValoradosByUsuario(int idUsuario){
+        ArrayList<Integer> ret = new ArrayList<>();
+        Integer[] valoraciones = this.getValoracionesUsuario(idUsuario);
+        for(int i = 0; i < valoraciones.length; i++){
+            if(valoraciones[i] == null){
+                ret.add((Integer) productos.toArray()[i]);
+            }
+        }
+        return ret;
+    }
+    
     /**
      * Esta función recupera los productos valorados de todos los 
      * usuarios
@@ -112,6 +123,14 @@ public class TablaValoracionesUsuarios {
             ret.put((Integer) idUsuarios[i], idsProductos);
         }
         return ret;
+    }
+    
+    public int getNUsuarios(){
+        return this.usuarios.size();
+    }
+    
+    public int getNUsuariosEtiqueta(int idEtiqueta){
+        return 0;
     }
     
 }

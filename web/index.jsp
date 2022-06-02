@@ -45,14 +45,14 @@
                     <hr/>
                     <section id="restaurantesContainer">
                         <article id="filtros">
-                            <form>
+                            <form id="formFiltrar">
                                 <label>
                                     Distancia Máxima
                                     <input type="range" name="radio" min="5" value="5" step="5" max="50"/>
                                     <output id="outRadio" for="radio">5</output>
                                 </label>
                                 <label>Localidad 
-                                    <select name="localidad">
+                                    <select name="localidadFiltros">
                                         <option>Todas</option>
                                         <%
                                             for (Restaurante restaurante : restaurauntes) {

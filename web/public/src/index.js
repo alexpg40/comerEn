@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { getEtiquetas, getRestaurantes, getRestaurantesCercanos, getLocalidades, getRestaurantesPopulares } from './services.js';
+import { getEtiquetas, getRestaurantes, getRestaurantesCercanos, getLocalidades, getRestaurantesPopulares, getRestaurantesFiltrados } from './services.js';
 var restaurantesG = [];
 window.onload = () => {
     init();
@@ -27,6 +27,8 @@ const initListeners = () => {
     const input = document.getElementsByName('buscador')[0];
     const valoracionMin = document.getElementsByName('valoracionMin')[0];
     const distanciaMax = document.getElementsByName('radio')[0];
+    const formFiltrar = document.getElementById('formFiltrar');
+    formFiltrar.addEventListener('submit', handlerFiltrar);
     valoracionMin.addEventListener('input', handlerOutputVal);
     distanciaMax.addEventListener('input', handlerOutputDis);
     form.addEventListener('submit', handlerSubmit);
@@ -45,6 +47,26 @@ const handlerOutputDis = (eve) => {
     const valoracionMin = eve.target;
     output.textContent = `${valoracionMin.value} km`;
 };
+const handlerFiltrar = (eve) => {
+    eve.preventDefault();
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(mostrarRestaurantesFiltrados, mostrarFiltradosSinUbicacion);
+    }
+};
+const mostrarRestaurantesFiltrados = ({ coords }) => __awaiter(void 0, void 0, void 0, function* () {
+    const inputLocalidad = document.getElementsByName('localidadFiltros')[0];
+    const inputValoracion = document.getElementsByName('valoracionMin')[0];
+    const inputRadio = document.getElementsByName('radio')[0];
+    restaurantesG = yield getRestaurantesFiltrados(inputLocalidad.value, parseInt(inputValoracion.value), parseInt(inputRadio.value), coords);
+    crearRestaurantes('Resultados filtrados', restaurantesG);
+});
+const mostrarFiltradosSinUbicacion = () => __awaiter(void 0, void 0, void 0, function* () {
+    const inputLocalidad = document.getElementsByName('localidadFiltros')[0];
+    const inputValoracion = document.getElementsByName('valoracionMin')[0];
+    const inputRadio = document.getElementsByName('radio')[0];
+    restaurantesG = yield getRestaurantesFiltrados(inputLocalidad.value, parseInt(inputValoracion.value));
+    crearRestaurantes('Resultados filtrados', restaurantesG);
+});
 const handlerSubmit = (eve) => __awaiter(void 0, void 0, void 0, function* () {
     eve.preventDefault();
     const form = document.getElementsByTagName('form')[0];
@@ -148,7 +170,7 @@ const obtenerLocalizacion = ({ coords }) => __awaiter(void 0, void 0, void 0, fu
 const errorLocalizacion = () => __awaiter(void 0, void 0, void 0, function* () {
     if (localStorage.getItem('ultimaUbicacion')) {
         const strPuntos = localStorage.getItem('ultimaUbicacion');
-        const coords = { longitude: Number(strPuntos.split('|')[1]), latitude: Number(strPuntos.split('|')[0]) };
+        const coords = { longitude: Number(strPuntos.split('|')[0]), latitude: Number(strPuntos.split('|')[1]) };
         const restaurantes = yield getRestaurantesCercanos(coords);
         crearRestaurantes('Restaurantes más cercanos desde tu última ubicación', restaurantes);
     }
