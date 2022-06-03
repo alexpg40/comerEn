@@ -1,0 +1,19 @@
+body{
+    background-image: url(../img/fondoHeader.jpg);
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-size:cover;
+}
+
+section{
+    margin: auto auto;
+    display: flex;
+    background-color: #FFFFFF;
+    width: 50vw;
+    display: flex;
+    font-size: 1.5vw;
+    font-weight: bolder;
+    align-items: center;
+    justify-content: center;
+    height: 50vh;
+}

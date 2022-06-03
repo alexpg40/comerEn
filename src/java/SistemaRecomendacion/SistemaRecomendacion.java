@@ -10,9 +10,11 @@ import DAO.RestauranteDAO;
 import DAO.UsuarioDAO;
 import Entidades.Etiqueta;
 import Entidades.Restaurante;
+import Utilidades.MapUtil;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -26,17 +28,50 @@ public class SistemaRecomendacion {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-
         
         RestauranteDAO restauranteDao = new RestauranteDAO();
         ArrayList<Restaurante> restaurantes = restauranteDao.getRestaurantes("");
         restauranteDao.cerrarConexion();
+        ArrayList<Restaurante> calcularRecomendacionRestaurantes = calcularRecomendacionRestaurantes(restaurantes, 7);
+        int a = 0;
 
-        Map<Integer, Double> calcularRecomendacion = calcularRecomendacion(restaurantes, 7);
-        
-        TablaValoracionesUsuarios tablaValoraciones = crearTablaValoraciones(restaurantes);
     }
 
+    public static ArrayList<Restaurante> calcularRecomendacionRestaurantes(ArrayList<Restaurante> restaurantes, int idUsuario){
+        
+        Map<Integer, Double> calcularRecomendacion = calcularRecomendacion(restaurantes, idUsuario);
+
+        Iterator<Integer> iterator = calcularRecomendacion.keySet().iterator();
+        
+        while(iterator.hasNext()){
+            int i = iterator.next();
+            System.out.println(i + " - " + calcularRecomendacion.get(i));
+        }
+        
+        Map<Integer, Double> sortByValue = MapUtil.sortByValue(calcularRecomendacion);
+        
+        Set<Integer> keySet = sortByValue.keySet();
+        
+        Object[] toArray =  keySet.toArray();
+        
+        ArrayList<Restaurante> ret = new ArrayList<>();
+        
+        for(int i = 0; i < toArray.length; i++){
+            for(Restaurante restaurante : restaurantes){
+                if(restaurante.getIdRestaurante() == (int) toArray[i]){
+                    ret.add(restaurante);
+                }
+            }
+        }
+        
+        for(Restaurante restaurante : restaurantes){
+            if(!ret.contains(restaurante)) ret.add(restaurante);
+        }
+        
+        return ret;
+    }
+    
+    
     public static Map<Integer, Double> calcularRecomendacion(ArrayList<Restaurante> restaurantes, int idUsuario) {
         Map<Integer, Double> ret = new HashMap<>();
         
@@ -122,6 +157,9 @@ public class SistemaRecomendacion {
         double multiplicacion = 0;
         int sumaUsuario = 0;
         int sumaProducto = 0;
+        if(ponderacion == null){
+            return 0.0;
+        }
         for (int i = 0; i < perfilUsuario.length; i++) {
             multiplicacion += perfilUsuario[i] * perfilProducto[i] * ponderacion[i];
             sumaUsuario += perfilUsuario[i];

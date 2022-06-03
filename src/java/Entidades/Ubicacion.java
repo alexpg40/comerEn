@@ -22,5 +22,23 @@ public class Ubicacion {
         this.Lng = Lng;
         this.Lat = Lat;
     }
+
+    public int getIdUbicacion() {
+        return idUbicacion;
+    }
+
+    public int getIdRestaurante() {
+        return idRestaurante;
+    }
+
+    public float getLng() {
+        return Lng;
+    }
+
+    public float getLat() {
+        return Lat;
+    }
+    
+    
     
 }

@@ -233,4 +233,3 @@ const crearEstrellas = (nEstrellas) => {
     }
     return ret;
 };
-//# sourceMappingURL=index.js.map

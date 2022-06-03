@@ -14,6 +14,7 @@
             <file>file:/home/Alex/Proyectos/comerEn/src/java/SistemaRecomendacion/TablaPerfilesUsuario.java</file>
             <file>file:/home/Alex/Proyectos/comerEn/src/java/Utilidades/Prueba.java</file>
             <file>file:/home/Alex/Proyectos/comerEn/src/java/comeren/es/controlador/administrador.java</file>
+            <file>file:/home/Alex/Proyectos/comerEn/src/java/comeren/es/controlador/suscripcion.java</file>
             <file>file:/home/Alex/Proyectos/comerEn/web/recuperarContraseña.jsp</file>
             <file>file:/home/Alex/Proyectos/comerEn/src/java/Utilidades/GeneradorContraseñas.java</file>
             <file>file:/home/Alex/Proyectos/comerEn/web/registro.jsp</file>
@@ -26,12 +27,15 @@
             <file>file:/home/Alex/Proyectos/comerEn/src/java/DAO/UsuarioDAO.java</file>
             <file>file:/home/Alex/Proyectos/comerEn/src/java/Utilidades/ConexionBD.java</file>
             <file>file:/home/Alex/Proyectos/comerEn/src/java/SistemaRecomendacion/TablaPonderaciones.java</file>
+            <file>file:/home/Alex/Proyectos/comerEn/src/java/DAO/ComentarioDAO.java</file>
             <file>file:/home/Alex/Proyectos/comerEn/src/java/DAO/UbicacionDAO.java</file>
             <file>file:/home/Alex/Proyectos/comerEn/src/java/DAO/RestauranteDAO.java</file>
+            <file>file:/home/Alex/Proyectos/comerEn/src/java/comeren/es/controlador/dueno.java</file>
+            <file>file:/home/Alex/Proyectos/comerEn/src/java/SistemaRecomendacion/SistemaRecomendacion.java</file>
+            <file>file:/home/Alex/Proyectos/comerEn/src/java/Utilidades/MapUtil.java</file>
             <file>file:/home/Alex/Proyectos/comerEn/web/public/styles/index.css</file>
             <file>file:/home/Alex/Proyectos/comerEn/src/java/Utilidades/Utilidades.java</file>
             <file>file:/home/Alex/Proyectos/comerEn/src/java/comeren/es/controlador/controlador.java</file>
-            <file>file:/home/Alex/Proyectos/comerEn/src/java/SistemaRecomendacion/Prueba.java</file>
             <file>file:/home/Alex/Proyectos/comerEn/src/java/DAO/SuscripcionDAO.java</file>
         </group>
     </open-files>

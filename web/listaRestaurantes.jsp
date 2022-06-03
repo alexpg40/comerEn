@@ -34,37 +34,39 @@
                     ArrayList<Restaurante> restaurantes = (ArrayList<Restaurante>) request.getAttribute("listaRestaurante");
                 %>
                 <h2>
-                <%
-                    if(request.getParameter("buscador") != null ){%>Resultados de "<%=request.getParameter("buscador")%>" - <%}
-                %>
-                Nº resultados <%=restaurantes.size()%>
+                    <%
+                    if (request.getParameter("buscador") != null) {%>Resultados de "<%=request.getParameter("buscador")%>" - <%}
+                    %>
+                    Nº resultados <%=restaurantes.size()%>
                 </h2>
                 <hr/>
-                <%
-                    for (Restaurante restaurante : restaurantes) {
-                %>
-                <a href="controlador?restaurante=<%=restaurante.getIdRestaurante()%>">
-                    <article class="restaurante">
-                        <h3 class="nombreRestaurante"><%=restaurante.getNombre()%></h3>
-                        <hr/>
-                        <section class="bodyRestaurante">
-                            <article>
-                                <img class="imagenRestaurante" src="public/img/foto_temporal.jpg" alt="foto temporal del restaurante"/>
-                            </article>
-                            <article class="containerDescripcion">
-                                <article class="descripcionRestaurante">
-                                    <%=restaurante.getDescripcion()%>
+                <article class="restaurantes">
+                    <%
+                        for (Restaurante restaurante : restaurantes) {
+                    %>
+                    <a href="controlador?restaurante=<%=restaurante.getIdRestaurante()%>">
+                        <article class="restaurante">
+                            <h3 class="nombreRestaurante"><%=restaurante.getNombre()%></h3>
+                            <hr/>
+                            <section class="bodyRestaurante">
+                                <article>
+                                    <img class="imagenRestaurante" src="public/img/foto_temporal.jpg" alt="foto temporal del restaurante"/>
                                 </article>
-                                <article class="valoracionRestaurante">
-                                    ★★★★★
+                                <article class="containerDescripcion">
+                                    <article class="descripcionRestaurante">
+                                        <%=restaurante.getDescripcion()%>
+                                    </article>
+                                    <article class="valoracionRestaurante">
+                                        ★★★★★
+                                    </article>
                                 </article>
-                            </article>
-                        </section>
-                    </article>
-                </a>
-                <%
-                    }
-                %>
+                            </section>
+                        </article>
+                    </a>
+                    <%
+                        }
+                    %>
+                </article>
             </section>
             <jsp:include page="./componentes/ads.jsp" /> 
         </main>

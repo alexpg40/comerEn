@@ -12,8 +12,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  *
@@ -40,7 +38,6 @@ public class UsuarioDAO {
         int idUsuario = 0;
         try {
             String sqlStr = "SELECT idUsuario FROM usuario WHERE correo = '" + correo + "' AND contrasena = '" + contraseña + "'";
-            System.out.println(sqlStr);
             Statement smt = this.conexion.createStatement();
             ResultSet result = smt.executeQuery(sqlStr);
             while(result.next()){
@@ -141,7 +138,6 @@ public class UsuarioDAO {
         try {
             String sqlStr = "SELECT usuario.* FROM usuario LEFT JOIN usuario_rol ON usuario.idUsuario = usuario_rol.idUsuario WHERE (usuario_rol.idRol IS NULL OR usuario_rol.idRol != 1) AND usuario.nombre LIKE'%" + nombre + "%'";
             Statement smt = this.conexion.createStatement();
-            System.out.println(sqlStr);
             ResultSet result = smt.executeQuery(sqlStr);
             while(result.next()){
                 ret.add(new Usuario(result.getString("icono"), result.getInt("idUsuario"), result.getString("nombre"), 
@@ -174,7 +170,6 @@ public class UsuarioDAO {
                     + " WHERE usuario.idUsuario = comentario.idUsuario"
                     + " AND comentario.idRestaurante = " + idRestaurante;
             Statement smt = this.conexion.createStatement();
-            System.out.println(sqlStr);
             ResultSet result = smt.executeQuery(sqlStr);
             while(result.next()){
                 ret[0] = result.getInt("idUsuario");
@@ -191,7 +186,6 @@ public class UsuarioDAO {
         try {
             String sqlStr = "SELECT DISTINCT COUNT(idUsuario) as numero FROM comentario";
             Statement smt = this.conexion.createStatement();
-            System.out.println(sqlStr);
             ResultSet result = smt.executeQuery(sqlStr);
             while(result.next()){
                 ret = result.getInt("numero");
@@ -210,7 +204,6 @@ public class UsuarioDAO {
                     + "AND comentario.idRestaurante = restaurante_etiqueta.idRestaurante "
                     + "AND comentario.valoracion >= 3";
             Statement smt = this.conexion.createStatement();
-            System.out.println(sqlStr);
             ResultSet result = smt.executeQuery(sqlStr);
             while(result.next()){
                 ret = result.getInt("numero");

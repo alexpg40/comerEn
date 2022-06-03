@@ -71,7 +71,11 @@ public class TablaValoracionesUsuarios {
     }
     
     private Integer[] getValoracionesUsuario(int idUsuario){
-        return this.valoracionesUsuario.get(idUsuario);
+        Integer[] ret = new Integer[this.productos.size()];
+        if(this.valoracionesUsuario.get(idUsuario) != null){
+            ret = this.valoracionesUsuario.get(idUsuario);
+        }
+        return ret;
     }
     
     /**

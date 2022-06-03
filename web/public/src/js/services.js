@@ -58,4 +58,3 @@ export const getRestaurantesFiltrados = (localidad, valoracionMin, radio = 40, p
     }
     return request(URL);
 };
-//# sourceMappingURL=services.js.map

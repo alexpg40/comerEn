@@ -16,7 +16,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="public/styles/common.css">
         <link rel="stylesheet" href="public/styles/cuenta.css">
-        <script src="public/src/cuenta.js"></script>
+        <script src="public/src/js/cuenta.js"></script>
     </head>
     <body>
         <jsp:include page="./componentes/header.jsp" />
