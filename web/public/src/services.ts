@@ -9,7 +9,10 @@ async function request<TResponse>(
         if(response.ok) return response.json();
         throw new Error('Error al intengar recuperar los usuarios de la base de datos')
     })
-    .then((json) => json as TResponse)
+    .then((json) => {
+        console.log(json)
+        return json as TResponse
+    })
 }
 
 export const getUsuarios =  () => {

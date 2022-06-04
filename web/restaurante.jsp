@@ -102,12 +102,18 @@
                         <h3>Comentarios</h3>
                         <hr/>
                         <article id="comentariosRestaurante">
-                                <form action="controlador" class="comentario">
-                                    <label>Descripcion <textarea name="comentario"></textarea></label>
-                                    <label>Valoracion <input type="number" value="3" name="valoracion"/></label>
-                                    <input type="submit" value="Enviar Comentario" name="crear_comentario"/>
-                                    <input type="hidden" name="restaurante" value=<%=restaurante.getIdRestaurante()%>/>
-                                </form>
+                            <%
+                                if (session.getAttribute("usuario") != null) {
+                            %>
+                            <form action="controlador" class="comentario">
+                                <label>Descripcion <textarea name="comentario"></textarea></label>
+                                <label>Valoracion <input type="number" value="3" name="valoracion"/></label>
+                                <input type="submit" value="Enviar Comentario" name="crear_comentario"/>
+                                <input type="hidden" name="idRestaurante" value="<%=restaurante.getIdRestaurante()%>"/>
+                            </form>
+                            <%
+                                }
+                            %>
                             <%
                                 for (Comentario comentario : comentarios) {
                             %>
@@ -150,7 +156,7 @@
     </body>
     <script>
         let punto = new L.LatLng(<%=ubicacion.getLat()%>, <%=ubicacion.getLng()%>);
-        
+
         let map = new L.Map('map', {
             center: punto,
             zoom: 50,

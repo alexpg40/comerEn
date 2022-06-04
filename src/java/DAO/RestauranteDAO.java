@@ -305,4 +305,14 @@ public class RestauranteDAO {
         return ret;
     }
     
+    public void cambiarDescripcion(int idRestaurante, String descripcion){
+        try {
+            String sqlStr = "UPDATE restaurante SET descripcion = '" + descripcion + "' WHERE idRestaurante = " + idRestaurante;
+            Statement smt = this.conexion.createStatement();
+            smt.executeUpdate(sqlStr);
+        } catch (SQLException ex) {
+            System.out.println("Error al ocultar el restaurante" + ex.getMessage());
+        }
+    }
+    
 }

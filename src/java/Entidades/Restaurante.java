@@ -5,13 +5,14 @@
  */
 package Entidades;
 
+import java.io.Serializable;
 import java.sql.Time;
 
 /**
  *
  * @author Alex
  */
-public class Restaurante {
+public class Restaurante implements Serializable {
     
     private int idRestaurante;
     private int idDueño;

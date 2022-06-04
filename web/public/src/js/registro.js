@@ -1,4 +1,4 @@
-import { validarNombre, validarApellido, validarContraseña, validarCorreo, validarRContraseña } from './validaciones.js';
+import { validarNombre, validarApellido, validarContraseña, validarCorreo, validarRContraseña } from './validaciones';
 window.onload = () => {
     let form = document.getElementById('formIniciarSesion');
     form.addEventListener('submit', evt => {
@@ -34,3 +34,4 @@ const handlerErrorRegistro = (error) => {
     pError.append(error);
     erroresContainer.appendChild(pError);
 };
+//# sourceMappingURL=registro.js.map

@@ -1,5 +1,5 @@
 import {getEtiquetas, getRestaurantes, getRestaurantesCercanos, getLocalidades, getRestaurantesPopulares, getRestaurantesFiltrados} from './services.js'
-import {Restaurante, Etiqueta, Punto} from './d'
+import {Restaurante, Etiqueta, Punto} from './d.js'
 
 var restaurantesG : Array<Restaurante> = []
 

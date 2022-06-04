@@ -65,4 +65,41 @@ public class EtiquetaDAO {
         return ret;
     }
     
+    public ArrayList<Etiqueta> getEtiquitasFaltantesByidRestaurante(int idRestaurante){
+        ArrayList<Etiqueta> ret = new ArrayList<>();
+        try{
+            String sqlStr = "SELECT * FROM etiqueta WHERE etiqueta.idEtiqueta NOT IN (SELECT idEtiqueta FROM restaurante_etiqueta WHERE idRestaurante = " + idRestaurante+ ")";
+            Statement smt = this.conexion.createStatement();
+            ResultSet result = smt.executeQuery(sqlStr);
+            while(result.next()){
+                ret.add(new Etiqueta(result.getInt("idEtiqueta"), result.getString("nombre")));
+            }
+        } catch(SQLException ex){
+            System.out.println("Error al intentar recuperar las etiquetas faltantes del restaurante!");
+        }
+        return ret;
+    }
+    
+    public void borrarEtiquetaByIdRestaurante(int idEtiqueta, int idRestaurante){
+        try{
+            String sqlStr = "DELETE FROM restaurante_etiqueta WHERE idRestaurante = " + idRestaurante + " AND idEtiqueta = " + idEtiqueta;
+            System.out.println(sqlStr);
+            Statement smt = this.conexion.createStatement();
+            smt.executeUpdate(sqlStr);
+        } catch(SQLException ex){
+            System.out.println("Error al borrar la etiqueta del restaurante!" + ex.getMessage());
+        }
+    }
+    
+    public void insertarEtiquetaByIdRestaurante(int idEtiqueta, int idRestaurante){
+        try{
+            String sqlStr = "INSERT INTO restaurante_etiqueta VALUES(" + idRestaurante + ", " + idEtiqueta + ")";
+            System.out.println(sqlStr);
+            Statement smt = this.conexion.createStatement();
+            smt.executeUpdate(sqlStr);
+        } catch(SQLException ex){
+            System.out.println("Error al insertar la etiqueta del restaurante!" + ex.getMessage());
+        }
+    }
+    
 }

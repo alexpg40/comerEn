@@ -68,3 +68,4 @@ const crearFilaUsuario = (usuario) => {
     articleUsuario.append(divBotones);
     return articleUsuario;
 };
+//# sourceMappingURL=adminUsuarios.js.map

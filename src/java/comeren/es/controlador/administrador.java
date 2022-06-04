@@ -5,11 +5,19 @@
  */
 package comeren.es.controlador;
 
+import DAO.ComentarioDAO;
+import DAO.EtiquetaDAO;
+import DAO.FotografiaDAO;
 import DAO.RestauranteDAO;
 import DAO.RolDAO;
+import DAO.UbicacionDAO;
 import DAO.UsuarioDAO;
+import Entidades.Comentario;
+import Entidades.Etiqueta;
+import Entidades.Fotografia;
 import Entidades.Restaurante;
 import Entidades.Rol;
+import Entidades.Ubicacion;
 import Entidades.Usuario;
 import Utilidades.Correos;
 import Utilidades.GeneradorContraseñas;
@@ -156,10 +164,30 @@ public class administrador extends HttpServlet {
             rd.forward(request, response);
 
         } else if (request.getParameter("editarRestaurante") != null) {
+            String restaurante = request.getParameter("editarRestaurante");
             RestauranteDAO restauranteDao = new RestauranteDAO();
-            Restaurante restaurante = restauranteDao.getRestauranteById(Integer.parseInt(request.getParameter("editarRestaurante")));
+            EtiquetaDAO etiquetaDao = new EtiquetaDAO();
+            ComentarioDAO comentarioDao = new ComentarioDAO();
+            UbicacionDAO ubicacionDao = new UbicacionDAO();
+            FotografiaDAO fotografiaDao = new FotografiaDAO();
+            ArrayList<Etiqueta> etiquitasByIdRestaurante = etiquetaDao.getEtiquitasByIdRestaurante(Integer.parseInt(restaurante));
+            ArrayList<Etiqueta> etiquitasFaltantesByidRestaurante = etiquetaDao.getEtiquitasFaltantesByidRestaurante(Integer.parseInt(restaurante));
+            ArrayList<Comentario> comentariosByIdRestaurante = comentarioDao.getComentariosByIdRestaurante(Integer.parseInt(restaurante));
+            Ubicacion ubicacion = ubicacionDao.getUbicacionByIdRestaurante(Integer.parseInt(restaurante));
+            ArrayList<Fotografia> fotografiasByIdRestaurante = fotografiaDao.getFotografiasByIdRestaurante(Integer.parseInt(restaurante));
+            Restaurante restauranteById = restauranteDao.getRestauranteById(Integer.parseInt(restaurante));
+            int valoracionMediaRestaurante = restauranteDao.valoracionMediaRestaurante(Integer.parseInt(restaurante));
+            comentarioDao.cerrarConexion();
+            fotografiaDao.cerrarConexion();
+            etiquetaDao.cerrarConexion();
             restauranteDao.cerrarConexion();
-            request.setAttribute("restaurante", restaurante);
+            request.setAttribute("etiquetasFaltantes", etiquitasFaltantesByidRestaurante);
+            request.setAttribute("valoracion", valoracionMediaRestaurante);
+            request.setAttribute("restaurante", restauranteById);
+            request.setAttribute("ubicacion", ubicacion);
+            request.setAttribute("comentarios", comentariosByIdRestaurante);
+            request.setAttribute("fotografias", fotografiasByIdRestaurante);
+            request.setAttribute("etiquetas", etiquitasByIdRestaurante);
             rd = request.getRequestDispatcher("/editarRestaurante.jsp");
             rd.forward(request, response);
         } else if (request.getParameter("eliminarRestaurante") != null) {
@@ -230,7 +258,25 @@ public class administrador extends HttpServlet {
                 rd.forward(request, response);
             }
             usuarioDao.cerrarConexion();
-        } else {
+        } else if (request.getParameter("quitarEtiqueta") != null) {
+            EtiquetaDAO etiquetaDao = new EtiquetaDAO();
+            etiquetaDao.borrarEtiquetaByIdRestaurante(Integer.parseInt((request.getParameter("etiqueta"))), Integer.parseInt((request.getParameter("idRestaurante"))));
+            etiquetaDao.cerrarConexion();
+            rd = request.getRequestDispatcher("administrador?editarRestaurante=" + Integer.parseInt((request.getParameter("idRestaurante"))));
+            rd.forward(request, response);
+        } else if(request.getParameter("anadirEtiqueta") != null){
+            EtiquetaDAO etiquetaDao = new EtiquetaDAO();
+            etiquetaDao.insertarEtiquetaByIdRestaurante(Integer.parseInt((request.getParameter("etiqueta"))), Integer.parseInt((request.getParameter("idRestaurante"))));
+            etiquetaDao.cerrarConexion();
+            rd = request.getRequestDispatcher("administrador?editarRestaurante=" + Integer.parseInt((request.getParameter("idRestaurante"))));
+            rd.forward(request, response);
+        } else if(request.getParameter("cambiar_descripcion") != null){
+            RestauranteDAO restauranteDao = new RestauranteDAO();
+            restauranteDao.cambiarDescripcion(Integer.parseInt(request.getParameter("idRestaurante")), request.getParameter("descripcion"));
+            restauranteDao.cerrarConexion();
+            rd = request.getRequestDispatcher("administrador?editarRestaurante=" + Integer.parseInt((request.getParameter("idRestaurante"))));
+            rd.forward(request, response);
+        }else {
             rd = request.getRequestDispatcher("/adminRestaurantes.jsp");
             rd.forward(request, response);
         }

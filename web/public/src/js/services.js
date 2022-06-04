@@ -15,7 +15,10 @@ function request(url, config = {}) {
                 return response.json();
             throw new Error('Error al intengar recuperar los usuarios de la base de datos');
         })
-            .then((json) => json);
+            .then((json) => {
+            console.log(json);
+            return json;
+        });
     });
 }
 export const getUsuarios = () => {
@@ -58,3 +61,4 @@ export const getRestaurantesFiltrados = (localidad, valoracionMin, radio = 40, p
     }
     return request(URL);
 };
+//# sourceMappingURL=services.js.map

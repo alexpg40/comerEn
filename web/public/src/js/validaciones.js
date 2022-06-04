@@ -27,3 +27,4 @@ export const validarRContraseña = () => {
     let rcontraseña = document.getElementsByName('rContrasena')[0];
     return contraseña.value === rcontraseña.value;
 };
+//# sourceMappingURL=validaciones.js.map

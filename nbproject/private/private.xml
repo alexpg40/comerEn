@@ -3,40 +3,33 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/Alex/Proyectos/comerEn/src/java/Entidades/Restaurante.java</file>
-            <file>file:/home/Alex/Proyectos/comerEn/src/java/DAO/FotografiaDAO.java</file>
-            <file>file:/home/Alex/Proyectos/comerEn/src/java/Entidades/Fotografia.java</file>
-            <file>file:/home/Alex/Proyectos/comerEn/web/listaRestaurantes.jsp</file>
-            <file>file:/home/Alex/Proyectos/comerEn/src/java/SistemaRecomendacion/TablaBooleana.java</file>
-            <file>file:/home/Alex/Proyectos/comerEn/web/index.jsp</file>
-            <file>file:/home/Alex/Proyectos/comerEn/web/public/styles/listaRestaurantes.css</file>
-            <file>file:/home/Alex/Proyectos/comerEn/web/adminUsuarios.jsp</file>
-            <file>file:/home/Alex/Proyectos/comerEn/src/java/SistemaRecomendacion/TablaPerfilesUsuario.java</file>
-            <file>file:/home/Alex/Proyectos/comerEn/src/java/Utilidades/Prueba.java</file>
-            <file>file:/home/Alex/Proyectos/comerEn/src/java/comeren/es/controlador/administrador.java</file>
-            <file>file:/home/Alex/Proyectos/comerEn/src/java/comeren/es/controlador/suscripcion.java</file>
-            <file>file:/home/Alex/Proyectos/comerEn/web/recuperarContraseña.jsp</file>
-            <file>file:/home/Alex/Proyectos/comerEn/src/java/Utilidades/GeneradorContraseñas.java</file>
-            <file>file:/home/Alex/Proyectos/comerEn/web/registro.jsp</file>
-            <file>file:/home/Alex/Proyectos/comerEn/web/restaurante.jsp</file>
-            <file>file:/home/Alex/Proyectos/comerEn/web/adminRestaurantes.jsp</file>
-            <file>file:/home/Alex/Proyectos/comerEn/src/java/SistemaRecomendacion/TablaValoracionesUsuarios.java</file>
-            <file>file:/home/Alex/Proyectos/comerEn/web/login.jsp</file>
-            <file>file:/home/Alex/Proyectos/comerEn/web/paginaError.jsp</file>
-            <file>file:/home/Alex/Proyectos/comerEn/src/java/Utilidades/Correos.java</file>
-            <file>file:/home/Alex/Proyectos/comerEn/src/java/DAO/UsuarioDAO.java</file>
-            <file>file:/home/Alex/Proyectos/comerEn/src/java/Utilidades/ConexionBD.java</file>
-            <file>file:/home/Alex/Proyectos/comerEn/src/java/SistemaRecomendacion/TablaPonderaciones.java</file>
-            <file>file:/home/Alex/Proyectos/comerEn/src/java/DAO/ComentarioDAO.java</file>
-            <file>file:/home/Alex/Proyectos/comerEn/src/java/DAO/UbicacionDAO.java</file>
-            <file>file:/home/Alex/Proyectos/comerEn/src/java/DAO/RestauranteDAO.java</file>
-            <file>file:/home/Alex/Proyectos/comerEn/src/java/comeren/es/controlador/dueno.java</file>
-            <file>file:/home/Alex/Proyectos/comerEn/src/java/SistemaRecomendacion/SistemaRecomendacion.java</file>
-            <file>file:/home/Alex/Proyectos/comerEn/src/java/Utilidades/MapUtil.java</file>
-            <file>file:/home/Alex/Proyectos/comerEn/web/public/styles/index.css</file>
-            <file>file:/home/Alex/Proyectos/comerEn/src/java/Utilidades/Utilidades.java</file>
-            <file>file:/home/Alex/Proyectos/comerEn/src/java/comeren/es/controlador/controlador.java</file>
-            <file>file:/home/Alex/Proyectos/comerEn/src/java/DAO/SuscripcionDAO.java</file>
+            <file>file:/home/alex/Proyectos/comerEn/src/java/comeren/es/controlador/controlador.java</file>
+            <file>file:/home/alex/Proyectos/comerEn/web/editarRestaurante.jsp</file>
+            <file>file:/home/alex/Proyectos/comerEn/src/java/Utilidades/Correos.java</file>
+            <file>file:/home/alex/Proyectos/comerEn/src/java/Utilidades/Prueba.java</file>
+            <file>file:/home/alex/Proyectos/comerEn/web/index.jsp</file>
+            <file>file:/home/alex/Proyectos/comerEn/src/java/Utilidades/MapUtil.java</file>
+            <file>file:/home/alex/Proyectos/comerEn/src/java/Entidades/Restaurante.java</file>
+            <file>file:/home/alex/Proyectos/comerEn/web/adminRestaurantes.jsp</file>
+            <file>file:/home/alex/Proyectos/comerEn/web/public/styles/editarRestaurante.css</file>
+            <file>file:/home/alex/Proyectos/comerEn/src/java/DAO/RestauranteDAO.java</file>
+            <file>file:/home/alex/Proyectos/comerEn/web/public/styles/registro.css</file>
+            <file>file:/home/alex/Proyectos/comerEn/web/public/styles/restaurante.css</file>
+            <file>file:/home/alex/Proyectos/comerEn/src/java/comeren/es/controlador/dueno.java</file>
+            <file>file:/home/alex/Proyectos/comerEn/src/java/DAO/ComentarioDAO.java</file>
+            <file>file:/home/alex/Proyectos/comerEn/web/restaurante.jsp</file>
+            <file>file:/home/alex/Proyectos/comerEn/src/java/Entidades/Comentario.java</file>
+            <file>file:/home/alex/Proyectos/comerEn/src/java/DAO/EtiquetaDAO.java</file>
+            <file>file:/home/alex/Proyectos/comerEn/web/dueño.jsp</file>
+            <file>file:/home/alex/Proyectos/comerEn/web/WEB-INF/web.xml</file>
+            <file>file:/home/alex/Proyectos/comerEn/web/public/styles/index.css</file>
+            <file>file:/home/alex/Proyectos/comerEn/src/java/DAO/FotografiaDAO.java</file>
+            <file>file:/home/alex/Proyectos/comerEn/src/java/DAO/RolDAO.java</file>
+            <file>file:/home/alex/Proyectos/comerEn/src/java/comeren/es/controlador/administrador.java</file>
+            <file>file:/home/alex/Proyectos/comerEn/src/java/Utilidades/ConexionBD.java</file>
+            <file>file:/home/alex/Proyectos/comerEn/src/java/DAO/UbicacionDAO.java</file>
+            <file>file:/home/alex/Proyectos/comerEn/src/java/Utilidades/Utilidades.java</file>
+            <file>file:/home/alex/Proyectos/comerEn/src/java/Utilidades/GeneradorContraseñas.java</file>
         </group>
     </open-files>
 </project-private>

@@ -1,0 +1,230 @@
+body{
+    background-image: url(../img/fondoHeader.jpg);
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-size:cover;
+}
+
+main{
+    height: 85vh;
+}
+
+#añadirEtiqueta{
+    background-color: #804000;
+}
+
+.etiqueta:not(#añadirEtiqueta):hover{
+    background-color: red;
+}
+
+section{
+    width: 75%;
+    margin: auto auto;
+    height: 80vh;
+    background-color: #f2f2f2;
+    padding: 2vh;
+}
+
+hr{
+    border-color: #4F5902;
+    width: 80%;
+    margin-top: 1vh;
+}
+
+h2{
+    font-size: 2.5rem;
+    padding-left: 2.5vw;
+}
+
+.etiquetas{
+    display: flex;
+    justify-content: space-around;
+    padding: 1vh;
+    min-width: 40vw;
+    align-items: center;
+    margin-bottom: 1vh;
+    background-color: #4F5902;
+}
+
+.etiquetas > *{
+    margin: 0 0.5vw;
+}
+
+.etiqueta{
+    padding: 1vh;
+    background-color: #f2f2f2;
+    font-size: 1rem;
+    margin: 0 0.5vw;
+}
+
+#imagenRestaurante{
+    width: 15vw;
+}
+
+#descripcionRestaurante{
+    width: 30vw;
+}
+
+.restauranteBody{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    font-size: 1.2rem;
+}
+
+.restauranteBody > * {
+    margin: 1vw;
+}
+
+.restauranteImg{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.valoracion{
+    padding: 2vh;
+    font-size: 1.5rem;
+    margin-top: 1vh;
+    letter-spacing: 0.6rem;
+    background-color: #4F5902;
+    color: yellow;
+}
+
+.fotografiaRestaurante{
+    width: 10vw;
+    margin: 1vw;
+    height: 8vw;
+}
+
+#fotografiasRestaurante{
+    width: 30vw;
+    height: 10vw;
+    display: flex;
+    flex-direction: row;
+    overflow-x: scroll;
+}
+
+#fotografiasContainer{
+    padding:0.5vw;
+    background-color: #4F5902;
+    color: white;
+}
+
+#fotografiasContainer > hr{
+    border-color: white;
+}
+
+#comentariosContainer{
+    padding:0.5vw;
+    background-color: #4F5902;
+    color: white;
+}
+
+#comentariosContainer > hr{
+    border-color: white;
+}
+
+.comentario{
+    padding: 0.5vw;
+    display: flex;
+    background-color: white;
+    color: black;
+    margin: 0.5vw;
+    align-items: center;
+}
+
+.bodyComentario{
+    width: 23vw;
+}
+
+.bodyComentario > p{
+    width: 22vw;
+}
+
+.imgUsuario > img{
+    width: 4vw;
+    border-radius: 100%;
+    padding: 0.5vw;
+    margin: 0.5vw;
+    background-color: black;
+}
+
+#comentariosRestaurante{
+    overflow: auto;
+    height: 20vh;
+}
+
+#map { 
+    height: 300px;
+    width: 300px;
+}
+
+form.comentario{
+    display: flex;
+    padding: 0.5vw;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+form.comentario > *{
+    margin: 0.5vw;
+}
+
+form.comentario textarea{
+    width: 18vw;
+}
+
+form.comentario label{
+    display: flex;
+    justify-content: space-between;
+    width:25vw;
+}
+
+input[type="submit"]{
+    padding: 0.5vw;
+    width: 10vw;
+    border-radius: 2vw;
+    border: 0;
+    margin: auto;
+    background-color: #4F5902;
+    color: white;
+    font-size: 1vw;
+}
+
+input[type="submit"]:hover{
+    cursor: pointer;
+    background-color: #6E8C03;
+}
+
+#añadirFoto{
+    background-color: #804000;
+    display: flex;
+    align-items: center;
+    padding: 1vw;
+    color: black;
+}
+
+textarea{
+    width: 30vw;
+    height: 5vw;
+}
+
+.etiquetas a{
+    color: black;
+}
+
+.etiquetas input[type="submit"]{
+    background-color: #f2f2f2;
+    margin: 0 1vw;
+    color: black;
+}
+
+.blanco{
+    color:white;
+}
+
+#map { 
+    height: 300px;
+    width: 300px;
+}

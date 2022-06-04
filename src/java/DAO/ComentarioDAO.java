@@ -51,4 +51,15 @@ public class ComentarioDAO {
         return ret;
     }
     
+    public void insertarComentario(int idUsuario, int idRestaurante, int valoracion, String descripcion){
+        try{
+            String sqlStr = "INSERT INTO comentario "
+                    + "VALUES(NULL," + idUsuario + ", " + idRestaurante + ", '" + descripcion + "', " + valoracion + ")";
+            Statement smt = this.conexion.createStatement();
+            smt.executeUpdate(sqlStr);
+        } catch(SQLException ex){
+            System.out.println("Error al intentar insertar el comentario");
+        }
+    }
+    
 }
