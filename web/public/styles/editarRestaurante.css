@@ -228,3 +228,106 @@ textarea{
     height: 300px;
     width: 300px;
 }
+
+#fotografiasRestaurante{
+    display: flex;
+    align-items: center;
+}
+
+#fotografiasRestaurante input[type="submit"]{
+    margin: 1vw;
+    background-color: #f2f2f2;
+    color: black;
+}
+
+@media only screen and (max-width: 1200px) {
+    #imagenRestaurante{
+        width: 30vw;
+    }
+    
+    .etiquetas input[type="submit"]{
+        width: auto;
+        font-size: 1.3rem;
+    }
+    
+    section{
+        height: auto;
+    }
+    
+    main{
+        height: auto;
+    }
+    
+    .restauranteBody{
+        align-items: center;
+        justify-content: center;
+    }
+    #descripcionRestaurante{
+        width: 60vw;
+    }
+    
+}
+
+@media only screen and (max-width: 800px) {
+    
+    #fotografiasContainer{
+        width: 60vw;
+        height: auto;
+    }
+    
+    .fotografiaRestaurante{
+        width: 30vw;
+        height: 20vw;
+    }
+    
+    #comentariosContainer{
+        width: 60vw;
+    }
+    
+    .imgUsuario > img{
+        width: 10vw;
+    }
+    
+    .bodyComentario{
+        width: 50vw;
+    }
+    
+    .bodyComentario > p{
+        width: 40vw;
+    }
+    
+    #fotografiasRestaurante{
+        width: auto;
+        height: auto;
+    }
+    
+}
+
+@media only screen and (max-width: 800px) {
+    
+    section{
+        width: 100vw;
+    }
+    
+    #imagenRestaurante{
+        width: 50vw;
+    }
+    
+    .fotografiaRestaurante{
+        width: 40vw;
+        height: 30vw;
+    }
+    
+    #comentariosContainer, #fotografiasContainer{
+        width: 90vw;
+    }
+    
+    .bodyComentario > p{
+        width: 70vw;
+    }
+    
+    .imgUsuario > img{
+        width: 15vw;
+    }
+    
+}

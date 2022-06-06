@@ -16,6 +16,10 @@
         <servlet-name>suscripcion</servlet-name>
         <servlet-class>comeren.es.controlador.suscripcion</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>subirFichero</servlet-name>
+        <servlet-class>comeren.es.controlador.subirFichero</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>controlador</servlet-name>
         <url-pattern>/controlador</url-pattern>
@@ -31,6 +35,10 @@
     <servlet-mapping>
         <servlet-name>suscripcion</servlet-name>
         <url-pattern>/suscripcion</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>subirFichero</servlet-name>
+        <url-pattern>/subirFichero</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

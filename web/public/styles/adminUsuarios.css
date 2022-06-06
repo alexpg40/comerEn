@@ -125,3 +125,50 @@ label input{
     width: 80%;
     overflow: auto;
 }
+
+@media only screen and (max-width: 1200px) {
+    main > section{
+        width: 90%;
+    }
+    
+    #sectionUsuario{
+        width: 80vw;
+    }
+    
+}
+
+@media only screen and (max-width: 800px) {
+    main > section{
+        width: 100%;
+    }
+    
+    #sectionUsuario{
+        width: 100vw;
+    }
+    
+    .icono{
+        display: none;
+    }
+    
+    .usuario{
+        padding: 2vw;
+    }
+    
+    input[type="submit"]{
+        width: auto;
+    }
+    
+    #buscador{
+        width: 50vw;
+    }
+    
+}
+
+@media only screen and (max-width: 500px) {
+    .apellidoUsuario{
+        display: none;
+    }
+    .nombreUsuario{
+        display: none;
+    }
+}

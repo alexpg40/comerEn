@@ -81,3 +81,82 @@ input[type="submit"]:hover{
     cursor: pointer;
     background-color: #6E8C03;
 }
+
+@media only screen and (max-width: 1200px) {
+    
+    label{
+        font-size: 1.5rem;
+        width: 50vw;
+    }
+    
+    h2{
+        font-size: 2rem;
+    }
+    
+    .iconoPerfil{
+        margin-top: 2vw;
+        width: 15vw;
+        border-radius: 15vw;
+    }
+    
+    input:not([type="submit"]){
+        width: 30vw;
+        font-size: 1.5rem;
+        
+    }
+    
+    #formActualizarCuenta{
+        margin-top: 3vw;
+    }
+    
+    input[type="submit"]{
+        margin-top: 3vw;
+        width: auto;
+        font-size: 1.5rem;
+    }
+    
+}
+
+@media only screen and (max-width: 800px) {
+    section{
+        width: 80%;
+    }
+    
+    label{
+        width: 65vw;
+        flex-direction: column;
+    }
+    
+    .iconoPerfil{
+        margin-top: 2vw;
+        width: 20vw;
+        border-radius: 15vw;
+    }
+    
+    input:not([type="submit"]){
+        width: 60vw;
+        font-size: 1.5rem;
+        
+    }
+    
+}
+
+@media only screen and (max-width: 800px) {
+    section{
+        width: 90%;
+    }
+    
+    label{
+        width: 80vw;
+    }
+    
+    input:not([type="submit"]){
+        width: 80vw;
+        font-size: 1.5rem;
+    }
+    
+    input[type="submit"]{
+        padding: 3vw;
+    }
+    
+}

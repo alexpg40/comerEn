@@ -17,3 +17,10 @@ section{
     justify-content: center;
     height: 50vh;
 }
+
+
+@media only screen and (max-width: 800px) {
+    section{
+        width: 70%;
+    }
+}

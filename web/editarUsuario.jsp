@@ -49,8 +49,6 @@
                 if (!rolesUsuario.isEmpty()) {
             %>
             <article>
-                <h3>Roles del Usuario</h3>
-                <hr>
                 <article class="formulario">
                     <form id="formQuitarRol" action="administrador">
                         <label>Quitar rol 
@@ -75,8 +73,6 @@
                 if (!rolesFaltantes.isEmpty()) {
             %>
             <article>
-                <h3>Roles Faltantes</h3>
-                <hr>
                 <article class="formulario">
                     <form id="formInsertarRol" action="administrador">
                         <label>Rol a insertar: 

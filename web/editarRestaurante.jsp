@@ -110,9 +110,10 @@
                         <h3>Fotografias</h3>
                         <hr/>
                         <article id="fotografiasRestaurante">
-                            <div class="fotografiaRestaurante" id="añadirFoto">
-                                Añadir fotografia
-                            </div>
+                            <form method="post" action="subirFichero" enctype="multipart/form-data" >
+                                <input type="file" name="file" id="file"/>
+                                <input type="submit" value="Subir imagen"/>
+                            </form>
                             <%
                                 for (Fotografia foto : fotografias) {
                             %>
@@ -130,6 +131,7 @@
             <jsp:include page="./componentes/ads.jsp" />
         </main>
         <script>
+            var idRestaurante = <%=restaurante.getIdRestaurante()%>;
             initMapa(<%=ubicacion.getLat()%>, <%=ubicacion.getLng()%>)
         </script>
         <footer>

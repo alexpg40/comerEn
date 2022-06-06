@@ -2,7 +2,6 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="Entidades.Rol"%>
 <%@page import="Entidades.Usuario"%>
-<header>
     <%
         Usuario usuario = (Usuario) session.getAttribute("usuario");
         ArrayList<Rol> roles = (ArrayList<Rol>) session.getAttribute("roles");

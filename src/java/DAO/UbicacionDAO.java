@@ -49,4 +49,14 @@ public class UbicacionDAO {
         return ret;
     }
     
+    public void cambiarUbicacionByIdRestaurante(int idRestaurante, float Lng, float Lat){
+       try {
+            String sqlStr = "UPDATE ubicacion SET Lng = " + Lng + ", Lat = " + Lat + " WHERE idRestaurante = " + idRestaurante;
+            Statement smt = this.conexion.createStatement();
+            smt.executeUpdate(sqlStr);
+        } catch (SQLException ex) {
+            System.out.println("Error al recuperar el usuario" + ex.getMessage());
+        } 
+    }
+    
 }

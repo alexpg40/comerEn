@@ -50,4 +50,14 @@ public class FotografiaDAO {
         return ret;
     }
     
+    public void subirFotografia(int idRestaurante, String ubicacion){
+        try{
+            String sqlStr = "INSERT INTO fotografia VALUES(NULL, " + idRestaurante + ", '" + ubicacion + "')";
+            Statement smt = this.conexion.createStatement();
+            smt.executeUpdate(sqlStr);
+        } catch(SQLException ex){
+            System.out.println("Error al intentar recuperar los restaurantes!");
+        }
+    }
+    
 }

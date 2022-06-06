@@ -103,3 +103,81 @@ hr{
     align-items: center;
     justify-content: center;
 }
+
+@media only screen and (max-width: 1200px) {
+    
+    main{
+        height: auto;
+    }
+    
+    section{
+        height: auto;
+        width: 60vw;
+    }
+    
+    input[type="submit"]{
+        width: auto;
+        font-size: 1.2rem;
+        padding: 2vw;
+    }
+    
+    label{
+        font-size: 1.1rem;
+        width: 40vw;
+    }
+    
+    input:not([type="submit"]){
+        width: 25vw;
+        font-size: 1.1rem;
+    }
+    
+    h2{
+        font-size: 2rem;
+        margin-top: 2vw;
+    }
+    
+}
+
+@media only screen and (max-width: 800px) {
+    section{
+        width: 80vw;
+    }
+    
+    label{
+        font-size: 1.2rem;
+        width: 65vw;
+    }
+    
+    input:not([type="submit"]){
+        width: 40vw;
+        font-size: 1.1rem;
+    }
+    
+    .iconoPerfil{
+        width: 15vw;
+        border-radius: 10vw;
+    }
+    
+}
+
+@media only screen and (max-width: 500px) {
+    section{
+        width: 100vw;
+    }
+    
+    label{
+        font-size: 1.2rem;
+        width: 80vw;
+        flex-direction: column;
+    }
+    
+    input:not([type="submit"]){
+        width: 80vw;
+        font-size: 1.2rem;
+    }
+    
+    .iconoPerfil{
+        width: 20vw;
+        border-radius: 10vw;
+    }
+}

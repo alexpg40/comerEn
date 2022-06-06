@@ -276,7 +276,12 @@ public class administrador extends HttpServlet {
             restauranteDao.cerrarConexion();
             rd = request.getRequestDispatcher("administrador?editarRestaurante=" + Integer.parseInt((request.getParameter("idRestaurante"))));
             rd.forward(request, response);
-        }else {
+        } else if(request.getParameter("actualizarUbicacion") != null){
+            String[] split = request.getParameter("actualizarUbicacion").split(";");
+            UbicacionDAO ubicacionDao = new UbicacionDAO();
+            ubicacionDao.cambiarUbicacionByIdRestaurante(Integer.parseInt(request.getParameter("idRestaurante")), Float.parseFloat(split[0]), Float.parseFloat(split[1]));
+            ubicacionDao.cerrarConexion();
+        } else {
             rd = request.getRequestDispatcher("/adminRestaurantes.jsp");
             rd.forward(request, response);
         }

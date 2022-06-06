@@ -88,3 +88,48 @@ section a{
     display: flex;
     flex-wrap: wrap;
 }
+
+@media only screen and (max-width: 1200px) {
+    #restaurantesContainer{
+        width: 80vw;
+        margin: auto auto;
+    }
+    
+    .restaurante{
+        width: 35vw;
+    }
+    
+    .imagenRestaurante{
+        width: 15vw;
+        height: 13vw;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    #restaurantesContainer{
+        width: 100vw;
+    }
+    .restaurante{
+        width: 45vw;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    #restaurantesContainer{
+        width: 100vw;
+    }
+    .restaurante{
+        width: 80vw;
+    }
+    .restaurantes{
+        height: 70vh;
+        overflow: auto;
+    }
+    .imagenRestaurante{
+        width: 30vw;
+        height: 23vw;
+    }
+    .descripcionRestaurante{
+        width: 40vw;
+    }
+}

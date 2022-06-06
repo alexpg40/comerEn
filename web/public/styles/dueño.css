@@ -124,3 +124,35 @@ h3{
     overflow: auto;
     height: 65vh;
 }
+
+@media only screen and (max-width: 1200px) {
+    .container{
+        width: 80vw;
+    }
+    .botones a{
+        border-radius: 2vw;
+    }
+    
+    .imagenRestaurante{
+        width: 20vw;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    .botones a{
+        width: auto;
+        padding: 1vw;
+    }
+    
+    .restauranteContainer{
+        flex-direction: column;
+    }
+    
+    .container{
+        width: 90vw;
+    }
+    
+    .imagenRestaurante{
+        width: 30vw;
+    }
+}

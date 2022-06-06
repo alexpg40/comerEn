@@ -14,21 +14,14 @@ const initMapa = (lat, lng) => {
         attribution: '© OpenStreetMap'
     }).addTo(map);
 
-    map.on('click', function(e){
-        var coord = e.latlng;
-        var lat = coord.lat;
-        var lng = coord.lng;
-
+    map.on('click', function (e) {
+        let coord = e.latlng;
+        let lat = coord.lat;
+        let lng = coord.lng;
+        fetch(`administrador?actualizarUbicacion=${lng};${lat}&idRestaurante=${idRestaurante}`)
         punto = new L.LatLng(lat, lng);
-
-        console.log(marker)
-
         marker.remove();
-
-        let marker = L.marker(punto);
-
+        marker = L.marker(punto);
         marker.addTo(map);
-
-        console.log("You clicked the map at latitude: " + lat + " and longitude: " + lng);
-        });
+    })
 }

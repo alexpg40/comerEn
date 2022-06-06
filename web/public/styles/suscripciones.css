@@ -129,3 +129,61 @@ hr{
     flex-direction: column;
     width: 10vw;
 }
+
+@media only screen and (max-width: 1200px) {
+    .suscripcion{
+        width: 17vw;
+    }
+    
+    .tusSuscripciones > p{
+        font-size: 1.5rem;
+    }
+    
+}
+
+@media only screen and (max-width: 800px) {
+    
+    .suscripcion{
+        width: 25vw;
+    }
+    
+    .suscripcion > img{
+         width: 10vw;
+    }
+    
+    .suscripcion > article{
+        font-size: 1.2rem;
+    }
+    
+    .precio{
+        font-size:1.3rem;
+    }
+    
+}
+
+@media only screen and (max-width: 800px) {
+    main > section{
+        width: 90%;
+    }
+    
+    .comprar_suscripciones > .tusSuscripciones{
+        flex-direction: column;
+        overflow:auto;
+        align-items: center;
+        height: 50vh;
+    }
+    
+    .suscripcion{
+        width: 50vw;
+    }
+    
+    .precio{
+        width: auto;
+        padding: 2.3vw;
+    }
+    
+    .suscripcion > img{
+        width: 20vw;
+    }
+    
+}

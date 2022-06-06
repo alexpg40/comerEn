@@ -75,3 +75,68 @@ label input{
 .formCrearRestaurante input[type="submit"]{
     width: 15vw;
 }
+
+@media only screen and (max-width: 1200px) {
+    section{
+        width: 80vw;
+    }
+    
+    .formCrearRestaurante{
+        align-items: flex-start;
+    }
+    
+    .formCrearRestaurante input[type="submit"]{
+        width: auto;
+    }
+    
+    .formCrearRestaurante label {
+        width: 60vw;
+    }
+    
+}
+
+
+@media only screen and (max-width: 800px) {
+    .formCrearRestaurante label {
+        width: 80vw;
+    }
+    
+    section{
+        width: 90vw;
+    }
+    
+    label input{
+        font-size: 1.4rem;
+        width: 45vw;
+    }
+    
+    input[type="submit"]{
+        width: auto;
+        font-size: 1.2rem;
+    }
+    
+}
+
+@media only screen and (max-width: 500px) {
+    section{
+        height: auto;
+    }
+    
+    .formCrearRestaurante label{
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    label input{
+        width: 70vw;
+    }
+    
+    #buscador{
+        width: 50vw;
+    }
+    
+    main{
+        height: auto;
+    }
+    
+}

@@ -52,7 +52,7 @@ input:not([type ='submit']){
 }
 
 label{
-    font-size: 1.2vw;
+    font-size: 1.2rem;
     display: flex;
     width: 30vw;
     justify-content: space-between;
@@ -76,4 +76,87 @@ input[type="submit"]:hover{
 
 p > a{
     color: blue;
+}
+
+@media only screen and (max-width: 1200px) {
+    
+    label{
+        font-size: 1.2rem;
+        width: 40vw;
+    }
+    
+    section{
+        width: 60%;
+    }
+    
+    h2{
+        font-size: 2rem;
+    }
+    
+    input[type="submit"]{
+        font-size: 1.3rem;
+        width: auto;
+    }
+    
+}
+
+@media only screen and (max-width: 800px) {
+
+    section{
+        width: 80%;
+    }
+
+    label{
+        width: 60vw;
+        font-size: 1.4rem;
+    }
+    
+    input:not([type="submit"]){
+        width: 30vw;
+        font-size: 1rem;
+    }
+    
+    #formIniciarSesion{
+        margin-top: 6vw;
+    }
+    
+     input[type="submit"]{
+        font-size: 1.2rem;
+        padding: 2vw;
+        margin-top: 2vw;
+    }
+    
+}
+
+
+@media only screen and (max-width: 600px) {
+    section{
+        width: 100%;
+    }
+    
+    h2{
+        font-size: 2.5rem;
+    }
+    
+    label{
+        flex-direction: column;
+        font-size: 1.6rem;
+        width: 60vw;
+    }
+    
+    input:not([type="submit"]){
+        width: 60vw;
+        font-size: 1.2rem;
+    }
+    
+    #formIniciarSesion{
+        margin-top: 6vw;
+    }
+    
+    input[type="submit"]{
+        font-size: 1.5rem;
+        padding: 2vw;
+        margin-top: 2vw;
+    }
+    
 }

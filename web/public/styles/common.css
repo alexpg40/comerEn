@@ -77,7 +77,7 @@ a{
 
 
 #iconoWeb, iconoSesion{
-    width: 75px;
+    width: 3.5vw;
     color: white;
 }
 
@@ -135,4 +135,49 @@ footer{
 
 #iconoAdminUsuario{
     background-color: black;
+}
+
+@media only screen and (max-width: 1200px) {
+
+    main {
+        height: auto;
+        flex-direction: column;
+
+    }
+
+    .ads{
+        width: 100%;
+        margin: auto;
+        max-height: 10vh;
+    }
+
+    .error{
+        font-size: 1.4rem;
+    }
+    
+    .ventanaEmergente{
+        width: auto;
+    }
+
+    .usuarioLogged{
+        font-size: 0;
+        background-color:#6E8C03;
+        border-radius: 2vh;
+    }
+    
+    #iconoSesion{
+        border-radius: 2vh;
+    }
+    
+}
+
+@media only screen and (max-width: 800px) {
+    .ventanaEmergente  a{
+        font-size: 0;
+        padding: 1vw;
+    }
+    
+    .ventanaEmergente img{
+        width: 40px;
+    }
 }
