@@ -72,6 +72,10 @@ public class Utilidades {
         return validarNombre(nombre) && validarApellido(apellido) && validarCorreo(correo);
     }
     
+    public static boolean validarUsuario(String nombre, String apellido, String contraseña, String correo){
+        return validarNombre(nombre) && validarApellido(apellido) && validarCorreo(correo) && validarContrasena(contraseña);
+    }
+    
     /**
      * Validación del nombre, tiene que ser mayor que 3 y estar vacio
      * @param nombre

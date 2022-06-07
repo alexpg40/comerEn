@@ -219,17 +219,23 @@ public class controlador extends HttpServlet {
                 String correo = request.getParameter("correo");
                 String contrasena = request.getParameter("contrasena");
                 Usuario usuario = (Usuario) session.getAttribute("usuario");
-                usuarioDao.actualizarUsuario(new Usuario(usuario.getIdUsuario(), nombre, apellido, correo, contrasena));
-                usuarioDao.cerrarConexion();
-                RestauranteDAO restauranteDao = new RestauranteDAO();
-                ArrayList<Restaurante> restaurantesPopulares = restauranteDao.getRestaurantesPopulares();
-                if (session.getAttribute("usuario") != null) {
-                    SistemaRecomendacion.calcularRecomendacionRestaurantes(restaurantesPopulares, (int) session.getAttribute("idUsuario"));
+                if (Utilidades.validarUsuario(nombre, apellido, correo, contrasena)) {
+                    usuarioDao.actualizarUsuario(new Usuario(usuario.getIdUsuario(), nombre, apellido, correo, contrasena));
+                    usuarioDao.cerrarConexion();
+                    RestauranteDAO restauranteDao = new RestauranteDAO();
+                    ArrayList<Restaurante> restaurantesPopulares = restauranteDao.getRestaurantesPopulares();
+                    if (session.getAttribute("usuario") != null) {
+                        SistemaRecomendacion.calcularRecomendacionRestaurantes(restaurantesPopulares, (int) session.getAttribute("idUsuario"));
+                    }
+                    request.setAttribute("restaurantes", restaurantesPopulares);
+                    restauranteDao.cerrarConexion();
+                    rd = request.getRequestDispatcher("/index.jsp");
+                    rd.forward(request, response);
+                } else {
+                    request.setAttribute("error", "Datos no validos");
+                    rd = request.getRequestDispatcher("/cuenta.jsp");
+                    rd.forward(request, response);
                 }
-                request.setAttribute("restaurantes", restaurantesPopulares);
-                restauranteDao.cerrarConexion();
-                rd = request.getRequestDispatcher("/index.jsp");
-                rd.forward(request, response);
             } else if (restaurante != null) {
                 RestauranteDAO restauranteDao = new RestauranteDAO();
                 EtiquetaDAO etiquetaDao = new EtiquetaDAO();
@@ -293,7 +299,7 @@ public class controlador extends HttpServlet {
                     rd = request.getRequestDispatcher("/recuperarContraseña.jsp");
                     rd.forward(request, response);
                 }
-            }else if(request.getParameter("filtrarForm") != null){
+            } else if (request.getParameter("filtrarForm") != null) {
                 String filtro = request.getParameter("valoracionMin");
                 response.setCharacterEncoding("UTF-8");
                 RestauranteDAO restauranteDao = new RestauranteDAO();
@@ -378,7 +384,7 @@ public class controlador extends HttpServlet {
                 restauranteDao.cerrarConexion();
                 String json = new Gson().toJson(restaurantes);
                 response.getWriter().write(json);
-            } else if(request.getParameter("crear_comentario") != null){
+            } else if (request.getParameter("crear_comentario") != null) {
                 ComentarioDAO comentarioDao = new ComentarioDAO();
                 comentarioDao.insertarComentario((int) session.getAttribute("idUsuario"), Integer.parseInt(request.getParameter("idRestaurante")), Integer.parseInt(request.getParameter("valoracion")), request.getParameter("comentario"));
                 comentarioDao.cerrarConexion();

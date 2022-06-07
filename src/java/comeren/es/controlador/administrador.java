@@ -19,6 +19,7 @@ import Entidades.Restaurante;
 import Entidades.Rol;
 import Entidades.Ubicacion;
 import Entidades.Usuario;
+import SistemaRecomendacion.SistemaRecomendacion;
 import Utilidades.Correos;
 import Utilidades.GeneradorContraseñas;
 import Utilidades.Utilidades;
@@ -138,14 +139,14 @@ public class administrador extends HttpServlet {
                 String nombre = request.getParameter("nombre");
                 String apellido = request.getParameter("apellido");
                 String correo = request.getParameter("correo");
+                Usuario usuario = (Usuario) session.getAttribute("usuario_editar");
                 if (Utilidades.validarUsuario(nombre, apellido, correo)) {
-                    Usuario usuario = (Usuario) session.getAttribute("usuario_editar");
                     usuarioDao.actualizarUsuario(new Usuario(usuario.getIdUsuario(), nombre, apellido, correo));
                     rd = request.getRequestDispatcher("/adminUsuarios.jsp");
                     rd.forward(request, response);
                 } else {
                     request.setAttribute("error", "Datos para actualizar el usuario no son validos!");
-                    rd = request.getRequestDispatcher("/paginaError.jsp");
+                    rd = request.getRequestDispatcher("administrador?editarUsuario=" + usuario.getIdUsuario());
                     rd.forward(request, response);
                 }
                 usuarioDao.cerrarConexion();
@@ -264,19 +265,19 @@ public class administrador extends HttpServlet {
             etiquetaDao.cerrarConexion();
             rd = request.getRequestDispatcher("administrador?editarRestaurante=" + Integer.parseInt((request.getParameter("idRestaurante"))));
             rd.forward(request, response);
-        } else if(request.getParameter("anadirEtiqueta") != null){
+        } else if (request.getParameter("anadirEtiqueta") != null) {
             EtiquetaDAO etiquetaDao = new EtiquetaDAO();
             etiquetaDao.insertarEtiquetaByIdRestaurante(Integer.parseInt((request.getParameter("etiqueta"))), Integer.parseInt((request.getParameter("idRestaurante"))));
             etiquetaDao.cerrarConexion();
             rd = request.getRequestDispatcher("administrador?editarRestaurante=" + Integer.parseInt((request.getParameter("idRestaurante"))));
             rd.forward(request, response);
-        } else if(request.getParameter("cambiar_descripcion") != null){
+        } else if (request.getParameter("cambiar_descripcion") != null) {
             RestauranteDAO restauranteDao = new RestauranteDAO();
             restauranteDao.cambiarDescripcion(Integer.parseInt(request.getParameter("idRestaurante")), request.getParameter("descripcion"));
             restauranteDao.cerrarConexion();
             rd = request.getRequestDispatcher("administrador?editarRestaurante=" + Integer.parseInt((request.getParameter("idRestaurante"))));
             rd.forward(request, response);
-        } else if(request.getParameter("actualizarUbicacion") != null){
+        } else if (request.getParameter("actualizarUbicacion") != null) {
             String[] split = request.getParameter("actualizarUbicacion").split(";");
             UbicacionDAO ubicacionDao = new UbicacionDAO();
             ubicacionDao.cambiarUbicacionByIdRestaurante(Integer.parseInt(request.getParameter("idRestaurante")), Float.parseFloat(split[0]), Float.parseFloat(split[1]));

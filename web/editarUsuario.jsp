@@ -19,6 +19,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="public/styles/common.css">
         <link rel="stylesheet" href="public/styles/editarUsuario.css">
+        <script type="module" src="public/src/js/editarUsuario.js"></script>
     </head>
     <body>
         <jsp:include page="./componentes/header.jsp" />
@@ -40,6 +41,14 @@
                     <label>Correo electrónico: <input type="email" name="correo" placeholder=<%=usuario.getCorreo()%>></label>
                     <input type="submit" value="Actualizar cuenta" name="actualizarUsuario"/>
                 </form>
+                <p id="erroresContainer">
+                    <%
+                        if (request.getAttribute("error") != null) {
+                    %>
+                <p class="error"><%=request.getAttribute("error")%></p>
+                <%
+                    }
+                %>
             </article>
         </section>
         <section>
