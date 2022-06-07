@@ -21,7 +21,7 @@ public class Correos {
     
     	private final Properties properties = new Properties();
 	
-	private String password = "comeren12";
+	private String password = "";
  
 	private Session session;
  
