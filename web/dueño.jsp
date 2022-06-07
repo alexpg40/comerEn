@@ -4,6 +4,8 @@
     Author     : Alex
 --%>
 
+<%@page import="Utilidades.Utilidades"%>
+<%@page import="Entidades.Rol"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="Entidades.Restaurante"%>
 <%@page import="Entidades.Restaurante"%>
@@ -26,6 +28,10 @@
         %>
         <jsp:include page="./componentes/header.jsp" />
         <main>
+            <%
+                ArrayList<Rol> rolesUsuario = (ArrayList<Rol>) session.getAttribute("roles");
+                if (session.getAttribute("usuario") != null && Utilidades.isRol("Dueño", rolesUsuario)) {
+            %>
             <section class="container">
                 <h2>Tus Restaurantes</h2>
                 <hr/>
@@ -71,6 +77,13 @@
                     %>
                 </section>
             </section>
+            <%
+                } else {
+                %>
+                <p class="error">No tiene permiso para acceder a esta página o su sesión a caducado!</p>
+                <%
+                }
+            %>
         </main>
         <footer>
             © Alex Perez 2022

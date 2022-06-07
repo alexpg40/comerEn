@@ -4,6 +4,9 @@
     Author     : Alex
 --%>
 
+<%@page import="Utilidades.Utilidades"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="Entidades.Rol"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -20,6 +23,10 @@
         <jsp:include page="./componentes/header.jsp" />
         <main>
             <section>
+                <%
+                    ArrayList<Rol> rolesUsuario = (ArrayList<Rol>) session.getAttribute("roles");
+                    if (session.getAttribute("usuario") != null && Utilidades.isRol("Admin", rolesUsuario)) {
+                %>
                 <article>
                     <h2>Buscar Restaurantes</h2>
                     <hr/>
@@ -39,6 +46,13 @@
                         <input type="submit" name="crear_restaurante" value="Crear Restaurante con Dueño"/>
                     </form>
                 </article>
+                <%
+                    } else {
+                    %>
+                    <p class="error">No tiene permiso para acceder a esta página o su sesión a caducado!</p>
+                    <%
+                    }
+                %>
             </section>
         </main>
         <footer>

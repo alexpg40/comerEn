@@ -4,6 +4,8 @@
     Author     : Alex
 --%>
 
+<%@page import="Utilidades.Utilidades"%>
+<%@page import="Entidades.Rol"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="Entidades.Restaurante"%>
 <%@page import="Entidades.Restaurante"%>
@@ -21,12 +23,14 @@
         <link rel="stylesheet" href="public/styles/dueño.css">
     </head>
     <body>
-        <%
-            ArrayList<Restaurante> restaurantes = (ArrayList<Restaurante>) session.getAttribute("restaurantes");
-        %>
         <jsp:include page="./componentes/header.jsp" />
         <main>
             <section class="container">
+                <%
+                    ArrayList<Rol> rolesUsuario = (ArrayList<Rol>) session.getAttribute("roles");
+                    if (session.getAttribute("usuario") != null && Utilidades.isRol("Admin", rolesUsuario)) {
+                        ArrayList<Restaurante> restaurantes = (ArrayList<Restaurante>) session.getAttribute("restaurantes");
+                %>
                 <h2>Listado de Restaurantes</h2>
                 <hr/>
                 <section id="restaurantes">
@@ -70,6 +74,13 @@
                         }
                     %>
                 </section>
+                <%
+                } else {
+                %>
+                <p class="error">No tiene permiso para acceder a esta página o su sesión a caducado!</p>
+                <%
+                    }
+                %>
             </section>
         </main>
         <footer>

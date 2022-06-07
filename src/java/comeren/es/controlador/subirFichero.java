@@ -5,6 +5,7 @@
  */
 package comeren.es.controlador;
 
+import DAO.FotografiaDAO;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -12,6 +13,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -40,9 +42,12 @@ public class subirFichero extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        RequestDispatcher rd = null;
         try (PrintWriter out2 = response.getWriter()) {
 
-            final String path = "/img";
+            
+            
+            final String path = getServletContext().getRealPath("/img");
             final Part filePart = request.getPart("file");
             final String fileName = getFileName(filePart);
 
@@ -61,9 +66,16 @@ public class subirFichero extends HttpServlet {
                 while ((read = filecontent.read(bytes)) != -1) {
                     out.write(bytes, 0, read);
                 }
+
+                FotografiaDAO fotografiaDao = new FotografiaDAO();
+                int idRestaurante = Integer.parseInt(request.getParameter("idRestaurante"));
+                fotografiaDao.insertFotografia(idRestaurante, "img" + File.separator + fileName);
+                fotografiaDao.cerrarConexion();
+                rd = request.getRequestDispatcher("dueno?editar=" + idRestaurante);
+                rd.forward(request, response);
             } catch (FileNotFoundException fne) {
                 System.out.println(fne.getMessage());
-                
+
             } finally {
                 if (out != null) {
                     out.close();

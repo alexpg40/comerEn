@@ -24,6 +24,7 @@ import Utilidades.Correos;
 import Utilidades.GeneradorContraseñas;
 import Utilidades.Utilidades;
 import com.google.gson.Gson;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
@@ -53,7 +54,7 @@ public class administrador extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession(true);
         RequestDispatcher rd = null;
-
+        
         if (session.isNew()) {
             RestauranteDAO restauranteDao = new RestauranteDAO();
             ArrayList<Restaurante> restaurantesPopulares = restauranteDao.getRestaurantesPopulares();
@@ -133,7 +134,7 @@ public class administrador extends HttpServlet {
                 rd = request.getRequestDispatcher("/paginaError.jsp");
                 rd.forward(request, response);
             }
-        } else if (request.getParameter("actualizarUsuario") != null) {
+            } else if (request.getParameter("actualizarUsuario") != null) {
             if (session.getAttribute("usuario_editar") != null) {
                 UsuarioDAO usuarioDao = new UsuarioDAO();
                 String nombre = request.getParameter("nombre");
@@ -280,7 +281,11 @@ public class administrador extends HttpServlet {
         } else if (request.getParameter("actualizarUbicacion") != null) {
             String[] split = request.getParameter("actualizarUbicacion").split(";");
             UbicacionDAO ubicacionDao = new UbicacionDAO();
-            ubicacionDao.cambiarUbicacionByIdRestaurante(Integer.parseInt(request.getParameter("idRestaurante")), Float.parseFloat(split[0]), Float.parseFloat(split[1]));
+            if(ubicacionDao.restauranteTieneUbicacion(Integer.parseInt(request.getParameter("idRestaurante"))) != 0){
+                ubicacionDao.cambiarUbicacionByIdRestaurante(Integer.parseInt(request.getParameter("idRestaurante")), Float.parseFloat(split[0]), Float.parseFloat(split[1]));
+            } else {
+                ubicacionDao.insertarUbicacion(Integer.parseInt(request.getParameter("idRestaurante")), Float.parseFloat(split[0]), Float.parseFloat(split[1]));
+            }
             ubicacionDao.cerrarConexion();
         } else {
             rd = request.getRequestDispatcher("/adminRestaurantes.jsp");

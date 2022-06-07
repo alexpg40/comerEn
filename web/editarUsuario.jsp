@@ -4,6 +4,7 @@
     Author     : Alex
 --%>
 
+<%@page import="Utilidades.Utilidades"%>
 <%@page import="Entidades.Rol"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.ArrayList"%>
@@ -24,13 +25,17 @@
     <body>
         <jsp:include page="./componentes/header.jsp" />
         <%
-            Usuario usuario = (Usuario) session.getAttribute("usuario_editar");
-            ArrayList<Rol> rolesFaltantes = (ArrayList<Rol>) request.getAttribute("rolesFaltantes");
-            ArrayList<Rol> rolesUsuario = (ArrayList<Rol>) request.getAttribute("rolesUsuario");
+
         %>
     </header>
     <main>
         <section>
+            <%                ArrayList<Rol> roles = (ArrayList<Rol>) session.getAttribute("roles");
+                if (session.getAttribute("usuario") != null && Utilidades.isRol("Admin", roles)) {
+                    Usuario usuario = (Usuario) session.getAttribute("usuario_editar");
+                    ArrayList<Rol> rolesFaltantes = (ArrayList<Rol>) request.getAttribute("rolesFaltantes");
+                    ArrayList<Rol> rolesUsuario = (ArrayList<Rol>) request.getAttribute("rolesUsuario");
+            %>
             <h2>Datos Cuenta</h2>
             <hr/>
             <article class="formulario">
@@ -99,6 +104,13 @@
                     </form>     
                 </article>
             </article>
+            <%
+                }
+            %>
+            <%
+            } else {
+            %>
+            <p class="error">No tiene permiso para acceder a esta página o su sesión a caducado!</p>
             <%
                 }
             %>

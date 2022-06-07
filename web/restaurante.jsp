@@ -96,7 +96,7 @@
                             <%
                                 for (Fotografia foto : fotografias) {
                             %>
-                            <img class="fotografiaRestaurante" src="public/img/<%=foto.getUbicacion()%>" alt="imagen del restaurante"/>
+                            <img class="fotografiaRestaurante" src="<%=foto.getUbicacion()%>" alt="imagen del restaurante"/>
                             <%
                                 }
                             %>

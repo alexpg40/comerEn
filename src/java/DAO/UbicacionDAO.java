@@ -71,4 +71,29 @@ public class UbicacionDAO {
         } 
     }
     
+    public int restauranteTieneUbicacion(int idRestaurante){
+        int ret = 0;
+        try {
+            String sqlStr = "SELECT count(*) as tiene FROM ubicacion WHERE idRestaurante = " + idRestaurante;
+            Statement smt = this.conexion.createStatement();
+            ResultSet executeQuery = smt.executeQuery(sqlStr);
+            while(executeQuery.next()){
+                ret = executeQuery.getInt("tiene");
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error al comprobar si el restaurante tiene ubicación" + ex.getMessage());
+        }
+        return ret;
+    }
+    
+    public void insertarUbicacion(int idRestaurante, float Lng, float Lat){
+       try {
+            String sqlStr = "INSERT INTO ubicacion VALUES(NULL, " + Lng + ", " + Lat + ", " + idRestaurante + ")";
+            Statement smt = this.conexion.createStatement();
+            smt.executeUpdate(sqlStr);
+        } catch (SQLException ex) {
+            System.out.println("Error al insertar la ubicacion" + ex.getMessage());
+        } 
+    }
+    
 }

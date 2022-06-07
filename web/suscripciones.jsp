@@ -25,32 +25,35 @@
         <main>
             <jsp:include page="./componentes/ads.jsp" />
             <section>
+                <%
+                    if (session.getAttribute("usuario") != null) {
+                %>
                 <article class="suscripciones">
                     <h2>Tus Suscripciones</h2>
                     <hr/>
                     <section class="tusSuscripciones">
                         <%
-                        ArrayList<Suscripcion> tusSuscripciones = (ArrayList<Suscripcion>) request.getAttribute("suscripciones_usuario");
-                        if(tusSuscripciones.isEmpty()){
-                            %>
-                            <p>No tienes ninguna suscripcióna activada</p>
-                            <%
+                            ArrayList<Suscripcion> tusSuscripciones = (ArrayList<Suscripcion>) request.getAttribute("suscripciones_usuario");
+                            if (tusSuscripciones.isEmpty()) {
+                        %>
+                        <p>No tienes ninguna suscripcióna activada</p>
+                        <%
                         } else {
-                            for(Suscripcion suscripcion : tusSuscripciones){
-                            %>
-                            <article class="tus_suscripcion">
-                               <img src="public/img/ads.png" alt="icono de la suscripcion"/>
-                                <article class="descripcion"><%=suscripcion.getDescripcion()%></article>
-                                <article class="botones">
-                                    <a href="suscripcion?baja=<%=suscripcion.getIdSuscripcion()%>" class="baja">
-                                        Anular
-                                    </a>
-                                </article>
+                            for (Suscripcion suscripcion : tusSuscripciones) {
+                        %>
+                        <article class="tus_suscripcion">
+                            <img src="public/img/ads.png" alt="icono de la suscripcion"/>
+                            <article class="descripcion"><%=suscripcion.getDescripcion()%></article>
+                            <article class="botones">
+                                <a href="suscripcion?baja=<%=suscripcion.getIdSuscripcion()%>" class="baja">
+                                    Anular
+                                </a>
                             </article>
-                            <%
-                        }
-                        }
-                    %>
+                        </article>
+                        <%
+                                }
+                            }
+                        %>
                     </section>
                 </article>
                 <article class="comprar_suscripciones">
@@ -58,27 +61,34 @@
                     <hr/>
                     <section class="tusSuscripciones">
                         <%
-                        ArrayList<Suscripcion> suscripciones = (ArrayList<Suscripcion>) request.getAttribute("suscripciones");
-                        if(suscripciones.isEmpty()){
-                            %>
-                            <p>No se han encontrado ninguna suscripción disponible</p>
-                            <%
+                            ArrayList<Suscripcion> suscripciones = (ArrayList<Suscripcion>) request.getAttribute("suscripciones");
+                            if (suscripciones.isEmpty()) {
+                        %>
+                        <p>No se han encontrado ninguna suscripción disponible</p>
+                        <%
                         } else {
-                            for(Suscripcion suscripcion : suscripciones){
-                            %>
-                            <article class="suscripcion">
-                                <img src="public/img/ads.png" alt="icono de la suscripcion"/>
-                                <hr/>
-                                <article><%=suscripcion.getDescripcion()%></article>
-                                <hr/>
-                                <a href="suscripcion?comprar=<%=suscripcion.getIdSuscripcion()%>"><article class="precio"><%=suscripcion.getPrecio()%> €</article></a>
-                            </article>
-                            <%
-                        }
-                        }
-                    %>
+                            for (Suscripcion suscripcion : suscripciones) {
+                        %>
+                        <article class="suscripcion">
+                            <img src="public/img/ads.png" alt="icono de la suscripcion"/>
+                            <hr/>
+                            <article><%=suscripcion.getDescripcion()%></article>
+                            <hr/>
+                            <a href="suscripcion?comprar=<%=suscripcion.getIdSuscripcion()%>"><article class="precio"><%=suscripcion.getPrecio()%> €</article></a>
+                        </article>
+                        <%
+                                }
+                            }
+                        %>
                     </section>
                 </article>
+                <%
+                    } else {
+                    %>
+                    <p class="error">Necesita estar logeado o su sesión a caducado!</p>
+                    <%
+                    }
+                %>
             </section>
             <jsp:include page="./componentes/ads.jsp" />
         </main>

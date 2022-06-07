@@ -27,6 +27,13 @@
                     <input type="submit" value="Enviar correo" name="recuperarContrasena"/>
                 </form>
                 <p>Si has olvidado la contraseña pulsa <a href="recuperarContraseña.jsp">aquí</a></p>
+                <%
+                    if (request.getAttribute("no_existe_usuario") != null) {
+                %>
+                <p class="error">Ese correo no esta registrado en la base de datos!</p>
+                <%
+                    }
+                %>
             </section>
         </main>
         <footer>

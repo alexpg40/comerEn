@@ -26,6 +26,7 @@ import Utilidades.Correos;
 import Utilidades.GeneradorContraseñas;
 import Utilidades.Utilidades;
 import com.google.gson.Gson;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
@@ -54,7 +55,7 @@ public class controlador extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession(true);
         RequestDispatcher rd = null;
-
+       
         if (session.isNew()) {
             RestauranteDAO restauranteDao = new RestauranteDAO();
             ArrayList<Restaurante> restaurantesPopulares = restauranteDao.getRestaurantesPopulares();
@@ -306,7 +307,6 @@ public class controlador extends HttpServlet {
                     Correos correo = new Correos();
                     correo.sendEmail("Recuperarción contraseña - comerEn", "Se contraseña actual ha cambiado a " + nuevaContraseña, request.getParameter("correo"));
                     rd = request.getRequestDispatcher("/login.jsp");
-                    System.out.println(request.getParameter("correo"));
                     request.setAttribute("correo_recuperar_contrasena", "correo_recuperar_contrasena");
                     rd.forward(request, response);
                 } else {

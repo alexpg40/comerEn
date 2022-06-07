@@ -4,6 +4,8 @@
     Author     : Alex
 --%>
 
+<%@page import="Entidades.Rol"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="Entidades.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -26,6 +28,9 @@
     </header>
     <main>
         <section>
+            <%
+                if (session.getAttribute("usuario") != null) {
+            %>
             <h2>Datos Cuenta</h2>
             <hr/>
             <img class="iconoPerfil" src="public/img/iconoLogin.svg" alt="icono perfil del usuario"/>
@@ -46,6 +51,13 @@
                 }
             %>
             </p>
+            <%
+                } else {
+                    %>
+                    <p class="error">Necesita estar logeado para poder acceder aqui, tal vez la sesión caduco</p>
+                    <%
+                }
+            %>        
         </section>
     </main>
     <footer>

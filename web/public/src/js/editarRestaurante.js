@@ -16,6 +16,7 @@ const initMapa = (lat, lng) => {
 
     map.on('click', function (e) {
         let coord = e.latlng;
+        console.log(coord);
         let lat = coord.lat;
         let lng = coord.lng;
         fetch(`administrador?actualizarUbicacion=${lng};${lat}&idRestaurante=${idRestaurante}`)
