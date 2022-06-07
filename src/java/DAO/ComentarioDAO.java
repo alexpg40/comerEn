@@ -74,4 +74,23 @@ public class ComentarioDAO {
         }
     }
     
+    
+    public int restauranteComentadoByIdUsuario(int idRestaurante, int idUsuario){
+        try{
+            String sqlStr = "SELECT count(*) as comentado FROM comentario WHERE idRestaurante = " + idRestaurante + " AND idUsuario =" + idUsuario;
+            Statement smt = this.conexion.createStatement();
+            ResultSet result = smt.executeQuery(sqlStr);
+            while(result.next()){
+                if(result.getInt("comentado") == 0){
+                    return 0;
+                } else {
+                    return 1;
+                }
+            }
+        } catch(SQLException ex){
+            System.out.println("Error al intentar recuperar los restaurantes!");
+        }
+        return 0;
+    }
+    
 }

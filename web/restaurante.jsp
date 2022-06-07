@@ -111,7 +111,11 @@
                         <hr/>
                         <article id="comentariosRestaurante">
                             <%
-                                if (session.getAttribute("usuario") != null) {
+                                int comentado = 0;
+                                if(request.getAttribute("comentado") != null){
+                                    comentado = (Integer) request.getAttribute("comentado");
+                                }
+                                if (session.getAttribute("usuario") != null && comentado == 0) {
                             %>
                             <form action="controlador" class="comentario">
                                 <label>Descripcion <textarea name="comentario"></textarea></label>

@@ -256,6 +256,10 @@ public class controlador extends HttpServlet {
                 FotografiaDAO fotografiaDao = new FotografiaDAO();
                 ArrayList<Etiqueta> etiquitasByIdRestaurante = etiquetaDao.getEtiquitasByIdRestaurante(Integer.parseInt(restaurante));
                 ArrayList<Comentario> comentariosByIdRestaurante = comentarioDao.getComentariosByIdRestaurante(Integer.parseInt(restaurante));
+                if(session.getAttribute("idUsuario") != null){
+                    int comentado = comentarioDao.restauranteComentadoByIdUsuario(Integer.parseInt(restaurante), (int)session.getAttribute("idUsuario"));
+                    request.setAttribute("comentado", comentado);
+                }
                 Ubicacion ubicacion = ubicacionDao.getUbicacionByIdRestaurante(Integer.parseInt(restaurante));
                 ArrayList<Fotografia> fotografiasByIdRestaurante = fotografiaDao.getFotografiasByIdRestaurante(Integer.parseInt(restaurante));
                 Restaurante restauranteById = restauranteDao.getRestauranteById(Integer.parseInt(restaurante));
