@@ -1,15 +1,11 @@
 import {getEtiquetas, getRestaurantes, getRestaurantesCercanos, getLocalidades, getRestaurantesPopulares, getRestaurantesFiltrados} from './services.js'
 import {Restaurante, Etiqueta, Punto} from './d.js'
+import { validarInput } from './validaciones.js'
 
 var restaurantesG : Array<Restaurante> = []
 
 window.onload = () => {
     init()
-}
-
-const validarInput = (input : String) : Boolean => {
-    if(input.length < 3) return false;
-    return true;
 }
 
 const init = () => {

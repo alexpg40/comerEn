@@ -117,6 +117,7 @@ public class controlador extends HttpServlet {
                 }
             } else if (buscador != null && !buscador.equals("")) {
                 RestauranteDAO restauranteDao = new RestauranteDAO();
+                System.out.println(buscador);
                 ArrayList<Restaurante> restaurantes = restauranteDao.getRestaurantes(buscador);
                 if (session.getAttribute("usuario") != null) {
                     SistemaRecomendacion.calcularRecomendacionRestaurantes(restaurantes, (int) session.getAttribute("idUsuario"));
@@ -146,6 +147,12 @@ public class controlador extends HttpServlet {
                     rd = request.getRequestDispatcher("/listaRestaurantes.jsp");
                     rd.forward(request, response);
                 } else if (restaurantes.isEmpty()) {
+                    ArrayList<Restaurante> restaurantesPopulares = restauranteDao.getRestaurantesPopulares();
+                    if (session.getAttribute("usuario") != null) {
+                        SistemaRecomendacion.calcularRecomendacionRestaurantes(restaurantesPopulares, (int) session.getAttribute("idUsuario"));
+                    }
+                    restauranteDao.cerrarConexion();
+                    request.setAttribute("restaurantes", restaurantesPopulares);
                     restauranteDao.cerrarConexion();
                     rd = request.getRequestDispatcher("/index.jsp");
                     rd.forward(request, response);
@@ -172,6 +179,11 @@ public class controlador extends HttpServlet {
                     }
                     request.setAttribute("restaurantes", restaurantesPopulares);
                     if (rolesUsuario.isEmpty()) {
+                        if (session.getAttribute("usuario") != null) {
+                            SistemaRecomendacion.calcularRecomendacionRestaurantes(restaurantesPopulares, (int) session.getAttribute("idUsuario"));
+                        }
+                        restauranteDao.cerrarConexion();
+                        request.setAttribute("restaurantes", restaurantesPopulares);
                         rd = request.getRequestDispatcher("/index.jsp");
                         rd.forward(request, response);
                     } else if (Utilidades.isRol("dueño", rolesUsuario)) {

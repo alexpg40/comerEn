@@ -8,14 +8,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { getEtiquetas, getRestaurantes, getRestaurantesCercanos, getLocalidades, getRestaurantesPopulares, getRestaurantesFiltrados } from './services.js';
+import { validarInput } from './validaciones.js';
 var restaurantesG = [];
 window.onload = () => {
     init();
-};
-const validarInput = (input) => {
-    if (input.length < 3)
-        return false;
-    return true;
 };
 const init = () => {
     initListeners();

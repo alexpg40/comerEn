@@ -27,4 +27,13 @@ export const validarRContraseña = () => {
     let rcontraseña = document.getElementsByName('rContrasena')[0];
     return contraseña.value === rcontraseña.value;
 };
+export const validarInput = (input) => {
+    if (input.trim().length < 3)
+        return false;
+    if (input.trim() == "")
+        return false;
+    if (input.trim() == " ")
+        return false;
+    return true;
+};
 //# sourceMappingURL=validaciones.js.map
