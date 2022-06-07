@@ -4,6 +4,8 @@
     Author     : Alex
 --%>
 
+<%@page import="Entidades.Usuario"%>
+<%@page import="DAO.UsuarioDAO"%>
 <%@page import="Entidades.Ubicacion"%>
 <%@page import="Entidades.Comentario"%>
 <%@page import="Entidades.Fotografia"%>
@@ -121,14 +123,17 @@
                                 }
                             %>
                             <%
+                                UsuarioDAO usuarioDao = new UsuarioDAO();
+                                Usuario usuario = null;
                                 for (Comentario comentario : comentarios) {
+                                    usuario = usuarioDao.getUsuarioByidUsuario(comentario.getIdUsuario());
                             %>
                             <article class="comentario">
                                 <article class="imgUsuario">
-                                    <img src="public/img/iconoLogin.svg" alt="imagen del usuario"/>
+                                    <img src="public/img/<%=usuario.getIcono()%>" alt="imagen del usuario"/>
                                 </article>
                                 <article class="bodyComentario">
-                                    <h4>Pepe</h4>
+                                    <h4><%=usuario.getNombre()%></h4>
                                     <hr/>
                                     <p>
                                         <%=comentario.getComentario()%>
@@ -146,6 +151,7 @@
                             </article>
                             <%
                                 }
+                                usuarioDao.cerrarConexion();
                             %>
                         </article>
                     </article>
