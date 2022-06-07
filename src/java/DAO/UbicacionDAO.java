@@ -33,6 +33,12 @@ public class UbicacionDAO {
         }
     }
     
+    /**
+     * Recupera la ubicación de un restaurante dada su 
+     * id
+     * @param idRestaurante a buscar su ubicación
+     * @return Ubicacion
+     */
     public Ubicacion getUbicacionByIdRestaurante(int idRestaurante){
         Ubicacion ret = null;
         try {
@@ -49,6 +55,12 @@ public class UbicacionDAO {
         return ret;
     }
     
+    /**
+     * Cambia la ubicación de un restaurante dada su id y la ubicacion 
+     * @param idRestaurante
+     * @param Lng Longitud de su ubicación
+     * @param Lat Latitud de su ubicación
+     */
     public void cambiarUbicacionByIdRestaurante(int idRestaurante, float Lng, float Lat){
        try {
             String sqlStr = "UPDATE ubicacion SET Lng = " + Lng + ", Lat = " + Lat + " WHERE idRestaurante = " + idRestaurante;

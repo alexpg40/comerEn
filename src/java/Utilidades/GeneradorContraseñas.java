@@ -27,7 +27,13 @@ public class GeneradorContraseñas {
 	public static String getPassword(int length) {
 		return getPassword(NUMEROS + MAYUSCULAS + MINUSCULAS, length);
 	}
- 
+        
+        /**
+         * Función que genera una contraseña aleatoria
+         * @param key 
+         * @param length
+         * @return 
+         */
 	public static String getPassword(String key, int length) {
 		String pswd = "";
  

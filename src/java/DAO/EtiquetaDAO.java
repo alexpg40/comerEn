@@ -34,6 +34,11 @@ public class EtiquetaDAO {
         }
     }
     
+    /**
+     * Recupera los etiquetas de un restaurante
+     * @param idRestaurante a buscar
+     * @return ArrayList<Etiqueta>
+     */
     public ArrayList<Etiqueta> getEtiquitasByIdRestaurante(int idRestaurante){
         ArrayList<Etiqueta> ret = new ArrayList<>();
         try{
@@ -50,6 +55,11 @@ public class EtiquetaDAO {
         return ret;
     }
     
+    /**
+     * Recupera las etiquetas que contengo el nombre del parametro
+     * @param nombre de la etiquetas a buscar
+     * @return ArrayList<Etiqueta>
+     */
     public ArrayList<Etiqueta> getEtiquitasByNombre(String nombre){
         ArrayList<Etiqueta> ret = new ArrayList<>();
         try{
@@ -65,6 +75,11 @@ public class EtiquetaDAO {
         return ret;
     }
     
+    /**
+     * Recuperar las etiquetas faltantes del restaurante
+     * @param idRestaurante a buscar
+     * @return ArrayList<Etiqueta>
+     */
     public ArrayList<Etiqueta> getEtiquitasFaltantesByidRestaurante(int idRestaurante){
         ArrayList<Etiqueta> ret = new ArrayList<>();
         try{

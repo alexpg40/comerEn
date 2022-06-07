@@ -34,6 +34,11 @@ public class RestauranteDAO {
         }
     }
 
+    /**
+     * Recupera los restaurantes dado un nombre
+     * @param nombre
+     * @return ArrayList<Restaurante>
+     */
     public ArrayList<Restaurante> getRestaurantes(String nombre) {
         ArrayList<Restaurante> ret = new ArrayList<>();
         try {
@@ -52,6 +57,11 @@ public class RestauranteDAO {
         return ret;
     }
 
+    /**
+     * Recupera los restaurantes de un dueño
+     * @param idDueño
+     * @return ArrayList<Restaurante>
+     */
     public ArrayList<Restaurante> getRestaurantesbyIdDueño(int idDueño) {
         ArrayList<Restaurante> ret = new ArrayList<>();
         try {
@@ -70,6 +80,11 @@ public class RestauranteDAO {
         return ret;
     }
 
+    /**
+     * Recupera un restaurante dado su idRestauarnte
+     * @param idRestaurante a buscar
+     * @return Restaurante
+     */
     public Restaurante getRestauranteById(int idRestaurante) {
         Restaurante ret = null;
         try {
@@ -88,6 +103,11 @@ public class RestauranteDAO {
         return ret;
     }
 
+    /**
+     * Borra un restaurante dado su id
+     * @param idRestaurante
+     * @return int si ha sido borrado
+     */
     public int borrarRestaurante(int idRestaurante) {
         int ret = 0;
         try {
@@ -100,6 +120,11 @@ public class RestauranteDAO {
         return ret;
     }
 
+    /**
+     * Oculto un restauarnte dado su id poniendo oculto = 1
+     * @param idRestaurante
+     * @return int si ha sido ocultado
+     */
     public int ocultarRestaurante(int idRestaurante) {
         int ret = 0;
         try {
@@ -112,6 +137,11 @@ public class RestauranteDAO {
         return ret;
     }
 
+    /**
+     * Desoculta un restaurante dado su id poniendo oculto = 0
+     * @param idRestaurante
+     * @return int si ha sido ocultado
+     */
     public int mostrarRestaurante(int idRestaurante) {
         int ret = 0;
         try {
@@ -124,11 +154,15 @@ public class RestauranteDAO {
         return ret;
     }
 
+    /**
+     * Calcula la valoración media dado el idRestaurante
+     * @param idRestaurante
+     * @return 
+     */
     public int valoracionMediaRestaurante(int idRestaurante) {
         int ret = 0;
         try {
             String sqlStr = "SELECT AVG(valoracion) FROM comentario WHERE idRestaurante = " + idRestaurante;
-            System.out.println(sqlStr);
             Statement smt = this.conexion.createStatement();
             ResultSet result = smt.executeQuery(sqlStr);
             if (result.next()) {
@@ -140,11 +174,17 @@ public class RestauranteDAO {
         return ret;
     }
 
+    /**
+     * Da de alta un restauarnte con su dueño
+     * @param nombreRestaurante 
+     * @param idDueño
+     * @param idAdmin
+     * @return si ha sido dado de alta
+     */
     public int darAltaRestaurante(String nombreRestaurante, int idDueño, int idAdmin) {
         int ret = 0;
         try {
             String sqlStr = "INSERT INTO restaurante(idRestaurante, nombre, idDueño, idAdmin) VALUES(NULL, '" + nombreRestaurante + "', " + idDueño + ", " + idAdmin + ")";
-            System.out.println(sqlStr);
             Statement smt = this.conexion.createStatement();
             ret = smt.executeUpdate(sqlStr);
         } catch (SQLException ex) {
@@ -153,6 +193,10 @@ public class RestauranteDAO {
         return ret;
     }
 
+    /**
+     * Recupera los 5 restaurantes más polulares con mejor valoración
+     * @return ArrayList<Restaurante>
+     */
     public ArrayList<Restaurante> getRestaurantesPopulares() {
         ArrayList<Restaurante> ret = new ArrayList<>();
         try {
@@ -176,6 +220,13 @@ public class RestauranteDAO {
         return ret;
     }
 
+    /**
+     * Recupera los restaurantes más cercanos dados una ubicación y un radio
+     * @param lng double Longitud de la ubicación
+     * @param lat double Latitud de la ubicación
+     * @param radio int km de radio
+     * @return ArrayList<Restaurante>
+     */
     public ArrayList<Restaurante> getRestaurantesCercanos(double lng, double lat, int radio) {
         ArrayList<Restaurante> ret = new ArrayList<>();
         try {
@@ -200,6 +251,11 @@ public class RestauranteDAO {
         return ret;
     }
 
+    /**
+     * Recupera las localidades de todos los restaurantes
+     * @param localidad
+     * @return ArrayList<String>
+     */
     public ArrayList<String> getLocalidadesRestaurantes(String localidad) {
         ArrayList<String> ret = new ArrayList<>();
         try {
@@ -216,6 +272,11 @@ public class RestauranteDAO {
         return ret;
     }
 
+    /**
+     * Recupera todos los restaurantes que contengan la id de Etiqueta
+     * @param idEtiqueta
+     * @return ArrayList<Restaurante>
+     */
     public ArrayList<Restaurante> getRestaurantesByEtiquetas(int idEtiqueta) {
         ArrayList<Restaurante> ret = new ArrayList<>();
         try {
@@ -235,6 +296,11 @@ public class RestauranteDAO {
         return ret;
     }
 
+    /**
+     * Recupera los restaurantes con esa localidad
+     * @param localidad
+     * @return ArrayList<Restaurante>
+     */
     public ArrayList<Restaurante> getRestaurantesByLocalidad(String localidad) {
         ArrayList<Restaurante> ret = new ArrayList<>();
         try {
@@ -253,6 +319,15 @@ public class RestauranteDAO {
         return ret;
     }
 
+    /**
+     * Filtra los restaurantes según la ubicación, el radio, la localidad o la valoración
+     * @param lng Longitud de la ubicación
+     * @param lat Latitud de la ubicación
+     * @param radio km de radio
+     * @param localidad del restaurante
+     * @param valoracion del restaurante
+     * @return ArrayList<Restaurante>
+     */
     public ArrayList<Restaurante> getRestaurantesFiltrados(double lng, double lat, int radio, String localidad, int valoracion) {
         ArrayList<Restaurante> ret = new ArrayList<>();
         try {
@@ -280,6 +355,12 @@ public class RestauranteDAO {
         return ret;
     }
     
+    /**
+     * Recupera los restaurantes filtrados segun la localidad o la valoración
+     * @param localidad
+     * @param valoracion
+     * @return ArrayList<Restaurante>
+     */
     public ArrayList<Restaurante> getRestaurantesFiltrados(String localidad, int valoracion) {
         ArrayList<Restaurante> ret = new ArrayList<>();
         try {
@@ -305,6 +386,11 @@ public class RestauranteDAO {
         return ret;
     }
     
+    /**
+     * Función que actualiza la descripción de un restaurante
+     * @param idRestaurante
+     * @param descripcion 
+     */
     public void cambiarDescripcion(int idRestaurante, String descripcion){
         try {
             String sqlStr = "UPDATE restaurante SET descripcion = '" + descripcion + "' WHERE idRestaurante = " + idRestaurante;

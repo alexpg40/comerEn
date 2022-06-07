@@ -12,9 +12,10 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 /**
- *
- * @author Alex
+ * Clase con utilidad para poder ordenar un Map basado en los
+ * values
  */
+
 public class MapUtil {
     public static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> map) {
         List<Entry<K, V>> list = new ArrayList<>(map.entrySet());

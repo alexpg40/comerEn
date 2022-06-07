@@ -16,13 +16,17 @@ import java.util.ArrayList;
  */
 public class Utilidades {
 
+    /**
+     * Funcion para hashear una contraseña con SHA-256
+     * @param password contraseña a hashear
+     * @return contraseña hasheado
+     */
     public static String convertirSHA256(String password) {
         MessageDigest md = null;
         try {
             md = MessageDigest.getInstance("SHA-256");
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
-            return null;
         }
 
         byte[] hash = md.digest(password.getBytes());
@@ -35,6 +39,13 @@ public class Utilidades {
         return sb.toString();
     }
 
+    /**
+     * Esta funcion comprueba dado un ArrayList<Rol> que no contenga el rol
+     * con el nombre pasado por parametro
+     * @param nombre_rol a buscar
+     * @param roles ArrayList<Rol> donde buscar
+     * @return boolean
+     */
     public static boolean isRol(String nombre_rol, ArrayList<Rol> roles) {
         for (int i = 0; i < roles.size(); i++) {
             if (roles.get(i).getNombreRol().equalsIgnoreCase(nombre_rol)) {
@@ -44,6 +55,15 @@ public class Utilidades {
         return false;
     }
 
+    /**
+     * Validacion del usuario para el usuario del registro
+     * @param nombre
+     * @param apellido
+     * @param correo
+     * @param contrasena
+     * @param rContrasena
+     * @return 
+     */
     public static boolean validarUsuario(String nombre, String apellido, String correo, String contrasena, String rContrasena){
         return validarNombre(nombre) && validarApellido(apellido) && validarCorreo(correo) && validarContrasena(contrasena) && validarRContrasena(contrasena, rContrasena);
     }
@@ -52,22 +72,50 @@ public class Utilidades {
         return validarNombre(nombre) && validarApellido(apellido) && validarCorreo(correo);
     }
     
+    /**
+     * Validación del nombre, tiene que ser mayor que 3 y estar vacio
+     * @param nombre
+     * @return 
+     */
     private static boolean validarNombre(String nombre){
         return nombre.length() > 3 && !nombre.equals("");
     } 
-    
+    /**
+     * Validación del apellido, tiene que ser mayor que 3 y estar vacio
+     * @param apellido
+     * @return 
+     */
     private static boolean validarApellido(String apellido){
         return apellido.length() > 3 && !apellido.equals("");
     }
     
+    /**
+     * Validación del correo con un regex
+     * @param correo
+     * @return 
+     */
     private static boolean validarCorreo(String correo){
         return !correo.matches("^[\\w-+]+(\\.[\\w-]{1,62}){0,126}@[\\w-]{1,63}(\\.[\\w-]{1,62})+/[\\w-]+$");
     }
     
+    /**
+     * Validación de contraseña tiene que contener un digito, un letra mayuscula
+     * y minuscula, y caracter especial y debe terner una longitud de 8 o 
+     * mayor
+     * @param contrasena
+     * @return 
+     */
     private static boolean validarContrasena(String contrasena){
         return !contrasena.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$");
     }
     
+    /**
+     * Validación de la segunda contraseña, tiene que coincidir
+     * con la primera contraseña
+     * @param contrasena
+     * @param rcontrasena
+     * @return 
+     */
     private static boolean validarRContrasena(String contrasena, String rcontrasena){
         return contrasena.equals(rcontrasena);
     }

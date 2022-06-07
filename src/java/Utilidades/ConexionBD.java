@@ -14,15 +14,16 @@ import java.sql.SQLException;
  * @author Alex
  */
 public class ConexionBD {
-     private Connection conexion = null;
+
+    private Connection conexion = null;
     private String servidor = "";
     private String database = "";
     private String usuario = "";
     private String passwords = "";
     private String url = "";
-    
-    public ConexionBD(String servidor , String database, String usuario, String password){
-        try{
+
+    public ConexionBD(String servidor, String database, String usuario, String password) {
+        try {
             this.servidor = servidor;
             this.database = database;
             this.url = "jdbc:mysql://" + servidor + "/" + database;
@@ -35,9 +36,9 @@ public class ConexionBD {
             System.out.println("Clase no encotrada");
         }
     }
-    
-    public ConexionBD(){
-        try{
+
+    public ConexionBD() {
+        try {
             this.servidor = "localhost";
             this.database = "comeren";
             this.usuario = "root";
@@ -51,13 +52,13 @@ public class ConexionBD {
             System.out.println("Clase no encotrada");
         }
     }
-    
-    public Connection getConexion(){
+
+    public Connection getConexion() {
         return conexion;
     }
-    
-    public Connection cerrarConexion(){
-        try{
+
+    public Connection cerrarConexion() {
+        try {
             conexion.close();
             System.out.println("Cerrando conexion a " + url + "....... Ok");
         } catch (SQLException ex) {

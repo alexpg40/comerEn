@@ -26,7 +26,7 @@ public class Correos {
 	private Session session;
  
 	private void init() {
- 
+          
 		properties.put("mail.smtp.host", "smtp.office365.com");
 		properties.put("mail.smtp.starttls.enable", "true");
 		properties.put("mail.smtp.port",587);
@@ -37,6 +37,12 @@ public class Correos {
 		session = Session.getDefaultInstance(properties);
 	}
  
+        /**
+         * Envio un correo con el asunto, texto y destinatario introducido por parametro
+         * @param asunto
+         * @param texto
+         * @param destinatario 
+         */
 	public void sendEmail(String asunto, String texto, String destinatario){
  
 		init();

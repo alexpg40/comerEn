@@ -34,6 +34,13 @@ public class UsuarioDAO {
         }
     }
     
+    /**
+     * Esta función comprueba si un usuario existe para poder 
+     * logearse en la aplicación
+     * @param correo del usuario
+     * @param contraseña del usuario
+     * @return int 0 no existe id del usuario si existe
+     */
     public int existeUsuario(String correo, String contraseña){
         int idUsuario = 0;
         try {
@@ -49,6 +56,12 @@ public class UsuarioDAO {
         return idUsuario;
     }
     
+    /**
+     * Comprueba que el correo del usuario este registrado 
+     * en la base de datos
+     * @param correo a buscar
+     * @return int 0 no existe id del usuario si existe
+     */
     public int existeUsuario(String correo){
         int idUsuario = 0;
         try {
@@ -64,6 +77,11 @@ public class UsuarioDAO {
         return idUsuario;
     }
     
+    /**
+     * Recupera el usuario dada su id
+     * @param idUsuario a buscar
+     * @return Usuario
+     */
     public Usuario getUsuarioByidUsuario(int idUsuario){
         Usuario ret = null;
         try {
@@ -80,6 +98,10 @@ public class UsuarioDAO {
         return ret;
     }
     
+    /**
+     * Registra un usuario en la base de datos
+     * @param usuario a registrar
+     */
     public void registrarUsuario(Usuario usuario){
         try {
             String sqlStr = "INSERT INTO usuario VALUES (null, '" + usuario.getNombre() + "', '" 
@@ -91,7 +113,11 @@ public class UsuarioDAO {
         }
     }
     
-    
+    /**
+     * Cambia la contraseña de un usuario
+     * @param contraseña a cambiar
+     * @param idUsuario al que cambiar la contraseña
+     */
     public void cambiarContraseña(String contraseña, int idUsuario){
         try {
             String sqlStr = "UPDATE usuario SET contrasena = '" + contraseña + "' WHERE idUsuario = " + idUsuario;
@@ -102,6 +128,10 @@ public class UsuarioDAO {
         }
     }
     
+    /**
+     * Actualiza los datos de un usuario
+     * @param usuario
+     */
     public void actualizarUsuario(Usuario usuario){
         try {
             String sqlStr = "UPDATE usuario SET nombre = '" + usuario.getNombre() + "', apellido = '" 
@@ -117,6 +147,10 @@ public class UsuarioDAO {
         }
     }
     
+    /**
+     * Recupera los usuario que no tengan el rol de administrador
+     * @return ArrayList<Usuario>
+     */
     public ArrayList<Usuario> getUsuariosNotAdmin(){
         ArrayList<Usuario> ret = new ArrayList<>();
         try {
@@ -133,6 +167,11 @@ public class UsuarioDAO {
         return ret;
     }
     
+    /**
+     * Recupera los usuario que contenga esa nombre
+     * @param nombre a buscar
+     * @return ArrayList<Usuario>
+     */
     public ArrayList<Usuario> getUsuariosByNombre(String nombre){
         ArrayList<Usuario> ret = new ArrayList<>();
         try {
@@ -149,6 +188,11 @@ public class UsuarioDAO {
         return ret;
     }
     
+    /**
+     * Borra un usuario de la base de datos con esa id
+     * @param idUsuario
+     * @return int
+     */
     public int borrarUsuario(int idUsuario){
         int ret = 0;
         try {
@@ -161,6 +205,11 @@ public class UsuarioDAO {
         return ret;
     }
     
+    /**
+     * Recupera la valoraci
+     * @param idRestaurante
+     * @return 
+     */
     public int[] getUsuariosValoradoRestaurante(int idRestaurante){
         
         int[] ret = new int[2];
@@ -176,11 +225,16 @@ public class UsuarioDAO {
                 ret[1] = result.getInt("valoracion");
             }
         } catch (SQLException ex) {
-            System.out.println("Error al actualizar el usuario" + ex.getMessage());
+            System.out.println("Error al recuperar la valoracion del usuario" + ex.getMessage());
         }
         return ret;
     }
     
+    /**
+     * Recupera el numero de usuarios con han comentado en total
+     * en toda la aplicación
+     * @return int n de usuarios
+     */
     public int getNUsuariosComentado(){
         int ret = 0;
         try {
@@ -196,6 +250,12 @@ public class UsuarioDAO {
         return ret;
     }
     
+    /**
+     * Recupera el numero de usuarios con han comentado en un restaurante
+     * que contenga la etiqueta
+     * @param idEtiqueta a buscar
+     * @return int numero de restaurantes
+     */
     public int getNUsuariosComentadoByidEtiqueta(int idEtiqueta){
         int ret = 0;
         try {

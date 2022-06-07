@@ -34,6 +34,11 @@ public class SuscripcionDAO {
         }
     }
     
+    /**
+     * Consigue todas las suscripciones disponibles de la base de
+     * datos
+     * @return ArrayList<Suscripcion
+     */
     public ArrayList<Suscripcion> getSuscripciones(){
         ArrayList<Suscripcion> ret = new ArrayList<>();  
         try{
@@ -50,6 +55,11 @@ public class SuscripcionDAO {
         return ret;
     }
     
+    /**
+     * Recupera las suscripciones que ha comprado un usuario
+     * @param idUsuario del usuario a buscar suscripciones
+     * @return ArrayList<Suscripcion>
+     */
     public ArrayList<Suscripcion> getSuscripcionesByIdUsuario(int idUsuario){
         ArrayList<Suscripcion> ret = new ArrayList<>();
         try{
@@ -68,6 +78,11 @@ public class SuscripcionDAO {
         return ret;
     }
     
+    /**
+     * Un usuario compra una suscripción
+     * @param idSuscripcion a comprar
+     * @param idUsuario del comprador
+     */
     public void comprarSuscripcion(int idSuscripcion, int idUsuario){
          try {
             String sqlStr = "INSERT INTO usuario_suscripcion VALUES (" + idUsuario + ", " + idSuscripcion + ")";
@@ -78,6 +93,11 @@ public class SuscripcionDAO {
         }
     }
     
+    /**
+     * Elimina un suscripció de un usuario
+     * @param idSuscripcion a eliminar
+     * @param idUsuario del usuario a quitar
+     */
     public void anularSuscripcion(int idSuscripcion, int idUsuario){
         try {
             String sqlStr = "DELETE FROM usuario_suscripcion WHERE idUsuario =" + idUsuario + " AND idSuscripcion = " + idSuscripcion;
@@ -88,12 +108,17 @@ public class SuscripcionDAO {
         }
     }
     
+    /**
+     * Comprueba si el usuario tiene un tipo de suscripcion de 
+     * anuncios, lo que devuelve un boolean si tiene que ver anunios
+     * @param idUsuario a buscar
+     * @return boolean
+     */
     public boolean tieneAnuncios(int idUsuario){
         try{
             String sqlStr = "SELECT suscripcion.* FROM suscripcion INNER JOIN usuario_suscripcion ON suscripcion.idSuscripcion"
                     + " = usuario_suscripcion.idSuscripcion WHERE usuario_suscripcion.idUsuario = " + idUsuario
                     + " AND suscripcion.categoria = 'publicidad'";
-            System.out.println(sqlStr);
             Statement smt = this.conexion.createStatement();
             ResultSet result = smt.executeQuery(sqlStr);
             return !result.next();  

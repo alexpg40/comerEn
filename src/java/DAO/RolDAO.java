@@ -34,6 +34,11 @@ public class RolDAO {
         }
     }
     
+    /**
+     * Recupera los roles de un usuario
+     * @param idUsuario del usuario a buscar
+     * @return ArrayList<Rol>
+     */
     public ArrayList<Rol> obtenerRolesUsuario(int idUsuario){
         ArrayList<Rol> ret = new ArrayList<>();
         try {
@@ -50,6 +55,11 @@ public class RolDAO {
         return ret;
     }
     
+    /**
+     * Recupera los roles que no tiene un usuario
+     * @param idUsuario del usuario a buscar
+     * @return ArrayList<Rol>
+     */
     public ArrayList<Rol> getRolesFaltantes(int idUsuario){
         ArrayList<Rol> ret = new ArrayList<>();
         try {
@@ -65,6 +75,11 @@ public class RolDAO {
         return ret;
     }
     
+    /**
+     * Añade un rol a un usuario en concreto
+     * @param idUsuario a añadir rol
+     * @param idRol del rol que añades al usuario
+     */
     public void submitRolUsuario(int idUsuario, int idRol){
         try {
             String sqlStr = "INSERT INTO usuario_rol VALUES (" + idUsuario + ", " + idRol + ")";
@@ -75,6 +90,11 @@ public class RolDAO {
         }
     }
     
+    /**
+     * Borra un rol de un usuario determinado
+     * @param idUsuario a borrar rol
+     * @param idRol del rol que quieres borrar
+     */
     public void deleteRolUsuario(int idUsuario, int idRol){
         try {
             String sqlStr = "DELETE FROM usuario_rol WHERE  idUsuario = " + idUsuario + " AND idRol = " + idRol;

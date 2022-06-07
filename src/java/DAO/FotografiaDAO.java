@@ -34,6 +34,11 @@ public class FotografiaDAO {
         }
     }
     
+    /**
+     * Recupera las fotografias de un restaurante
+     * @param idRestaurante
+     * @return ArrayList<Fotografia>
+     */
     public ArrayList<Fotografia> getFotografiasByIdRestaurante(int idRestaurante){
         ArrayList<Fotografia> ret = new ArrayList<>();
         try{
@@ -50,7 +55,12 @@ public class FotografiaDAO {
         return ret;
     }
     
-    public void subirFotografia(int idRestaurante, String ubicacion){
+    /**
+     * Subir una fotografia de un restaurante
+     * @param idRestaurante 
+     * @param ubicacion 
+     */
+    public void insertFotografia(int idRestaurante, String ubicacion){
         try{
             String sqlStr = "INSERT INTO fotografia VALUES(NULL, " + idRestaurante + ", '" + ubicacion + "')";
             Statement smt = this.conexion.createStatement();

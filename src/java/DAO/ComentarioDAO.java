@@ -34,6 +34,11 @@ public class ComentarioDAO {
         }
     }
     
+    /**
+     * Recupera los comentarios de un restaurante
+     * @param idRestaurante a buscar  comentarios
+     * @return ArrayList<Comentario> del restaurante
+     */
     public ArrayList<Comentario> getComentariosByIdRestaurante(int idRestaurante){
         ArrayList<Comentario> ret = new ArrayList<>();
         try{
@@ -51,6 +56,13 @@ public class ComentarioDAO {
         return ret;
     }
     
+    /**
+     * Inserta en la base de datos un comentario de un usuario
+     * @param idUsuario de la persona que ha escrito el comentario
+     * @param idRestaurante del restaurante que ha comentado
+     * @param valoracion nota que le ha puesto al restaurante
+     * @param descripcion del restaurante
+     */
     public void insertarComentario(int idUsuario, int idRestaurante, int valoracion, String descripcion){
         try{
             String sqlStr = "INSERT INTO comentario "
