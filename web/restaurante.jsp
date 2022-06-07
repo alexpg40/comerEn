@@ -75,9 +75,15 @@
                             </p>
                         </article>
                     </article>
+                    <%
+                        if (ubicacion != null) {
+                    %>
                     <article id="map">
 
                     </article>
+                    <%
+                        }
+                    %>
                     <%
                         if (!fotografias.isEmpty()) {
                     %>
@@ -154,6 +160,9 @@
             © Alex Perez 2022
         </footer>
     </body>
+    <%
+        if (ubicacion != null) {
+    %>
     <script>
         let punto = new L.LatLng(<%=ubicacion.getLat()%>, <%=ubicacion.getLng()%>);
 
@@ -170,4 +179,7 @@
         }).addTo(map);
 
     </script>
+    <%
+        }
+    %>
 </html>

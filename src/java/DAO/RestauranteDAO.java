@@ -252,7 +252,7 @@ public class RestauranteDAO {
     }
 
     /**
-     * Recupera las localidades de todos los restaurantes
+     * Recupera las localidades de todos los restaurantes dado un nombre
      * @param localidad
      * @return ArrayList<String>
      */
@@ -271,7 +271,27 @@ public class RestauranteDAO {
         }
         return ret;
     }
-
+    /**
+     * Recupera las localidades de todos los restaurantes dado un nombre
+     * @param localidad
+     * @return ArrayList<String>
+     */
+    public ArrayList<String> getLocalidadesRestaurantes() {
+        ArrayList<String> ret = new ArrayList<>();
+        try {
+            String sqlStr = "SELECT DISTINCT localidad FROM restaurante";
+            Statement smt = this.conexion.createStatement();
+            ResultSet result = smt.executeQuery(sqlStr);
+            System.out.println(sqlStr);
+            while (result.next()) {
+                ret.add(result.getString("localidad"));
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error al intentar recuperar los restaurantes!" + ex.getMessage());
+        }
+        return ret;
+    }
+    
     /**
      * Recupera todos los restaurantes que contengan la id de Etiqueta
      * @param idEtiqueta
@@ -371,7 +391,7 @@ public class RestauranteDAO {
             String sqlStr = "SELECT Restaurante_Valoracion.* "
                     + "FROM Restaurante_Valoracion "
                     + where;
-                        System.out.println(sqlStr);
+            System.out.println(sqlStr);
             Statement smt = this.conexion.createStatement();
             ResultSet result = smt.executeQuery(sqlStr);
             while (result.next()) {

@@ -4,6 +4,7 @@
     Author     : Alex
 --%>
 
+<%@page import="DAO.RestauranteDAO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="Entidades.Restaurante"%>
 <%@page import="Entidades.Usuario"%>
@@ -18,6 +19,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="public/styles/common.css">
         <link rel="stylesheet" href="public/styles/index.css">
+        <script type="module" src="./public/src/js/index.js"></script>
     </head>
     <body>
         <%
@@ -51,12 +53,17 @@
                                     <output id="outRadio" for="radio">5</output>
                                 </label>
                                 <label>Localidad 
+                                    <%
+                                        RestauranteDAO restauranteDao = new RestauranteDAO();
+                                        ArrayList<String> localidades = restauranteDao.getLocalidadesRestaurantes();
+                                        restauranteDao.cerrarConexion();
+                                    %>
                                     <select name="localidadFiltros">
                                         <option>Todas</option>
                                         <%
-                                            for (Restaurante restaurante : restaurauntes) {
+                                            for (String localidad : localidades) {
                                         %>
-                                        <option><%=restaurante.getLocalidad()%></option>
+                                        <option><%=localidad%></option>
                                         <%
                                             }
                                         %>
@@ -67,7 +74,7 @@
                                         <input type="range" name="valoracionMin" value="1" min="1" max="5"/>
                                         <output id="outValoracion" for="valoracionMin">★</output>
                                 </label>
-                                <input type="submit" value="Filtrar" name="filtrar"/>
+                                <input type="submit" value="Filtrar" name="filtrarForm"/>
                             </form>
                         </article>
                         <article class="restaurantes">

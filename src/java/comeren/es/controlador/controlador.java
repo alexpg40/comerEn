@@ -293,6 +293,19 @@ public class controlador extends HttpServlet {
                     rd = request.getRequestDispatcher("/recuperarContraseña.jsp");
                     rd.forward(request, response);
                 }
+            }else if(request.getParameter("filtrarForm") != null){
+                String filtro = request.getParameter("valoracionMin");
+                response.setCharacterEncoding("UTF-8");
+                RestauranteDAO restauranteDao = new RestauranteDAO();
+                ArrayList<Restaurante> restaurantes = null;
+                restaurantes = restauranteDao.getRestaurantesFiltrados(request.getParameter("localidadFiltros"), Integer.parseInt(request.getParameter("valoracionMin")));
+                if (session.getAttribute("usuario") != null) {
+                    SistemaRecomendacion.calcularRecomendacionRestaurantes(restaurantes, (int) session.getAttribute("idUsuario"));
+                }
+                restauranteDao.cerrarConexion();
+                request.setAttribute("restaurantes", restaurantes);
+                rd = request.getRequestDispatcher("/index.jsp");
+                rd.forward(request, response);
             } else //API
             if (request.getParameter("buscarRestaurantes") != null) {
                 response.setContentType("application/json");

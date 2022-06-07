@@ -132,7 +132,17 @@
         </main>
         <script>
             var idRestaurante = <%=restaurante.getIdRestaurante()%>;
-            initMapa(<%=ubicacion.getLat()%>, <%=ubicacion.getLng()%>)
+            <%
+              if(ubicacion != null){
+                  %>
+                  initMapa(<%=ubicacion.getLat()%>, <%=ubicacion.getLng()%>)
+                  <%
+              } else {
+                  %>
+                      initMapa(40.416962006055115, -3.7015176580147946)
+                  <%
+              }
+            %>
         </script>
         <footer>
             © Alex Perez 2022
