@@ -22,7 +22,7 @@ public class Correos {
 
     private final Properties properties = new Properties();
 
-    private String password = "comeren21";
+    private String password = "";
 
     private Session session;
 
@@ -31,20 +31,22 @@ public class Correos {
         properties.put("mail.smtp.host", "smtp.office365.com");
         properties.put("mail.smtp.starttls.enable", "true");
         properties.put("mail.smtp.port", 587);
-        properties.put("mail.smtp.mail.sender", "correo.comeren@outlook.com");
+        properties.put("mail.smtp.mail.sender", "comeren.comer@outlook.com");
         properties.put("mail.smtp.starttls.enable", "true");
         properties.put("mail.smtp.ssl.protocols", "TLSv1.2");
         properties.put("mail.smtp.auth", "true");
 
-        session = Session.getInstance(properties,
-                new javax.mail.Authenticator() {
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("correo.comeren@outlook.com", password);
-            }
-        });
-
+        session = Session.getDefaultInstance(properties);
     }
 
+    /**
+     * Envio un correo con el asunto, texto y destinatario introducido por
+     * parametro
+     *
+     * @param asunto
+     * @param texto
+     * @param destinatario
+     */
     public void sendEmail(String asunto, String texto, String destinatario) {
 
         init();
@@ -55,7 +57,7 @@ public class Correos {
             message.setSubject(asunto);
             message.setText(texto);
             Transport t = session.getTransport("smtp");
-            t.connect((String) properties.get("mail.smtp.user"), "comeren21");
+            t.connect((String) properties.get("mail.smtp.user"), "comeren12");
             t.sendMessage(message, message.getAllRecipients());
             t.close();
         } catch (MessagingException me) {
