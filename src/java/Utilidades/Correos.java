@@ -22,21 +22,26 @@ public class Correos {
 
     private final Properties properties = new Properties();
 
-    private String password = "";
+    private String password = "comeren21";
 
     private Session session;
 
     private void init() {
-
         properties.put("mail.smtp.host", "smtp.office365.com");
         properties.put("mail.smtp.starttls.enable", "true");
         properties.put("mail.smtp.port", 587);
-        properties.put("mail.smtp.mail.sender", "comeren.comer@outlook.com");
+        properties.put("mail.smtp.mail.sender", "correo.comeren@outlook.com");
         properties.put("mail.smtp.starttls.enable", "true");
         properties.put("mail.smtp.ssl.protocols", "TLSv1.2");
         properties.put("mail.smtp.auth", "true");
 
-        session = Session.getDefaultInstance(properties);
+        session = Session.getInstance(properties,
+                new javax.mail.Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication("correo.comeren@outlook.com", password);
+            }
+        });
+
     }
 
     /**
@@ -57,7 +62,7 @@ public class Correos {
             message.setSubject(asunto);
             message.setText(texto);
             Transport t = session.getTransport("smtp");
-            t.connect((String) properties.get("mail.smtp.user"), "comeren12");
+            t.connect((String) properties.get("mail.smtp.user"), "comeren21");
             t.sendMessage(message, message.getAllRecipients());
             t.close();
         } catch (MessagingException me) {
