@@ -124,4 +124,12 @@ public class Utilidades {
         return contrasena.equals(rcontrasena);
     }
     
+    public static String crearEstrellas(int nEstrellas){
+        String ret = "";
+        for(int i = 0; i < nEstrellas; i++){
+            ret += "★";
+        }
+        return ret;
+    }
+    
 }

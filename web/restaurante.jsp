@@ -51,10 +51,16 @@
                         <img src="public/img/foto_temporal.jpg" alt="imagen restaurante" id="imagenRestaurante"/>
                         <span class="valoracion">
                             <%
-                                for (int i = 0; i < valoracion; i++) {
+                                if (valoracion > 0) {
+                                    for (int i = 0; i < valoracion; i++) {
                             %>
                             ★
                             <%
+                                    }
+                                } else {
+                                %>
+                                Sin Valoración
+                                <%
                                 }
                             %>
                         </span>
@@ -112,7 +118,7 @@
                         <article id="comentariosRestaurante">
                             <%
                                 int comentado = 0;
-                                if(request.getAttribute("comentado") != null){
+                                if (request.getAttribute("comentado") != null) {
                                     comentado = (Integer) request.getAttribute("comentado");
                                 }
                                 if (session.getAttribute("usuario") != null && comentado == 0) {

@@ -4,6 +4,8 @@
     Author     : Alex
 --%>
 
+<%@page import="Utilidades.Utilidades"%>
+<%@page import="DAO.RestauranteDAO"%>
 <%@page import="Entidades.Usuario"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="Entidades.Restaurante"%>
@@ -21,7 +23,7 @@
         <title>comerEn - Buscador</title>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@500&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="public/styles/common.css">
         <link rel="stylesheet" href="public/styles/listaRestaurantes.css">
     </head>
@@ -35,7 +37,7 @@
                 %>
                 <h2>
                     <%
-                    if (request.getParameter("buscador") != null) {%>Resultados de "<%=request.getParameter("buscador")%>" - <%}
+                        if (request.getParameter("buscador") != null) {%>Resultados de "<%=request.getParameter("buscador")%>" - <%}
                     %>
                     Nº resultados <%=restaurantes.size()%>
                 </h2>
@@ -57,7 +59,19 @@
                                         <%=restaurante.getDescripcion()%>
                                     </article>
                                     <article class="valoracionRestaurante">
-                                        ★★★★★
+                                        <%
+                                            RestauranteDAO restauranteDao = new RestauranteDAO();
+                                            int valoracion = restauranteDao.valoracionMediaRestaurante(restaurante.getIdRestaurante());
+                                            if (valoracion > 0) {
+                                        %>
+                                        <%=Utilidades.crearEstrellas(valoracion)%>
+                                        <%
+                                        } else {
+                                        %>
+                                        Sin Valoración
+                                        <%
+                                            }
+                                        %>
                                     </article>
                                 </article>
                             </section>

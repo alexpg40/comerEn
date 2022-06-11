@@ -19,12 +19,10 @@ import Entidades.Restaurante;
 import Entidades.Rol;
 import Entidades.Ubicacion;
 import Entidades.Usuario;
-import SistemaRecomendacion.SistemaRecomendacion;
 import Utilidades.Correos;
 import Utilidades.GeneradorContraseñas;
 import Utilidades.Utilidades;
 import com.google.gson.Gson;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
@@ -158,7 +156,7 @@ public class administrador extends HttpServlet {
             }
         } else if (request.getParameter("buscarRestaurante") != null) {
             RestauranteDAO restauranteDao = new RestauranteDAO();
-            ArrayList<Restaurante> restaurantes = restauranteDao.getRestaurantes(request.getParameter("buscador"));
+            ArrayList<Restaurante> restaurantes = restauranteDao.getRestaurantesAdmin(request.getParameter("buscador"));
             session.setAttribute("restaurantes", restaurantes);
             restauranteDao.cerrarConexion();
             session.setAttribute("paramBusqueda", request.getParameter("buscador"));

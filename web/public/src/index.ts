@@ -168,7 +168,9 @@ const initLocalizacion = () => {
 
 const obtenerLocalizacion = async ({coords}) => {
     const restaurantes = await getRestaurantesCercanos(coords);
-    crearRestaurantes('Restaurantes más cercanos', restaurantes)
+    if(restaurantes.length > 0){
+        crearRestaurantes('Restaurantes más cercanos', restaurantes)
+    }
     localStorage.setItem('ultimaUbicacion', `${coords.longitude}|${coords.latitude}`);
 }
 
@@ -177,7 +179,9 @@ const errorLocalizacion = async () => {
         const strPuntos = localStorage.getItem('ultimaUbicacion');
         const coords = { longitude: Number(strPuntos.split('|')[0]), latitude: Number(strPuntos.split('|')[1])}
         const restaurantes = await getRestaurantesCercanos(coords);
-        crearRestaurantes('Restaurantes más cercanos desde tu última ubicación', restaurantes)
+        if(restaurantes.length > 0){
+            crearRestaurantes('Restaurantes más cercanos desde tu última ubicación', restaurantes)
+        }
     }
 }
 

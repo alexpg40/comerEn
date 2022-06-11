@@ -4,6 +4,7 @@
     Author     : Alex
 --%>
 
+<%@page import="DAO.RestauranteDAO"%>
 <%@page import="Utilidades.Utilidades"%>
 <%@page import="Entidades.Rol"%>
 <%@page import="java.util.ArrayList"%>
@@ -50,7 +51,19 @@
                                         <%=restaurante.getDescripcion()%>
                                     </article>
                                     <article class="valoracionRestaurante">
-                                        ★★★★★
+                                        <%
+                                            RestauranteDAO restauranteDao = new RestauranteDAO();
+                                            int valoracion = restauranteDao.valoracionMediaRestaurante(restaurante.getIdRestaurante());
+                                            if (valoracion > 0) {
+                                        %>
+                                        <%=Utilidades.crearEstrellas(valoracion)%>
+                                        <%
+                                        } else {
+                                        %>
+                                        Sin Valoración
+                                        <%
+                                            }
+                                        %>
                                     </article>
                                 </article>
                             </section>

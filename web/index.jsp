@@ -4,6 +4,8 @@
     Author     : Alex
 --%>
 
+<%@page import="Utilidades.Utilidades"%>
+<%@page import="DAO.ComentarioDAO"%>
 <%@page import="DAO.RestauranteDAO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="Entidades.Restaurante"%>
@@ -56,7 +58,6 @@
                                     <%
                                         RestauranteDAO restauranteDao = new RestauranteDAO();
                                         ArrayList<String> localidades = restauranteDao.getLocalidadesRestaurantes();
-                                        restauranteDao.cerrarConexion();
                                     %>
                                     <select name="localidadFiltros">
                                         <option>Todas</option>
@@ -71,8 +72,8 @@
                                 </label>
                                 <label>
                                     Puntuación minima
-                                        <input type="range" name="valoracionMin" value="1" min="1" max="5"/>
-                                        <output id="outValoracion" for="valoracionMin">★</output>
+                                    <input type="range" name="valoracionMin" value="1" min="1" max="5"/>
+                                    <output id="outValoracion" for="valoracionMin">★</output>
                                 </label>
                                 <input type="submit" value="Filtrar" name="filtrarForm"/>
                             </form>
@@ -94,7 +95,18 @@
                                                 <%=restaurante.getDescripcion()%>
                                             </article>
                                             <article class="valoracionRestaurante">
-                                                ★★★★★
+                                                <%
+                                                    int valoracion = restauranteDao.valoracionMediaRestaurante(restaurante.getIdRestaurante());
+                                                    if (valoracion > 0) {
+                                                %>
+                                                <%=Utilidades.crearEstrellas(valoracion)%>
+                                                <%
+                                                    } else {
+                                                    %>
+                                                    Sin Valoración
+                                                    <%
+                                                    }
+                                                %>
                                             </article>
                                         </article>
                                     </section>
@@ -102,6 +114,7 @@
                             </a>
                             <%
                                 }
+                                restauranteDao.cerrarConexion();
                             %>
                         </article>
                     </section>

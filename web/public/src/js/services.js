@@ -15,49 +15,46 @@ function request(url, config = {}) {
                 return response.json();
             throw new Error('Error al intengar recuperar los usuarios de la base de datos');
         })
-            .then((json) => {
-            console.log(json);
-            return json;
-        });
+            .then((json) => json);
     });
 }
 export const getUsuarios = () => {
-    const URL = 'http://localhost:8080/comerEn/administrador?buscarUsuarios';
+    const URL = 'administrador?buscarUsuarios';
     return request(URL);
 };
 export const getUsuario = (usuario) => {
-    const URL = `http://localhost:8080/comerEn/administrador?buscarUsuario=${usuario}`;
+    const URL = `administrador?buscarUsuario=${usuario}`;
     return request(URL);
 };
 export const getRestaurantes = (restaurantes) => {
-    const URL = `http://localhost:8080/comerEn/controlador?buscarRestaurantes=${restaurantes}`;
+    const URL = `controlador?buscarRestaurantes=${restaurantes}`;
     return request(URL);
 };
 export const getRestaurantesPopulares = () => {
-    const URL = `http://localhost:8080/comerEn/controlador?getRestaurantesPopulares=getRestaurantesPopulare`;
+    const URL = `controlador?getRestaurantesPopulares=getRestaurantesPopulare`;
     return request(URL);
 };
 export const getEtiquetas = (etiquetas) => {
-    const URL = `http://localhost:8080/comerEn/controlador?buscarEtiquetas=${etiquetas}`;
+    const URL = `controlador?buscarEtiquetas=${etiquetas}`;
     return request(URL);
 };
 export const getLocalidades = (localidad) => {
-    const URL = `http://localhost:8080/comerEn/controlador?buscarLocalidades=${localidad}`;
+    const URL = `controlador?buscarLocalidades=${localidad}`;
     return request(URL);
 };
 export const getRestaurantesCercanos = (punto, radio = 40) => {
     const { latitude, longitude } = punto;
-    const URL = `http://localhost:8080/comerEn/controlador?buscarRestaurantesCercanos=${longitude}|${latitude}&radio=${radio}`;
+    const URL = `controlador?buscarRestaurantesCercanos=${longitude}|${latitude}&radio=${radio}`;
     return request(URL);
 };
 export const getRestaurantesFiltrados = (localidad, valoracionMin, radio = 40, punto) => {
     let URL = '';
     if (punto) {
         const { latitude, longitude } = punto;
-        URL = `http://localhost:8080/comerEn/controlador?filtrarRestaurantes=${longitude}|${latitude}&radio=${radio}&valoracionMin=${valoracionMin}&localidadFiltros=${localidad}`;
+        URL = `controlador?filtrarRestaurantes=${longitude}|${latitude}&radio=${radio}&valoracionMin=${valoracionMin}&localidadFiltros=${localidad}`;
     }
     else {
-        URL = `http://localhost:8080/comerEn/controlador?filtrarRestaurantes=a&valoracionMin=${valoracionMin}&localidadFiltros=${localidad}`;
+        URL = `controlador?filtrarRestaurantes=a&valoracionMin=${valoracionMin}&localidadFiltros=${localidad}`;
     }
     return request(URL);
 };

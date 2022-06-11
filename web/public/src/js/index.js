@@ -160,7 +160,9 @@ const initLocalizacion = () => {
 };
 const obtenerLocalizacion = ({ coords }) => __awaiter(void 0, void 0, void 0, function* () {
     const restaurantes = yield getRestaurantesCercanos(coords);
-    crearRestaurantes('Restaurantes más cercanos', restaurantes);
+    if (restaurantes.length > 0) {
+        crearRestaurantes('Restaurantes más cercanos', restaurantes);
+    }
     localStorage.setItem('ultimaUbicacion', `${coords.longitude}|${coords.latitude}`);
 });
 const errorLocalizacion = () => __awaiter(void 0, void 0, void 0, function* () {
@@ -168,7 +170,9 @@ const errorLocalizacion = () => __awaiter(void 0, void 0, void 0, function* () {
         const strPuntos = localStorage.getItem('ultimaUbicacion');
         const coords = { longitude: Number(strPuntos.split('|')[0]), latitude: Number(strPuntos.split('|')[1]) };
         const restaurantes = yield getRestaurantesCercanos(coords);
-        crearRestaurantes('Restaurantes más cercanos desde tu última ubicación', restaurantes);
+        if (restaurantes.length > 0) {
+            crearRestaurantes('Restaurantes más cercanos desde tu última ubicación', restaurantes);
+        }
     }
 });
 const crearRestaurantes = (nombreSeccion, restaurantes) => {

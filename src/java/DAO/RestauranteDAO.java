@@ -42,6 +42,24 @@ public class RestauranteDAO {
     public ArrayList<Restaurante> getRestaurantes(String nombre) {
         ArrayList<Restaurante> ret = new ArrayList<>();
         try {
+            String sqlStr = "SELECT * FROM restaurante WHERE nombre LIKE '%" + nombre + "%' AND oculto=0";
+            Statement smt = this.conexion.createStatement();
+            ResultSet result = smt.executeQuery(sqlStr);
+            while (result.next()) {
+                ret.add(new Restaurante(result.getInt("idRestaurante"), result.getInt("idDueño"),
+                        result.getInt("idAdmin"), result.getString("nombre"), result.getString("descripcion"),
+                        result.getTime("horario_abre"), result.getTime("horario_cierra"),
+                        result.getString("icono"), result.getBoolean("oculto"), result.getString("localidad")));
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error al intentar recuperar los restaurantes!" + ex.getMessage());
+        }
+        return ret;
+    }
+    
+    public ArrayList<Restaurante> getRestaurantesAdmin(String nombre) {
+        ArrayList<Restaurante> ret = new ArrayList<>();
+        try {
             String sqlStr = "SELECT * FROM restaurante WHERE nombre LIKE '%" + nombre + "%'";
             Statement smt = this.conexion.createStatement();
             ResultSet result = smt.executeQuery(sqlStr);
@@ -56,6 +74,7 @@ public class RestauranteDAO {
         }
         return ret;
     }
+    
 
     /**
      * Recupera los restaurantes de un dueño
@@ -233,7 +252,7 @@ public class RestauranteDAO {
             String sqlStr = "SELECT restaurante.*, "
                     + "st_distance_sphere(point(Lng, Lat), point(" + lng + ", " + lat + ")) / 1000 as distance "
                     + "FROM ubicacion, restaurante "
-                    + "WHERE ubicacion.idRestaurante = restaurante.idRestaurante "
+                    + "WHERE ubicacion.idRestaurante = restaurante.idRestaurante AND restaurante.oculto = 0"
                     + "HAVING distance <= " + radio
                     + " ORDER BY distance ASC";
             System.out.println(sqlStr);
@@ -259,7 +278,7 @@ public class RestauranteDAO {
     public ArrayList<String> getLocalidadesRestaurantes(String localidad) {
         ArrayList<String> ret = new ArrayList<>();
         try {
-            String sqlStr = "SELECT DISTINCT localidad FROM restaurante WHERE localidad LIKE '%" + localidad + "%'";
+            String sqlStr = "SELECT DISTINCT localidad FROM restaurante WHERE localidad LIKE '%" + localidad + "%' AND restaurante.oculto = 0";
             Statement smt = this.conexion.createStatement();
             ResultSet result = smt.executeQuery(sqlStr);
             System.out.println(sqlStr);
@@ -301,7 +320,8 @@ public class RestauranteDAO {
         ArrayList<Restaurante> ret = new ArrayList<>();
         try {
             String sqlStr = "SELECT DISTINCT restaurante.* FROM restaurante, restaurante_etiqueta "
-                    + "WHERE restaurante_etiqueta.idRestaurante = restaurante.idRestaurante and restaurante_etiqueta.idEtiqueta = " + idEtiqueta;
+                    + "WHERE restaurante_etiqueta.idRestaurante = restaurante.idRestaurante and restaurante.oculto= 0 "
+                    + "and restaurante_etiqueta.idEtiqueta = " + idEtiqueta;
             Statement smt = this.conexion.createStatement();
             ResultSet result = smt.executeQuery(sqlStr);
             while (result.next()) {
@@ -351,7 +371,8 @@ public class RestauranteDAO {
     public ArrayList<Restaurante> getRestaurantesFiltrados(double lng, double lat, int radio, String localidad, int valoracion) {
         ArrayList<Restaurante> ret = new ArrayList<>();
         try {
-            String where = "WHERE ubicacion.idRestaurante = Restaurante_Valoracion.idRestaurante AND valoracion >= " + valoracion;
+            String where = "WHERE ubicacion.idRestaurante = Restaurante_Valoracion.idRestaurante AND oculto = 0 "
+                    + "AND valoracion >= " + valoracion;
             if(!localidad.equals("Todas")){
                 where += " AND localidad = '" + localidad + "'";
             }
@@ -384,7 +405,7 @@ public class RestauranteDAO {
     public ArrayList<Restaurante> getRestaurantesFiltrados(String localidad, int valoracion) {
         ArrayList<Restaurante> ret = new ArrayList<>();
         try {
-            String where = "WHERE valoracion >= " + valoracion;
+            String where = "WHERE valoracion >= " + valoracion + " AND oculto= 0";
             if(!localidad.equals("Todas")){
                 where += " AND localidad = '" + localidad + "'";
             }
