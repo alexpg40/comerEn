@@ -11,11 +11,14 @@
             <file>file:/home/alex/Proyectos/comerEn/src/java/Utilidades/MapUtil.java</file>
             <file>file:/home/alex/Proyectos/comerEn/src/java/Entidades/Restaurante.java</file>
             <file>file:/home/alex/Proyectos/comerEn/web/adminRestaurantes.jsp</file>
+            <file>file:/home/alex/Proyectos/comerEn/web/editarUsuario.jsp</file>
             <file>file:/home/alex/Proyectos/comerEn/src/java/SistemaRecomendacion/TablaBooleana.java</file>
             <file>file:/home/alex/Proyectos/comerEn/web/public/styles/editarRestaurante.css</file>
             <file>file:/home/alex/Proyectos/comerEn/src/java/DAO/RestauranteDAO.java</file>
             <file>file:/home/alex/Proyectos/comerEn/web/public/styles/registro.css</file>
+            <file>file:/home/alex/Proyectos/comerEn/src/java/comeren/es/controlador/subirFichero.java</file>
             <file>file:/home/alex/Proyectos/comerEn/web/public/styles/restaurante.css</file>
+            <file>file:/home/alex/Proyectos/comerEn/web/suscripciones.jsp</file>
             <file>file:/home/alex/Proyectos/comerEn/src/java/comeren/es/controlador/dueno.java</file>
             <file>file:/home/alex/Proyectos/comerEn/src/java/DAO/ComentarioDAO.java</file>
             <file>file:/home/alex/Proyectos/comerEn/web/restaurante.jsp</file>
@@ -25,12 +28,14 @@
             <file>file:/home/alex/Proyectos/comerEn/web/WEB-INF/web.xml</file>
             <file>file:/home/alex/Proyectos/comerEn/web/public/styles/index.css</file>
             <file>file:/home/alex/Proyectos/comerEn/src/java/DAO/FotografiaDAO.java</file>
+            <file>file:/home/alex/Proyectos/comerEn/web/listaRestaurantesAdmin.jsp</file>
             <file>file:/home/alex/Proyectos/comerEn/web/adminUsuarios.jsp</file>
             <file>file:/home/alex/Proyectos/comerEn/src/java/DAO/RolDAO.java</file>
             <file>file:/home/alex/Proyectos/comerEn/src/java/comeren/es/controlador/administrador.java</file>
             <file>file:/home/alex/Proyectos/comerEn/src/java/Utilidades/ConexionBD.java</file>
             <file>file:/home/alex/Proyectos/comerEn/src/java/DAO/UbicacionDAO.java</file>
             <file>file:/home/alex/Proyectos/comerEn/src/java/Utilidades/Utilidades.java</file>
+            <file>file:/home/alex/Proyectos/comerEn/web/listaRestaurantes.jsp</file>
             <file>file:/home/alex/Proyectos/comerEn/src/java/Utilidades/GeneradorContraseñas.java</file>
         </group>
     </open-files>

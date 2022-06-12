@@ -198,7 +198,7 @@ public class administrador extends HttpServlet {
                 rd = request.getRequestDispatcher("/paginaError.jsp");
                 rd.forward(request, response);
             } else {
-                ArrayList<Restaurante> restaurantes = restauranteDao.getRestaurantes((String) session.getAttribute("paramBusqueda"));
+                ArrayList<Restaurante> restaurantes = restauranteDao.getRestaurantesAdmin((String) session.getAttribute("paramBusqueda"));
                 session.setAttribute("restaurantes", restaurantes);
                 rd = request.getRequestDispatcher("/listaRestaurantesAdmin.jsp");
                 rd.forward(request, response);
@@ -212,7 +212,7 @@ public class administrador extends HttpServlet {
                 rd = request.getRequestDispatcher("/paginaError.jsp");
                 rd.forward(request, response);
             } else {
-                ArrayList<Restaurante> restaurantes = restauranteDao.getRestaurantes((String) session.getAttribute("paramBusqueda"));
+                ArrayList<Restaurante> restaurantes = restauranteDao.getRestaurantesAdmin((String) session.getAttribute("paramBusqueda"));
                 restauranteDao.cerrarConexion();
                 session.setAttribute("restaurantes", restaurantes);
                 rd = request.getRequestDispatcher("/listaRestaurantesAdmin.jsp");
@@ -226,7 +226,7 @@ public class administrador extends HttpServlet {
                 rd = request.getRequestDispatcher("/paginaError.jsp");
                 rd.forward(request, response);
             } else {
-                ArrayList<Restaurante> restaurantes = restauranteDao.getRestaurantes((String) session.getAttribute("paramBusqueda"));
+                ArrayList<Restaurante> restaurantes = restauranteDao.getRestaurantesAdmin((String) session.getAttribute("paramBusqueda"));
                 session.setAttribute("restaurantes", restaurantes);
                 rd = request.getRequestDispatcher("/listaRestaurantesAdmin.jsp");
                 rd.forward(request, response);
