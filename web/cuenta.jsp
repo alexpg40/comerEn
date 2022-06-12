@@ -34,12 +34,13 @@
             <h2>Datos Cuenta</h2>
             <hr/>
             <img class="iconoPerfil" src="public/img/iconoLogin.svg" alt="icono perfil del usuario"/>
-            <form action="controlador" method="post" id="formActualizarCuenta">
+            <form action="controlador" id="formActualizarCuenta">
                 <label>Nombre: <input type="text" name="nombre" placeholder=<%=usuario.getNombre()%>></label>
                 <label>Apellido: <input type="text" name="apellido" placeholder=<%=usuario.getApellido()%>></label>
                 <label>Correo electrónico: <input type="email" name="correo" placeholder=<%=usuario.getCorreo()%>></label>
                 <label>Contraseña: <input type="password" name="contrasena"/></label>
                 <input type="submit" value="Actualizar cuenta" name="actualizarCuenta"/>
+                 <input type="hidden" name="actualizarCuenta" value="<%=usuario.getIdUsuario()%>"/>
                 <input type="hidden" name="idUsuario" value="<%=usuario.getIdUsuario()%>"/>
             </form>
             <p id="erroresContainer">

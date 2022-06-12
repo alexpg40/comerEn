@@ -159,7 +159,9 @@ const initLocalizacion = () => {
     }
 };
 const obtenerLocalizacion = ({ coords }) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log(coords);
     const restaurantes = yield getRestaurantesCercanos(coords);
+    console.log(restaurantes);
     if (restaurantes.length > 0) {
         crearRestaurantes('Restaurantes más cercanos', restaurantes);
     }

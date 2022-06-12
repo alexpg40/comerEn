@@ -167,7 +167,9 @@ const initLocalizacion = () => {
 }
 
 const obtenerLocalizacion = async ({coords}) => {
+    console.log(coords);
     const restaurantes = await getRestaurantesCercanos(coords);
+    console.log(restaurantes)
     if(restaurantes.length > 0){
         crearRestaurantes('Restaurantes más cercanos', restaurantes)
     }

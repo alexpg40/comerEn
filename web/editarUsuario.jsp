@@ -40,10 +40,11 @@
             <hr/>
             <article class="formulario">
                 <img class="iconoPerfil" src="public/img/<%=usuario.getIcono()%>" alt="icono perfil del usuario"/>
-                <form action="administrador" method="post" id="formActualizarCuenta">
+                <form action="administrador" name="actualizarUsuario" id="formActualizarCuenta">
                     <label>Nombre: <input type="text" name="nombre" placeholder=<%=usuario.getNombre()%>></label>
                     <label>Apellido: <input type="text" name="apellido" placeholder=<%=usuario.getApellido()%>></label>
                     <label>Correo electrónico: <input type="email" name="correo" placeholder=<%=usuario.getCorreo()%>></label>
+                    <input type="hidden" name="actualizarUsuario" value=""/>
                     <input type="submit" value="Actualizar cuenta" name="actualizarUsuario"/>
                 </form>
                 <p id="erroresContainer">

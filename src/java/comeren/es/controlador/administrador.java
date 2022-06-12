@@ -212,6 +212,7 @@ public class administrador extends HttpServlet {
                 rd = request.getRequestDispatcher("/paginaError.jsp");
                 rd.forward(request, response);
             } else {
+                System.out.println("param de busqueda ->" + (String) session.getAttribute("paramBusqueda"));
                 ArrayList<Restaurante> restaurantes = restauranteDao.getRestaurantesAdmin((String) session.getAttribute("paramBusqueda"));
                 restauranteDao.cerrarConexion();
                 session.setAttribute("restaurantes", restaurantes);

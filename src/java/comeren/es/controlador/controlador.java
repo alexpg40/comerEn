@@ -232,9 +232,9 @@ public class controlador extends HttpServlet {
                 String correo = request.getParameter("correo");
                 String contrasena = request.getParameter("contrasena");
                 Usuario usuario = (Usuario) session.getAttribute("usuario");
+                int idUsuario = usuario.getIdUsuario();
                 if (Utilidades.validarUsuario(nombre, apellido, correo, contrasena)) {
-                    usuarioDao.actualizarUsuario(new Usuario(usuario.getIdUsuario(), nombre, apellido, correo, contrasena));
-                    usuarioDao.cerrarConexion();
+                    usuarioDao.actualizarUsuario(new Usuario(usuario.getIdUsuario(), nombre, apellido, correo, contrasena));  
                     RestauranteDAO restauranteDao = new RestauranteDAO();
                     ArrayList<Restaurante> restaurantesPopulares = restauranteDao.getRestaurantesPopulares();
                     if (session.getAttribute("usuario") != null) {
@@ -242,6 +242,8 @@ public class controlador extends HttpServlet {
                     }
                     request.setAttribute("restaurantes", restaurantesPopulares);
                     restauranteDao.cerrarConexion();
+                    session.setAttribute("usuario", usuarioDao.getUsuarioByidUsuario(idUsuario));
+                    usuarioDao.cerrarConexion();
                     rd = request.getRequestDispatcher("/index.jsp");
                     rd.forward(request, response);
                 } else {

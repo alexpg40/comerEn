@@ -137,7 +137,7 @@ public class UsuarioDAO {
             String sqlStr = "UPDATE usuario SET nombre = '" + usuario.getNombre() + "', apellido = '" 
                     + usuario.getApellido() + "', correo = '" + usuario.getCorreo() +"'";
             if(usuario.getContrasena() != null){
-                sqlStr+= " , contrasena = '" + Utilidades.Utilidades.convertirSHA256(usuario.getContrasena()) + "'";
+                sqlStr+= " , contrasena = '" +usuario.getContrasena() + "'";
             }
             sqlStr+= " WHERE idUsuario = " + usuario.getIdUsuario();
             Statement smt = this.conexion.createStatement();

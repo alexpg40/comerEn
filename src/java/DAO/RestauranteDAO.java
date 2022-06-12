@@ -252,8 +252,8 @@ public class RestauranteDAO {
             String sqlStr = "SELECT restaurante.*, "
                     + "st_distance_sphere(point(Lng, Lat), point(" + lng + ", " + lat + ")) / 1000 as distance "
                     + "FROM ubicacion, restaurante "
-                    + "WHERE ubicacion.idRestaurante = restaurante.idRestaurante AND restaurante.oculto = 0"
-                    + "HAVING distance <= " + radio
+                    + "WHERE ubicacion.idRestaurante = restaurante.idRestaurante AND restaurante.oculto = 0 "
+                    + " HAVING distance <= " + radio
                     + " ORDER BY distance ASC";
             System.out.println(sqlStr);
             Statement smt = this.conexion.createStatement();
